@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.recruit.Model.Competition" table="competition">
+		<id name="id">
+		 <generator class="identity"/>
+		</id>
+		<property name="name" not-null="true" unique  ="true"></property>
+		<property name="information"  ></property>
+        <property name="numberLimit"  ></property>
+        <property name="createTime"  not-null="true"></property>
+        <property name="updateTime"  ></property>
+		</class>
+</hibernate-mapping>

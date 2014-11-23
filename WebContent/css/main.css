@@ -1,0 +1,13 @@
+nav.navbar.navbar-ghost{
+background-color: #6C52BD;
+}
+a{
+color:#fff;
+}
+.nav>li>a:hover, .nav>li>a:focus {
+text-decoration: none;
+background-color: #fff;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+background-color: rgba(108, 82, 189, 0.67);
+}
