@@ -8,6 +8,8 @@
 		<id name="id">
 		 <generator class="identity"/>
 		</id>
+		<property name="image_url"  ></property>
+		<property name="link"  ></property>
 		<property name="name" not-null="true" unique  ="true"></property>
 		<property name="information"  ></property>
         <property name="numberLimit"  ></property>

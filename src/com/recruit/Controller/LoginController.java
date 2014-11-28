@@ -27,7 +27,7 @@ public class LoginController {
         int temp=HomeDao.findUser(username,password);
        if (temp>=1)
        {    request.setAttribute("username",username);
-           return "/View/home/success";
+           return "/View/home/myspace";
        }
         else{
            return  "/View/home/error";
@@ -38,7 +38,7 @@ public class LoginController {
         try{
             HomeDao.addUser(account,password);
             request.setAttribute("username",account);
-            return "/View/home/success";
+            return "/View/home/myspace";
         }catch (Exception e){
             e.printStackTrace();
 

@@ -15,6 +15,7 @@
         <property name="createTime"  not-null="true"></property>
         <property name="updateTime"  ></property>
         <property name="name" not-null="true" ></property>
+        <property name="image_url" ></property>
         <property name="sex"  ></property>
         <property name="major"  ></property>
         <property name="classes"  ></property>
