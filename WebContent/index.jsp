@@ -12,7 +12,7 @@
   </head>
   <body>
  点击进入主页
-    <a href="home/hello">链接</a>
+    <a href="foodrecruit/home/hello">链接</a>
   </div>
   </body>
 </html>
