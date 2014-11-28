@@ -1,30 +1,22 @@
 package com.recruit.Model;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
  * Created by Administrator on 2014/11/21.
  */
-public class Competition {
-    private Integer id;
+@Entity
+public class Competition extends BasicModel{
+
     private String image_url;
 	private String link;
     private String name;
     private String information;
     private Integer numberLimit;
-    private Date createTime;
-    private Date updateTime;
     public Competition(){
 
     }
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
     public String getImage_url() {
 		return image_url;
 	}
@@ -63,21 +55,5 @@ public class Competition {
 
     public void setNumberLimit(Integer numberLimit) {
         this.numberLimit = numberLimit;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

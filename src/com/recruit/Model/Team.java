@@ -1,10 +1,13 @@
 package com.recruit.Model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created by Administrator on 2014/11/21.
  */
-public class Team {
-    private Integer id;
+@Entity
+public class Team extends BasicModel{
     private String name;
     private Integer size;
     private String slogan;
@@ -13,14 +16,6 @@ public class Team {
     private Integer competition_id;
 
     public Team() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

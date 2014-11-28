@@ -1,16 +1,19 @@
 package com.recruit.Model;
 
+import java.io.Serializable;
+import java.security.Identity;
 import java.util.Date;
 
-public class User {
-	
-	private Integer id;
+import javax.persistence.*;
+
+@Entity
+public class User extends BasicModel{
+    @Column(nullable = false)
 	private String account;
+    @Column(nullable = false)
 	private String password;
     private Integer type;
     private Integer status;
-    private Date createTime;
-    private Date updateTime;
     private String name;
     private String image_url;
 	private Boolean sex;
@@ -160,13 +163,7 @@ public class User {
         this.self_info = self_info;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
 
 }

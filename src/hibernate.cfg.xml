@@ -15,6 +15,9 @@
 		<property name="show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
-		<mapping resource="com/recruit/Model/User.hbm.xml"/>
-	</session-factory>
+        <mapping class="com.recruit.Model.User" />
+        <mapping class="com.recruit.Model.Team" />
+        <mapping class="com.recruit.Model.Competition" />
+        <mapping class="com.recruit.Model.CompetAndTeam" />
+    </session-factory>
 </hibernate-configuration>
