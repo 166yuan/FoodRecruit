@@ -3,7 +3,7 @@ package com.recruit.Model;
 import javax.persistence.Entity;
 
 /** 竞赛和队伍中间表
- *  @author 陈思远
+ *  @author Yuan
  */
 @Entity
 public class CompetAndTeam extends BasicModel{

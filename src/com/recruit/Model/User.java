@@ -6,6 +6,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+/** 用户类
+ *  @author Yuan
+  */
 @Entity
 public class User extends BasicModel{
     @Column(nullable = false)
@@ -24,7 +27,17 @@ public class User extends BasicModel{
     private String qq;
     private String address;
     private String self_info;
-    
+    //是否主动招收
+    private String isActive;
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
+
     public User(){
 
     }

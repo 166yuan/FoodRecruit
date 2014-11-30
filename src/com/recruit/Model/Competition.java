@@ -3,8 +3,8 @@ package com.recruit.Model;
 import javax.persistence.Entity;
 import java.util.Date;
 
-/**
- * Created by Administrator on 2014/11/21.
+/** 竞赛类
+ * @author Yuan
  */
 @Entity
 public class Competition extends BasicModel{

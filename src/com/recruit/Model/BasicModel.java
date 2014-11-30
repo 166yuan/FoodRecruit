@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Administrator on 2014/11/28.
+/** model基类
+ * @author Yuan
  */
 @MappedSuperclass
 public class BasicModel implements Serializable{

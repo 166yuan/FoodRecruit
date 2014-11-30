@@ -3,8 +3,8 @@ package com.recruit.Model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Created by Administrator on 2014/11/21.
+/** 竞赛队伍
+ *  @author Yuan
  */
 @Entity
 public class Team extends BasicModel{
@@ -14,6 +14,26 @@ public class Team extends BasicModel{
     private Integer leader_id;
     private  String password;
     private Integer competition_id;
+    //组队状态
+    private Integer type;
+    //当前人数
+
+    public Integer getCurrentNum() {
+        return currentNum;
+    }
+
+    public void setCurrentNum(Integer currentNum) {
+        this.currentNum = currentNum;
+    }
+
+    private Integer currentNum;
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Team() {
     }

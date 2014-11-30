@@ -19,5 +19,10 @@
         <mapping class="com.recruit.Model.Team" />
         <mapping class="com.recruit.Model.Competition" />
         <mapping class="com.recruit.Model.CompetAndTeam" />
+        <mapping class="com.recruit.Model.Score" />
+        <mapping class="com.recruit.Model.Experiment" />
+        <mapping class="com.recruit.Model.Exper_User" />
+        <mapping class="com.recruit.Model.Notification" />
+        <mapping class="com.recruit.Model.PublishLog" />
     </session-factory>
 </hibernate-configuration>
