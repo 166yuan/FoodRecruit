@@ -1,0 +1,56 @@
+#wrapper {
+
+    display: block;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: #fff url("bg.jpg") top center no-repeat;
+}
+
+.rowspan {
+    padding: 80px 290px 20px 290px;
+}
+
+.form-signin-heading {
+    font-size: 66px;
+    font-family: Georgia;
+    font-weight: bold;
+    text-shadow: -1px 2px 3px #8DB386;
+}
+
+a.navbar-brand {
+    margin-top: -100px;
+
+}
+
+nav.navbar.navbar-ghost {
+    height: 60px;
+}
+
+.nav.navbar-nav.navbar-right {
+    margin-top: -43px;
+
+}
+
+.widget-box {
+    display: none;
+}
+
+.widget-box.visible {
+    display: inline;
+}
+
+.footer {
+    border-top: #87bfff solid 1px;
+    background: #f4f4f4;
+    font-family: "Microsoft Yahei";
+}
+
+input[type=checkbox] {
+    height: 18px;
+    width: 18px;
+}

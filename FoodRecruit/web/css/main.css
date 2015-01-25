@@ -1,0 +1,57 @@
+nav.navbar.navbar-ghost {
+    background-color: #6C52BD;
+}
+
+a {
+    color: #141414;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: rgba(108, 82, 189, 0.67);
+}
+
+nav.navbar.navbar-ghost {
+    height: 143px;
+    background: #fff url("bg.jpg") top center no-repeat;
+}
+
+div#logo {
+    height: 80px;
+    margin-left: 40px;
+}
+
+ul.navbar-nav.navbar-right {
+    margin-top: -80px;
+}
+
+a.optionbuttion {
+    display: inline-block;
+    position: relative;
+    margin: 10px;
+    padding: 0 20px;
+    text-align: center;
+    text-decoration: none;
+    font: bold 18px/25px Arial, sans-serif;
+    color: #3e5706;
+    background: #a5cd4e;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, .22);
+
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
+
+    -webkit-transition: all 0.15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    -ms-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+}
