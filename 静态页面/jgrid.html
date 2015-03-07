@@ -1,0 +1,592 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="UTF-8">
+<!-- 强制国内垃圾浏览器开启高速模式-->
+<meta name="renderer" content="webkit">
+<title>个人中心</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="css/ui.jqgrid.css" >
+<link rel="stylesheet" type="text/css" href="css/ace.min.css" >
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
+<link rel="stylesheet" type="text/css" href="css/manager.css" >
+
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" >
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+     <script type="text/javascript" src="js/ace.min.js"></script>
+	 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+</head>
+<html>
+<body class="no-skin">
+<!--导航栏-->
+<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<!-- #section:basics/sidebar.mobile.toggle -->
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<!-- /section:basics/sidebar.mobile.toggle -->
+				<div class="navbar-header pull-left">
+					<!-- #section:basics/navbar.layout.brand -->
+					<a href="#" class="navbar-brand">
+						
+							<i class="fa fa-leaf"></i>
+							<span id="title">求士后台管理</span>
+						
+					</a>
+
+					<!-- /section:basics/navbar.layout.brand -->
+
+					<!-- #section:basics/navbar.toggle -->
+
+					<!-- /section:basics/navbar.toggle -->
+				</div>
+
+				
+			</div><!-- /.navbar-container -->
+		</div>
+<!--导航栏结束-->
+<!-- 主体部分-->
+<div class="main-container" id="main-container">
+<div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse">
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+				</script>
+
+				<!-- /.sidebar-shortcuts -->
+
+				<ul class="nav nav-list" style="top: 0px;">
+					<li class="hover">
+						<a href="#">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> 用户管理 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="hover hsub">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-desktop"></i>
+							<span class="menu-text"> 实验管理 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="hover hsub">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-list"></i>
+							<span class="menu-text"> 竞赛管理 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="hover">
+								<a href="tables.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									下拉栏1
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="hover">
+								<a href="jqgrid.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									下拉栏2
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="hover hsub">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> 用户反馈 </span>
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+						<b class="arrow"></b>
+
+
+					<li class="hover">
+						<a href="widgets.html">
+							<i class="menu-icon fa fa-list-alt"></i>
+							<span class="menu-text"> 操作一览 </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+
+
+					<li class="hover hsub">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-tag"></i>
+							<span class="menu-text"> 关于 </span>
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+
+				</ul><!-- /.nav-list -->
+
+				<!-- #section:basics/sidebar.layout.minimize -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<!-- /section:basics/sidebar.layout.minimize -->
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				</script>
+			</div>
+			<div class="main-content">
+				<div class="page-content">
+						<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<div class="well well-sm">
+								<button type="button" class="close line-height-0" data-dismiss="alert">
+									<i class="ace-icon fa fa-times smaller-75"></i>
+								</button>
+
+								You can have a custom jqGrid download here:
+								<a href="http://www.trirand.com/blog/?page_id=6" target="_blank">
+									http://www.trirand.com/blog/?page_id=6
+									<i class="fa fa-external-link bigger-110"></i>
+								</a>
+							</div>
+
+							<div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all" id="gbox_grid-table" dir="ltr" style="width: 554px;"><div class="ui-widget-overlay jqgrid-overlay" id="lui_grid-table"></div><div class="loading ui-state-default ui-state-active" id="load_grid-table" style="display: none;">Loading...</div><div class="ui-jqgrid-view" id="gview_grid-table" style="width: 554px;"><div class="ui-jqgrid-titlebar ui-jqgrid-caption ui-widget-header ui-corner-top ui-helper-clearfix"><a role="link" class="ui-jqgrid-titlebar-close ui-corner-all HeaderButton" style="right: 0px;"><span class="ui-icon ui-icon-circle-triangle-n"></span></a><span class="ui-jqgrid-title">jqGrid with inline editing</span></div><div class="ui-state-default ui-jqgrid-hdiv" style="width: 554px;"><div class="ui-jqgrid-hbox"><table class="ui-jqgrid-htable" style="width: 536px;" role="grid" aria-labelledby="gbox_grid-table" cellspacing="0" cellpadding="0" border="0"><thead><tr class="ui-jqgrid-labels" role="rowheader"><th id="grid-table_cb" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 25px;"><div id="jqgh_grid-table_cb"><input role="checkbox" id="cb_grid-table" class="cbox" type="checkbox"><span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_subgrid" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 25px;"><div id="jqgh_grid-table_subgrid"><span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_myac" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 80px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_myac" class="ui-jqgrid-sortable"> <span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_id" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 40px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_id" class="ui-jqgrid-sortable">ID<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_sdate" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 60px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_sdate" class="ui-jqgrid-sortable">Last Sales<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_name" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 100px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_name" class="ui-jqgrid-sortable">Name<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_stock" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 47px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_stock" class="ui-jqgrid-sortable">Stock<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_ship" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 60px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_ship" class="ui-jqgrid-sortable">Ship via<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="grid-table_note" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 99px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_grid-table_note" class="ui-jqgrid-sortable">Notes<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th></tr></thead></table></div></div><div class="ui-jqgrid-bdiv" style="height: 250px; width: 554px;"><div style="position:relative;"><div></div><table id="grid-table" tabindex="0" cellspacing="0" cellpadding="0" border="0" role="grid" aria-multiselectable="true" aria-labelledby="gbox_grid-table" class="ui-jqgrid-btable" style="width: 536px;"><tbody><tr class="jqgfirstrow" role="row" style="height:auto"><td role="gridcell" style="height:0px;width:25px;"></td><td role="gridcell" style="height:0px;width:25px;"></td><td role="gridcell" style="height:0px;width:80px;"></td><td role="gridcell" style="height: 0px; width: 40px;"></td><td role="gridcell" style="height: 0px; width: 60px;"></td><td role="gridcell" style="height: 0px; width: 100px;"></td><td role="gridcell" style="height: 0px; width: 47px;"></td><td role="gridcell" style="height: 0px; width: 60px;"></td><td role="gridcell" style="height: 0px; width: 99px;"></td></tr><tr role="row" id="12" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:center;width: 25px;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_12" class="cbox" name="jqg_grid-table_12"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_12" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_12" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_12" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_12" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="12" aria-describedby="grid-table_id">12</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="LCD Monitor" aria-describedby="grid-table_name">LCD Monitor</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="TNT" aria-describedby="grid-table_ship">TNT</td><td role="gridcell" style="" title="note3" aria-describedby="grid-table_note">note3</td></tr><tr role="row" id="1" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr ui-priority-secondary"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_1" class="cbox" name="jqg_grid-table_1"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_1" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_1" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_1" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_1" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="1" aria-describedby="grid-table_id">1</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Desktop Computer" aria-describedby="grid-table_name">Desktop Computer</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="FedEx" aria-describedby="grid-table_ship">FedEx</td><td role="gridcell" style="" title="note" aria-describedby="grid-table_note">note</td></tr><tr role="row" id="3" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_3" class="cbox" name="jqg_grid-table_3"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_3" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_3" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_3" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_3" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="3" aria-describedby="grid-table_id">3</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="LCD Monitor" aria-describedby="grid-table_name">LCD Monitor</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="TNT" aria-describedby="grid-table_ship">TNT</td><td role="gridcell" style="" title="note3" aria-describedby="grid-table_note">note3</td></tr><tr role="row" id="4" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr ui-priority-secondary"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_4" class="cbox" name="jqg_grid-table_4"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_4" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_4" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_4" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_4" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="4" aria-describedby="grid-table_id">4</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Speakers" aria-describedby="grid-table_name">Speakers</td><td role="gridcell" style="" title="No" aria-describedby="grid-table_stock">No</td><td role="gridcell" style="" title="ARAMEX" aria-describedby="grid-table_ship">ARAMEX</td><td role="gridcell" style="" title="note" aria-describedby="grid-table_note">note</td></tr><tr role="row" id="5" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_5" class="cbox" name="jqg_grid-table_5"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_5" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_5" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_5" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_5" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="5" aria-describedby="grid-table_id">5</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Laser Printer" aria-describedby="grid-table_name">Laser Printer</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="FedEx" aria-describedby="grid-table_ship">FedEx</td><td role="gridcell" style="" title="note2" aria-describedby="grid-table_note">note2</td></tr><tr role="row" id="6" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr ui-priority-secondary"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_6" class="cbox" name="jqg_grid-table_6"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_6" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_6" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_6" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_6" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="6" aria-describedby="grid-table_id">6</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Play Station" aria-describedby="grid-table_name">Play Station</td><td role="gridcell" style="" title="No" aria-describedby="grid-table_stock">No</td><td role="gridcell" style="" title="FedEx" aria-describedby="grid-table_ship">FedEx</td><td role="gridcell" style="" title="note3" aria-describedby="grid-table_note">note3</td></tr><tr role="row" id="7" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_7" class="cbox" name="jqg_grid-table_7"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_7" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_7" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_7" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_7" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="7" aria-describedby="grid-table_id">7</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Mobile Telephone" aria-describedby="grid-table_name">Mobile Telephone</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="ARAMEX" aria-describedby="grid-table_ship">ARAMEX</td><td role="gridcell" style="" title="note" aria-describedby="grid-table_note">note</td></tr><tr role="row" id="8" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr ui-priority-secondary"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_8" class="cbox" name="jqg_grid-table_8"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_8" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_8" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_8" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_8" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="8" aria-describedby="grid-table_id">8</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Server" aria-describedby="grid-table_name">Server</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="TNT" aria-describedby="grid-table_ship">TNT</td><td role="gridcell" style="" title="note2" aria-describedby="grid-table_note">note2</td></tr><tr role="row" id="9" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_9" class="cbox" name="jqg_grid-table_9"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_9" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_9" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_9" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_9" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="9" aria-describedby="grid-table_id">9</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Matrix Printer" aria-describedby="grid-table_name">Matrix Printer</td><td role="gridcell" style="" title="No" aria-describedby="grid-table_stock">No</td><td role="gridcell" style="" title="FedEx" aria-describedby="grid-table_ship">FedEx</td><td role="gridcell" style="" title="note3" aria-describedby="grid-table_note">note3</td></tr><tr role="row" id="10" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr ui-priority-secondary"><td role="gridcell" style="text-align:center;" aria-describedby="grid-table_cb"><input role="checkbox" type="checkbox" id="jqg_grid-table_10" class="cbox" name="jqg_grid-table_10"></td><td role="gridcell" aria-describedby="grid-table_subgrid" class="ui-sgcollapsed sgcollapsed" style=""><a style="cursor:pointer;"><span class="ui-icon ace-icon fa fa-plus center bigger-110 blue"></span></a></td><td role="gridcell" style="" title="" aria-describedby="grid-table_myac"><div style="margin-left:8px;"><div title="" style="float:left;cursor:pointer;" class="ui-pg-div ui-inline-edit" id="jEditButton_10" onclick="jQuery.fn.fmatter.rowactions.call(this,'edit');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover')" data-original-title="Edit selected row"><span class="ui-icon ui-icon-pencil"></span></div><div title="" style="float:left;margin-left:5px;" class="ui-pg-div ui-inline-del" id="jDeleteButton_10" onclick="jQuery.fn.fmatter.rowactions.call(this,'del');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Delete selected row"><span class="ui-icon ui-icon-trash"></span></div><div title="" style="float:left;display:none" class="ui-pg-div ui-inline-save" id="jSaveButton_10" onclick="jQuery.fn.fmatter.rowactions.call(this,'save');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Submit"><span class="ui-icon ui-icon-disk"></span></div><div title="" style="float:left;display:none;margin-left:5px;" class="ui-pg-div ui-inline-cancel" id="jCancelButton_10" onclick="jQuery.fn.fmatter.rowactions.call(this,'cancel');" onmouseover="jQuery(this).addClass('ui-state-hover');" onmouseout="jQuery(this).removeClass('ui-state-hover');" data-original-title="Cancel"><span class="ui-icon ui-icon-cancel"></span></div></div></td><td role="gridcell" style="" title="10" aria-describedby="grid-table_id">10</td><td role="gridcell" style="" title="2007-12-03" aria-describedby="grid-table_sdate">2007-12-03</td><td role="gridcell" style="" title="Desktop Computer" aria-describedby="grid-table_name">Desktop Computer</td><td role="gridcell" style="" title="Yes" aria-describedby="grid-table_stock">Yes</td><td role="gridcell" style="" title="FedEx" aria-describedby="grid-table_ship">FedEx</td><td role="gridcell" style="" title="note" aria-describedby="grid-table_note">note</td></tr></tbody></table></div></div></div><div class="ui-jqgrid-resize-mark" id="rs_mgrid-table">&nbsp;</div><div id="grid-pager" class="ui-state-default ui-jqgrid-pager ui-corner-bottom" dir="ltr" style="width: 554px;"><div id="pg_grid-pager" class="ui-pager-control" role="group"><table cellspacing="0" cellpadding="0" border="0" class="ui-pg-table" style="width:100%;table-layout:fixed;height:100%;" role="row"><tbody><tr><td id="grid-pager_left" align="left"><table cellspacing="0" cellpadding="0" border="0" class="ui-pg-table navtable" style="float:left;table-layout:auto;"><tbody><tr><td class="ui-pg-button ui-corner-all" title="" id="add_grid-table" data-original-title="Add new row"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-plus-circle purple"></span></div></td><td class="ui-pg-button ui-corner-all" title="" id="edit_grid-table" data-original-title="Edit selected row"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></td><td class="ui-pg-button ui-corner-all" title="" id="view_grid-table" data-original-title="View selected row"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></td><td class="ui-pg-button ui-corner-all" title="" id="del_grid-table" data-original-title="Delete selected row"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-trash-o red"></span></div></td><td class="ui-pg-button ui-state-disabled" style="width:4px;" data-original-title="" title=""><span class="ui-separator"></span></td><td class="ui-pg-button ui-corner-all" title="" id="search_grid-table" data-original-title="Find records"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-search orange"></span></div></td><td class="ui-pg-button ui-corner-all" title="" id="refresh_grid-table" data-original-title="Reload Grid"><div class="ui-pg-div"><span class="ui-icon ace-icon fa fa-refresh green"></span></div></td></tr></tbody></table></td><td id="grid-pager_center" align="center" style="white-space: pre; width: 339px;"><table cellspacing="0" cellpadding="0" border="0" style="table-layout:auto;" class="ui-pg-table"><tbody><tr><td id="first_grid-pager" class="ui-pg-button ui-corner-all ui-state-disabled" style="cursor: default;"><span class="ui-icon ace-icon fa fa-angle-double-left bigger-140"></span></td><td id="prev_grid-pager" class="ui-pg-button ui-corner-all ui-state-disabled"><span class="ui-icon ace-icon fa fa-angle-left bigger-140"></span></td><td class="ui-pg-button ui-state-disabled" style="width: 4px; cursor: default;"><span class="ui-separator"></span></td><td dir="ltr">Page <input class="ui-pg-input" type="text" size="2" maxlength="7" value="0" role="textbox"> of <span id="sp_1_grid-pager">3</span></td><td class="ui-pg-button ui-state-disabled" style="width:4px;"><span class="ui-separator"></span></td><td id="next_grid-pager" class="ui-pg-button ui-corner-all" style="cursor: default;"><span class="ui-icon ace-icon fa fa-angle-right bigger-140"></span></td><td id="last_grid-pager" class="ui-pg-button ui-corner-all" style="cursor: default;"><span class="ui-icon ace-icon fa fa-angle-double-right bigger-140"></span></td><td dir="ltr"><select class="ui-pg-selbox" role="listbox"><option role="option" value="10" selected="selected">10</option><option role="option" value="20">20</option><option role="option" value="30">30</option></select></td></tr></tbody></table></td><td id="grid-pager_right" align="right"><div dir="ltr" style="text-align:right" class="ui-paging-info">View 1 - 10 of 23</div></td></tr></tbody></table></div></div></div>
+
+							
+
+							<script type="text/javascript">
+								var $path_base = "..";//this will be used for editurl parameter
+							</script>
+
+							<!-- PAGE CONTENT ENDS -->
+						</div><!-- /.col -->
+					</div>
+				</div>
+			</div>
+<!-- 主体结束-->
+</body>
+</html>
+</html>
+<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="../assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+		<script src="../assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			var grid_data = 
+			[ 
+				{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+				{id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+				{id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+				{id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+				{id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+				{id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+				{id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+				{id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+				{id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+				{id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+				{id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+				{id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+				{id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+				{id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+				{id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+				{id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+				{id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+				{id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+				{id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+				{id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+				{id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+				{id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+				{id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
+			];
+			
+			var subgrid_data = 
+			[
+			 {id:"1", name:"sub grid item 1", qty: 11},
+			 {id:"2", name:"sub grid item 2", qty: 3},
+			 {id:"3", name:"sub grid item 3", qty: 12},
+			 {id:"4", name:"sub grid item 4", qty: 5},
+			 {id:"5", name:"sub grid item 5", qty: 2},
+			 {id:"6", name:"sub grid item 6", qty: 9},
+			 {id:"7", name:"sub grid item 7", qty: 3},
+			 {id:"8", name:"sub grid item 8", qty: 8}
+			];
+			
+			jQuery(function($) {
+				var grid_selector = "#grid-table";
+				var pager_selector = "#grid-pager";
+				
+				//resize to fit page size
+				$(window).on('resize.jqGrid', function () {
+					$(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+			    })
+				//resize on sidebar collapse/expand
+				var parent_column = $(grid_selector).closest('[class*="col-"]');
+				$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+					if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+						$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+					}
+			    })
+			
+			
+			
+				jQuery(grid_selector).jqGrid({
+					//direction: "rtl",
+			
+					//subgrid options
+					subGrid : true,
+					//subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
+					//datatype: "xml",
+					subGridOptions : {
+						plusicon : "ace-icon fa fa-plus center bigger-110 blue",
+						minusicon  : "ace-icon fa fa-minus center bigger-110 blue",
+						openicon : "ace-icon fa fa-chevron-right center orange"
+					},
+					//for this example we are using local data
+					subGridRowExpanded: function (subgridDivId, rowId) {
+						var subgridTableId = subgridDivId + "_t";
+						$("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
+						$("#" + subgridTableId).jqGrid({
+							datatype: 'local',
+							data: subgrid_data,
+							colNames: ['No','Item Name','Qty'],
+							colModel: [
+								{ name: 'id', width: 50 },
+								{ name: 'name', width: 150 },
+								{ name: 'qty', width: 50 }
+							]
+						});
+					},
+					
+			
+			
+					data: grid_data,
+					datatype: "local",
+					height: 250,
+					colNames:[' ', 'ID','Last Sales','Name', 'Stock', 'Ship via','Notes'],
+					colModel:[
+						{name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
+							formatter:'actions', 
+							formatoptions:{ 
+								keys:true,
+								
+								delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
+								//editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+							}
+						},
+						{name:'id',index:'id', width:60, sorttype:"int", editable: true},
+						{name:'sdate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
+						{name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
+						{name:'stock',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
+						{name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
+						{name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}} 
+					], 
+			
+					viewrecords : true,
+					rowNum:10,
+					rowList:[10,20,30],
+					pager : pager_selector,
+					altRows: true,
+					//toppager: true,
+					
+					multiselect: true,
+					//multikey: "ctrlKey",
+			        multiboxonly: true,
+			
+					loadComplete : function() {
+						var table = this;
+						setTimeout(function(){
+							styleCheckbox(table);
+							
+							updateActionIcons(table);
+							updatePagerIcons(table);
+							enableTooltips(table);
+						}, 0);
+					},
+			
+					editurl: "/dummy.html",//nothing is saved
+					caption: "jqGrid with inline editing"
+			
+					//,autowidth: true,
+			
+			
+					/**
+					,
+					grouping:true, 
+					groupingView : { 
+						 groupField : ['name'],
+						 groupDataSorted : true,
+						 plusicon : 'fa fa-chevron-down bigger-110',
+						 minusicon : 'fa fa-chevron-up bigger-110'
+					},
+					caption: "Grouping"
+					*/
+			
+				});
+				$(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+				
+				
+			
+				//enable search/filter toolbar
+				//jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+				//jQuery(grid_selector).filterToolbar({});
+			
+			
+				//switch element when editing inline
+				function aceSwitch( cellvalue, options, cell ) {
+					setTimeout(function(){
+						$(cell) .find('input[type=checkbox]')
+							.addClass('ace ace-switch ace-switch-5')
+							.after('<span class="lbl"></span>');
+					}, 0);
+				}
+				//enable datepicker
+				function pickDate( cellvalue, options, cell ) {
+					setTimeout(function(){
+						$(cell) .find('input[type=text]')
+								.datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
+					}, 0);
+				}
+			
+			
+				//navButtons
+				jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+					{ 	//navbar options
+						edit: true,
+						editicon : 'ace-icon fa fa-pencil blue',
+						add: true,
+						addicon : 'ace-icon fa fa-plus-circle purple',
+						del: true,
+						delicon : 'ace-icon fa fa-trash-o red',
+						search: true,
+						searchicon : 'ace-icon fa fa-search orange',
+						refresh: true,
+						refreshicon : 'ace-icon fa fa-refresh green',
+						view: true,
+						viewicon : 'ace-icon fa fa-search-plus grey',
+					},
+					{
+						//edit record form
+						//closeAfterEdit: true,
+						//width: 700,
+						recreateForm: true,
+						beforeShowForm : function(e) {
+							var form = $(e[0]);
+							form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+							style_edit_form(form);
+						}
+					},
+					{
+						//new record form
+						//width: 700,
+						closeAfterAdd: true,
+						recreateForm: true,
+						viewPagerButtons: false,
+						beforeShowForm : function(e) {
+							var form = $(e[0]);
+							form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
+							.wrapInner('<div class="widget-header" />')
+							style_edit_form(form);
+						}
+					},
+					{
+						//delete record form
+						recreateForm: true,
+						beforeShowForm : function(e) {
+							var form = $(e[0]);
+							if(form.data('styled')) return false;
+							
+							form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+							style_delete_form(form);
+							
+							form.data('styled', true);
+						},
+						onClick : function(e) {
+							alert(1);
+						}
+					},
+					{
+						//search form
+						recreateForm: true,
+						afterShowSearch: function(e){
+							var form = $(e[0]);
+							form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+							style_search_form(form);
+						},
+						afterRedraw: function(){
+							style_search_filters($(this));
+						}
+						,
+						multipleSearch: true,
+						/**
+						multipleGroup:true,
+						showQuery: true
+						*/
+					},
+					{
+						//view record form
+						recreateForm: true,
+						beforeShowForm: function(e){
+							var form = $(e[0]);
+							form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+						}
+					}
+				)
+			
+			
+				
+				function style_edit_form(form) {
+					//enable datepicker on "sdate" field and switches for "stock" field
+					form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+						.end().find('input[name=stock]')
+							.addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
+							   //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
+							  //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+			
+					//update buttons classes
+					var buttons = form.next().find('.EditButton .fm-button');
+					buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
+					buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
+					buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>')
+					
+					buttons = form.next().find('.navButton a');
+					buttons.find('.ui-icon').hide();
+					buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
+					buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');		
+				}
+			
+				function style_delete_form(form) {
+					var buttons = form.next().find('.EditButton .fm-button');
+					buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
+					buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+					buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+				}
+				
+				function style_search_filters(form) {
+					form.find('.delete-rule').val('X');
+					form.find('.add-rule').addClass('btn btn-xs btn-primary');
+					form.find('.add-group').addClass('btn btn-xs btn-success');
+					form.find('.delete-group').addClass('btn btn-xs btn-danger');
+				}
+				function style_search_form(form) {
+					var dialog = form.closest('.ui-jqdialog');
+					var buttons = dialog.find('.EditTable')
+					buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
+					buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
+					buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
+				}
+				
+				function beforeDeleteCallback(e) {
+					var form = $(e[0]);
+					if(form.data('styled')) return false;
+					
+					form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+					style_delete_form(form);
+					
+					form.data('styled', true);
+				}
+				
+				function beforeEditCallback(e) {
+					var form = $(e[0]);
+					form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+					style_edit_form(form);
+				}
+			
+			
+			
+				//it causes some flicker when reloading or navigating grid
+				//it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+				//or go back to default browser checkbox styles for the grid
+				function styleCheckbox(table) {
+				/**
+					$(table).find('input:checkbox').addClass('ace')
+					.wrap('<label />')
+					.after('<span class="lbl align-top" />')
+			
+			
+					$('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+					.find('input.cbox[type=checkbox]').addClass('ace')
+					.wrap('<label />').after('<span class="lbl align-top" />');
+				*/
+				}
+				
+			
+				//unlike navButtons icons, action icons in rows seem to be hard-coded
+				//you can change them like this in here if you want
+				function updateActionIcons(table) {
+					/**
+					var replacement = 
+					{
+						'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
+						'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
+						'ui-icon-disk' : 'ace-icon fa fa-check green',
+						'ui-icon-cancel' : 'ace-icon fa fa-times red'
+					};
+					$(table).find('.ui-pg-div span.ui-icon').each(function(){
+						var icon = $(this);
+						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+					})
+					*/
+				}
+				
+				//replace icons with FontAwesome icons like above
+				function updatePagerIcons(table) {
+					var replacement = 
+					{
+						'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+						'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+						'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+						'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+					};
+					$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+						var icon = $(this);
+						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+						
+						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+					})
+				}
+			
+				function enableTooltips(table) {
+					$('.navtable .ui-pg-button').tooltip({container:'body'});
+					$(table).find('.ui-pg-div').tooltip({container:'body'});
+				}
+			
+				//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+			
+			
+			});
+		</script>
+

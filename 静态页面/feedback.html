@@ -8,11 +8,10 @@
 <link rel="stylesheet" type="text/css" href="css/ace.min.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
 <link rel="stylesheet" type="text/css" href="css/all.css" >
+
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/ace.min.js"></script>
-
-
 
 </head>
 <body class="no-skin">
@@ -174,48 +173,44 @@
 				<i class="ace-icon fa fa-home home-icon"></i>
 				<a href="myspace.html">主页</a>
 			</li>
-			<li class="active">已发布实验</li>
+			<li class="active">意见反馈</li>
 		</ul><!-- /.breadcrumb -->
 
 	</div>
 <!-- 面包屑结束-->
-    <!--main content-->
-	<div class="page-content">
-        <div class="page-header">
-						<h1>
-							已发布实验
-						</h1>
+
+<div id="page" class="hfeed">
+	<div id="main">
+		<div class="col-md-offset-2 col-md-8">
+	<div   >
+		<br>
+		<div class="page-header">
+			<h1>写下你宝贵的意见</h1>
 		</div>
 
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-10">
-				<div class="widget-box">
-						<div class="widget-header widget-header-flat">
-							<h4 class="widget-title">实验列表</h4>
-						</div>
+		<form id="feedback" class="form-horizontal">
+			<div class="form-group">
+			    <div class="col-md-12">
+			    	<textarea class="form-control" rows="8" id="content" placeholder="请写下您的宝贵意见"></textarea>
+			    </div>
+			    <br>
+			  </div>	
 
-						<div class="widget-body">
-							<div class="widget-main">
-									<ul class="list-unstyled spaced">
-										<li>
-											<h4 class="lighter no-margin-bottom">
-												<a href="#"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp; 
-												<a href="#basics/sidebar.mobile.style2" class="pink btn-display-help"> Minimized mobile menu help </a>
-												&nbsp;&nbsp; <small>2015年1月1日</small>&nbsp;&nbsp; 
-												<a href="#"><i class="ace-icon fa fa-times red2"></i></a>
-												</h4>														
-										</li>
+			  <br>
 
-														</ul>			
-							</div>
-						</div>
-				</div>
-				<div class="col-sm-1"></div>
-		</div>						
-	</div>
-	<!-- main content end-->
+			   <div class="form-group">
+			    <div class="col-md-offset-6 col-md-6">
+			      <button type="submit" class="btn btn-primary">提交反馈</button>
+			    </div>
+			  </div>
+		</form>
+		
+		 
+	</div><!-- #main -->	
+</div><!-- #page -->
+	</div><!-- #main -->	
+</div><!-- #page -->
+
+
 </body>
 </html>

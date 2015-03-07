@@ -7,12 +7,16 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="css/ace.min.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="css/all.css" >
+
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/ace.min.js"></script>
 
 
+<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
+<link rel="stylesheet" id="jetpack-widgets-css" href="./css/widgets.css" type="text/css" media="all">
+<link rel="stylesheet" id="white-css" href="./css/white.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-markdown-prettify-css" href="./css/prettify.css" type="text/css" media="all">
 
 </head>
 <body class="no-skin">
@@ -174,48 +178,65 @@
 				<i class="ace-icon fa fa-home home-icon"></i>
 				<a href="myspace.html">主页</a>
 			</li>
-			<li class="active">已发布实验</li>
+			<li>
+				<a href="myInvolveExperiment.html">我参与的实验</a>
+			</li>
+			<li class="active" id="smallTitle">实验名称</li>
 		</ul><!-- /.breadcrumb -->
 
 	</div>
 <!-- 面包屑结束-->
-    <!--main content-->
-	<div class="page-content">
-        <div class="page-header">
-						<h1>
-							已发布实验
-						</h1>
-		</div>
 
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-10">
-				<div class="widget-box">
-						<div class="widget-header widget-header-flat">
-							<h4 class="widget-title">实验列表</h4>
-						</div>
+<div class="col-md-offset-3 col-md-8">
 
-						<div class="widget-body">
-							<div class="widget-main">
-									<ul class="list-unstyled spaced">
-										<li>
-											<h4 class="lighter no-margin-bottom">
-												<a href="#"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp; 
-												<a href="#basics/sidebar.mobile.style2" class="pink btn-display-help"> Minimized mobile menu help </a>
-												&nbsp;&nbsp; <small>2015年1月1日</small>&nbsp;&nbsp; 
-												<a href="#"><i class="ace-icon fa fa-times red2"></i></a>
-												</h4>														
-										</li>
-
-														</ul>			
-							</div>
-						</div>
+		<div id="content" >					
+				<div class="page-header">
+							<h1 class="text-center">
+								实验名称
+							</h1>
+					</div>
+				<br>
+				<h3 class="strong">实验内容：</h3><br>
+				<div class="article">
+					<p>了解国内果蔬罐头的种类及发展状况,了解果蔬罐藏的基本原理和罐头加工工艺上的变革,掌握果蔬制作罐头时的一般工艺方法和一些特性,并掌握罐头成品外观及物理指标检验 的方法,由此对进一步提高罐头品质提出自己的设想和措施</p>
 				</div>
-				<div class="col-sm-1"></div>
-		</div>						
-	</div>
-	<!-- main content end-->
+				<br>
+				<h3 class="strong">实验要求：</h3><br>
+				<div class="article">
+					<p>了解国内果蔬罐头的种类及发展状况,了解果蔬罐藏的基本原理和罐头加工工艺上的变革,掌握果蔬制作罐头时的一般工艺方法和一些特性,并掌握罐头成品外观及物理指标检验 的方法,由此对进一步提高罐头品质提出自己的设想和措施</p>
+				</div>
+
+				<br><br><br>
+				<p>实验性质：<span id="exper_type">院级创新项目</span></p>
+				<p>需要助手：<span id="numberLimit">8</span>&nbsp;个</p>
+				<hr>
+
+				<div class="panel panel-default">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading">contact</div>
+				  <table class="table">
+				    <tr>
+				    	<td>联系人</td>
+				    	<td id="cont_name">谢晋叶</td>
+				    </tr>
+				    <tr>
+				    	<td>电话</td>
+				    	<td id="phone">18027247255</td>
+				    </tr>
+				    <tr>
+				    	<td>邮箱</td>
+				    	<td id="email">xie.jinye@163.com</td>
+				    </tr>
+				  </table>
+				</div>
+				
+				<div class="center">
+					<a href="#" class="btn btn-primary">加入实验</a> 
+				</div>
+			</div><!-- #content -->
+
+</div><!-- #page -->
+
+
 </body>
 </html>
