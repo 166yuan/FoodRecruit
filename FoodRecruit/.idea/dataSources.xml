@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3545073673">
+    <data-source source="LOCAL" name="hibernate.cfg.xml" uuid="945e6207-00ae-49cc-add6-2faf19246c7d">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql:///foodrecruit</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

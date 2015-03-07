@@ -1,0 +1,19 @@
+.navbar{
+min-height:100px;
+}
+
+#title{
+font-size:45px;
+}
+
+.navbar-brand{
+margin-top:20px;
+}
+.label-warning {
+    background-color: #F8060F !important;
+}
+.dataTables_length select {
+    width: 120px;
+    height: 25px;
+    padding: 2px 3px;
+}

@@ -1,0 +1,20 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2014/11/22
+  Time: 10:59
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+点击进入主页
+<a href="/user/login">主页</a>
+<br>
+<a href="/mana/index">进入后台管理</a>
+</div>
+</body>
+</html>
