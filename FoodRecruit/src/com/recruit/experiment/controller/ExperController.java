@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Administrator on 2015/1/29.
@@ -41,6 +42,12 @@ public class ExperController {
         return json;
     }
 
+    /**
+     * 跳转到实验发布页面
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "publish")
     public String publicExper(HttpSession session,Model model) {
         String account=(String)session.getAttribute("account");
@@ -48,6 +55,14 @@ public class ExperController {
         return "/View/experiment/experiment";
     }
 
+    /**
+     * 根据跟定的id 跳转到显示该实验信息的界面
+     * @param id
+     * @param from  利用from 在show_experiment页面中判断面包屑的显示
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "showExper")
     public String showExperById(Long id,String from,HttpSession session,Model model){
         ExperimentDao exdao=ExperimentDao.getInstance();
@@ -58,6 +73,12 @@ public class ExperController {
      return "/View/experiment/show_experiment";
     }
 
+    /**
+     * 返回我发布的所有实验
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "myPublishExperiment")
     public  String ExperList(HttpSession session,Model model){
         ExperimentDao exdao=ExperimentDao.getInstance();
@@ -68,6 +89,12 @@ public class ExperController {
         return "View/experiment/myPublishExperiment";
     }
 
+    /**
+     * 返回所有需要招收实验助手的实验
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping("nendAssistant")
     public String needAssistant(HttpSession session,Model model){
         ExperimentDao eDao = ExperimentDao.getInstance();
@@ -79,6 +106,11 @@ public class ExperController {
         return "View/experiment/experimentNeedAssistant";
     }
 
+    /**
+     * 创建添加实验
+     * @param request
+     * @param out
+     */
     @RequestMapping(value = "/addExper")
     public void newExper(HttpServletRequest request,PrintWriter out){
         ExperimentDao experDao= ExperimentDao.getInstance();
@@ -87,7 +119,7 @@ public class ExperController {
 
             JSONObject j = createJson(request);
             Long publisherId = (Long)request.getSession().getAttribute("userId");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
             experDao.begin();
             Experiment exper=new Experiment();
             exper.setPublishId(publisherId);
@@ -116,6 +148,12 @@ public class ExperController {
         out.print(experId);
     }
 
+
+    /**
+     * 根据 id 删除 实验
+     * @param id
+     * @param out
+     */
     @RequestMapping("delete")
     public void delete(Long id,PrintWriter out){
         int result = 0;

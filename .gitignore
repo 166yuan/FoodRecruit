@@ -1,0 +1,9 @@
+out/
+FoodRecruit/.idea/*.xml
+/FoodRecruit/.idea/misc.xml
+FoodRecruit/.idea/workspace.xml
+FoodRecruit/.idea/
+.idea/
+FoodRecruit/out/
+FoodRecruit/*.iml
+*.iml

@@ -42,11 +42,20 @@ public class UserController {
         return json;
     }
 
+    //---------------------------------- 登录注册 ----------------------------------
+    //---------------------------------- 登录注册 ----------------------------------
+
+    /**-----------------------
+     *  跳转到登录页面
+     */
     @RequestMapping("/login")
     public String sayHello(HttpServletRequest request){
         return "/View/user/login";
     }
 
+    /**-----------------------
+     *  进行登录认证
+     */
     @RequestMapping("/doLogin")
     public void login(String account,String password,HttpServletRequest request,PrintWriter out){
         UserDao userDao = UserDao.getInstance();
@@ -55,16 +64,18 @@ public class UserController {
             userDao.begin();
             User user = userDao.forAccount(account);
             if (user != null){
-                //    将account 改为 userId
+
                 if(user.getStatus() != 1){
                     result = -2;
                 }else {
                     if (user.getPassword().equals(password)) {
                         result = SUCCESS;
+
                         request.getSession().setAttribute("account", account);
                         request.getSession().setAttribute("userId",user.getId());
                         request.getSession().setAttribute("user_type",user.getType());
                         request.getSession().setAttribute("imageUrl",user.getImage_url());
+
                     } else {
                         result = FAILURE;
                     }
@@ -81,6 +92,25 @@ public class UserController {
         out.print(result);
     }
 
+
+    /**-----------------------
+     * 登出
+     * @param request
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().setAttribute("account",null);
+        return "redirect:/user/login";
+    }
+
+    /**------------------------
+     * 注册处理
+     *
+     * @param account   注册帐号
+     * @param password  注册密码
+     * @param out
+     */
     @RequestMapping("/register")
     public void register(String account,String password,PrintWriter out){
         UserDao userDao = UserDao.getInstance();
@@ -103,39 +133,36 @@ public class UserController {
         out.print(result);
     }
 
-    @RequestMapping("")
-    public void m(PrintWriter out){
-        UserDao userDao = UserDao.getInstance();
-        int result = 0;
-        try {
-            userDao.begin();
 
-            userDao.commit();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            userDao.close();
-        }
-        out.print(result);
-    }
     @RequestMapping("home")
     public String home(HttpServletRequest request,Model model){
         return "View/user/myspace";
     }
+
+    /**-----------------------
+     * 修改密码
+     * @param password 旧密码
+     * @param newPass  新密码
+     * @param request
+     * @param out
+     */
     @RequestMapping("passwd")
     public void passwd(String password,String newPass,HttpServletRequest request,PrintWriter out){
         UserDao userDao = UserDao.getInstance();
         int result = 0;
         try {
             userDao.begin();
+
             String account = (String)request.getSession().getAttribute("account");
             User user = userDao.forAccount(account);
+
             if (!user.getPassword().equals(password)){
                 result = FAILURE;
             }else {
                 user.setPassword(newPass);
                 result = SUCCESS;
             }
+
             userDao.commit();
         }catch (Exception ex){
             ex.printStackTrace();
@@ -145,6 +172,14 @@ public class UserController {
         out.print(result);
     }
 
+    //---------------------------------- 个人信息 ----------------------------------
+    //---------------------------------- 个人信息 ----------------------------------
+
+    /**
+     * 更新个人资料
+     * @param request
+     * @param out
+     */
     @RequestMapping("/updateProfile")
     public void updateProfile(HttpServletRequest request,PrintWriter out){
         UserDao userDao = UserDao.getInstance();
@@ -175,6 +210,12 @@ public class UserController {
         out.print(result);
     }
 
+    /**
+     * 获取个人资料
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/getProfile")
     public String getProfile(HttpServletRequest request,Model model){
         UserDao userDao = UserDao.getInstance();
@@ -192,16 +233,17 @@ public class UserController {
         return "/View/user/profile";
     }
 
-    @RequestMapping("/logout")
-    public String logout(HttpServletRequest request){
-        request.getSession().setAttribute("account",null);
-        return "redirect:/user/login";
-    }
-    @RequestMapping("/uploadImage")
-    public  String uploadImage(){
-        return "View/user/upload";
-    }
 
+    //---------------------------------- 头像上传 ----------------------------------
+    //---------------------------------- 头像上传 ----------------------------------
+
+    /**
+     * 上传图片
+     * @param request
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping("/upload")
     public String update3(DefaultMultipartHttpServletRequest request,HttpSession session,Model model){
         CommonsMultipartFile file=(CommonsMultipartFile)request.getFile("file");
@@ -211,12 +253,13 @@ public class UserController {
         String fileName =request.getRealPath("/images/")+File.separator+System.currentTimeMillis()+file.getOriginalFilename().
                 substring(file.getOriginalFilename().lastIndexOf("."));
         File uploadFile = new File(fileName);
-        System.out.println(uploadFile.getPath());
+
         try{
             FileCopyUtils.copy(file.getBytes(),uploadFile);
         }catch (Exception e){
             e.printStackTrace();
         }
+
         String account = (String)request.getSession().getAttribute("account");
         UserDao userDao=UserDao.getInstance();
         try{
@@ -236,11 +279,25 @@ public class UserController {
         return "/View/user/profile";
     }
 
+
+    //---------------------------------- 信息反馈 ----------------------------------
+    //---------------------------------- 信息反馈 ----------------------------------
+
+    /**
+     * 跳转反馈页面
+     * @return
+     */
     @RequestMapping("feedback")
     public String feedback(){
     return "View/user/feedBack";
     }
 
+    /**
+     * 添加反馈
+     * @param info
+     * @param request
+     * @return
+     */
     @RequestMapping("addfeedback")
     public String addfeedBack(String info,HttpServletRequest request){
         NotificationDao notificationDao=NotificationDao.getInstance();

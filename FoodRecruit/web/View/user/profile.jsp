@@ -110,7 +110,7 @@
                                     <i class="ace-icon fa fa-check"></i></button>
                                 <button type="button" class="btn editable-cancel">
                                     <i class="ace-icon fa fa-times"></i></button></div>
-                        </div>
+                            </div>
                         <div class="editable-error-block help-block" style="display: none;"></div>
                     </div>
                 </form>
