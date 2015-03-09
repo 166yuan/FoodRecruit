@@ -6,7 +6,13 @@ import com.recruit.experUser.model.ExperUser;
 import com.recruit.experiment.dao.ExperimentDao;
 import com.recruit.experiment.model.Experiment;
 
+import com.recruit.user.Dao.UserDao;
+import com.recruit.user.model.User;
 import net.sf.json.JSONObject;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,34 +80,70 @@ public class ExperController {
 
     /**
      * 返回我发布的所有实验
+     * @param start 返回结果的起始数
+     * @param size  返回结果的个数
+     * @param order 升序(asc) | 降序（desc）
+     * @param by    按该字段进行排序
      * @param session
      * @param model
      * @return
      */
     @RequestMapping(value = "myPublishExperiment")
-    public  String ExperList(HttpSession session,Model model){
-        ExperimentDao exdao=ExperimentDao.getInstance();
+    public  String myPublishExperiment(Integer start, Integer size, String order, String by, HttpSession session, Model model){
+        ExperimentDao eDao=ExperimentDao.getInstance();
         Long userId = (Long)session.getAttribute("userId");
 
-        List<Experiment> list = exdao.findMyPublishExperiment(userId);
+        DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
+
+        dc.add(Restrictions.eq("publishId", userId));
+
+        if ("asc".equals(order))
+            dc.addOrder(Order.asc(by));
+        if ("desc".equals(order))
+            dc.addOrder(Order.desc(by));
+
+        start = start != null? start : 0;
+        size  = size  != null? size  : 10;
+
+        List<Experiment> list = eDao.search(dc, start, size);
+
         model.addAttribute("list",list);
+
         return "View/experiment/myPublishExperiment";
     }
 
     /**
      * 返回所有需要招收实验助手的实验
+     * @param start 返回结果的起始数
+     * @param size  返回结果的个数
+     * @param order 升序(asc) | 降序（desc）
+     * @param by    按该字段进行排序
      * @param session
      * @param model
      * @return
      */
     @RequestMapping("nendAssistant")
-    public String needAssistant(HttpSession session,Model model){
+    public String needAssistant(Integer start, Integer size, String order, String by, HttpSession session, Model model){
         ExperimentDao eDao = ExperimentDao.getInstance();
         eDao.begin();
-        List<Experiment> list = eDao.findAllNeedAssistant();
+
+        DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
+
+        dc.add(Restrictions.eq("isOk",false));
+
+        if ("asc".equals(order))
+            dc.addOrder(Order.asc(by));
+        if ("desc".equals(order))
+            dc.addOrder(Order.desc(by));
+
+        start = start != null? start : 0;
+        size  = size  != null? size  : 8;
+
+        List<Experiment> list = eDao.search(dc, start, size);
+
         eDao.close();
         model.addAttribute("list",list);
-        //---这个url作为测试用 要替换成experimentNeedAssistant.html 那个
+
         return "View/experiment/experimentNeedAssistant";
     }
 
@@ -171,21 +212,7 @@ public class ExperController {
         out.print(result);
     }
 
-    @RequestMapping("update")
-    public void update(HttpServletRequest request,PrintWriter out){
-        int result = 0;
-        ExperimentDao eDao = ExperimentDao.getInstance();
-        try{
-            JSONObject j = createJson(request);
-            eDao.begin();
-            eDao.commit();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            eDao.close();
-        }
-        out.print(result);
-    }
+
 
     @RequestMapping("attendList")
     public String attendList(Long experId,Model model){
@@ -218,12 +245,50 @@ public class ExperController {
         out.print(result);
     }
 
-    @RequestMapping("editExper")
-    public String editExperById(Long id,HttpSession session,Model model){
-        ExperimentDao exdao=ExperimentDao.getInstance();
-        Experiment experiment = exdao.get(id);
+
+
+    @RequestMapping("update")
+    public String update(Long id,Model model){
+        ExperimentDao eDao = ExperimentDao.getInstance();
+        Experiment experiment = eDao.get(id);
+        model.addAttribute("id",id);
         model.addAttribute("exper",experiment);
-        return "/View/experiment/editExper";
+        return "View/experiment/experimentUpdate";
+    }
+
+    @RequestMapping("doUpdate")
+    public void doUpdate(HttpServletRequest request,PrintWriter out){
+        Long result = -1L;
+        ExperimentDao eDao = ExperimentDao.getInstance();
+        try{
+            JSONObject j = createJson(request);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
+            eDao.begin();
+
+
+            Experiment exper = eDao.get(j.getLong("experId"));
+
+            exper.setName(j.getString("name"));
+            exper.setInformation(j.getString("content"));
+            exper.setRequirement(j.getString("requirement"));
+       //     exper.setBeginTime(sdf.parse(j.getString("pretime")));
+       //     exper.setEndTime(sdf.parse(j.getString("endtime")));
+            exper.setContact(j.getString("linkman"));
+            exper.setQQ(j.getString("qq"));
+            exper.setPhone(j.getString("phone"));
+            exper.setEmail(j.getString("email"));
+            exper.setNote(j.getString("note"));
+            exper.setCount(j.getInt("count"));
+            eDao.update(exper);
+
+            result = j.getLong("experId");
+            eDao.commit();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            eDao.close();
+        }
+        out.print(result);
     }
 
 }

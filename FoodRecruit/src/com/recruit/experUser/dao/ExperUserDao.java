@@ -2,9 +2,11 @@ package com.recruit.experUser.dao;
 
 import com.recruit.BaseDao.DaoBase;
 import com.recruit.experUser.model.ExperUser;
+import com.recruit.experiment.model.Experiment;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +24,7 @@ public class ExperUserDao extends DaoBase<ExperUser>{
     private static class Singleton{
         public static final ExperUserDao INSTANCE = new ExperUserDao();
     }
+
     public static ExperUserDao getInstance(){
         return Singleton.INSTANCE;
     }
@@ -39,10 +42,15 @@ public class ExperUserDao extends DaoBase<ExperUser>{
         return experUser;
     }
 
-    public List<ExperUser>getByExperId(Long  experId){
+
+
+    public List<ExperUser> getByExperId(Long experId){
         DetachedCriteria dc = DetachedCriteria.forClass(ExperUser.class)
-                .add(Restrictions.eq("experId", experId));
-        List<ExperUser>list=this.search(dc);
-        return list;
+                .add(Restrictions.eq("experId",experId));
+
+        List<ExperUser> experUserList = this.search(dc);
+
+        return experUserList;
     }
+
 }

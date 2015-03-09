@@ -8,6 +8,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>实验报名情况</title>
 
+    <script type="text/javascript" src="/js/experiment/experimentUpdate.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/css/all.css" >
     <style type="text/css">
         .line-center{

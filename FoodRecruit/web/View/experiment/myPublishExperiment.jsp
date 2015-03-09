@@ -58,7 +58,7 @@
 							<c:forEach items="${list}" var="exper">
 							<li>
 								<h4 class="lighter no-margin-bottom">
-									<a href="/exper/editExper?id=${exper.id}"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp;
+									<a href="/exper/update?id=${exper.id}"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp;
 									<a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
 									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
                                     <c:set var="now" value="<%=System.currentTimeMillis()%>"/>

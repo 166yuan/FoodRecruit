@@ -6,7 +6,7 @@ import java.io.*;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.Query;
+
 import static com.recruit.BaseDao.EntityNotFoundException.entFound;
 
 

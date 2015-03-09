@@ -13,6 +13,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>experiment_release</title>
 
+  <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
   <script type="text/javascript" src="/js/experiment/experimentUpdate.js"></script>
 
 </head>
@@ -60,21 +61,21 @@
       <div class="form-group">
         <label  class="col-sm-4 control-label">实验名称</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" name="name" id="name" placeholder="name">
+          <input type="text" class="form-control" name="name" id="name" value="${exper.name}">
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">实验内容</label>
         <div class="col-sm-5">
-          <textarea class="form-control" name="content" rows="5" id="content" placeholder="content"></textarea>
+          <textarea class="form-control" name="content" rows="5" id="content" >${exper.information}</textarea>
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">实验要求</label>
         <div class="col-sm-5">
-          <textarea class="form-control" rows="5" id="requirement" placeholder="requirement"></textarea>
+          <textarea class="form-control" rows="5" id="requirement" placeholder="requirement">${exper.requirement}</textarea>
         </div>
       </div>
 
@@ -103,51 +104,49 @@
       <div class="form-group">
         <label  class="col-sm-4 control-label">联系人</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="linkname" id="linkman" placeholder="linkman" >
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label  class="col-sm-4 control-label">职称</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" name="role" id="Role" placeholder="Role" >
+          <input type="text" class="form-control" name="linkname" id="linkman"  >
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">电话（长短号）</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="phone" id="phoneNumber" placeholder="phoneNumber" >
+          <input type="text" class="form-control" name="phone" id="phoneNumber" value="${exper.phone}" >
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">QQ</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="qq" id="QQ" placeholder="QQ" >
+          <input type="text" class="form-control" name="qq" id="QQ" value="${exper.QQ}" >
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">Email</label>
         <div class="col-sm-2">
-          <input type="email" class="form-control" name="qq" id="Email" placeholder="Email">
+          <input type="email" class="form-control" name="qq" id="Email" value="${exper.email}">
         </div>
       </div>
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">需要助手人数</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="count" id="count" placeholder="count" >
+          <input type="text" class="form-control" name="count" id="count" value="${exper.count}" >
         </div>
       </div>
       <div class="form-group">
         <label  class="col-sm-4 control-label">备注</label>
         <div class="col-sm-5">
-          <textarea class="form-control" rows="5" name="note" id="remark" placeholder="remark"></textarea>
-          `    </div>
+          <textarea class="form-control" rows="5" name="note" id="remark" >${exper.note}</textarea>
+        </div>
       </div>
 
+      <div class="form-group">
+        <div class="col-sm-5">
+          <input class="form-control" type="hidden" id="experId" value="${id}" />
+        </div>
+      </div>
 
       <div class="form-group  ">
         <div class="col-sm-offset-6 col-sm-6">

@@ -10,7 +10,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateSessionFactoryWrap
 {
-  // CONSTRUCT
+    // CONSTRUCT
     public static final String DEFAULTS = "/hibernate.cfg.xml";
 
     private SessionFactory sf;
@@ -18,11 +18,11 @@ public class HibernateSessionFactoryWrap
     public HibernateSessionFactoryWrap(String resConf)
     {
         Configuration cfg = new Configuration()
-            .configure(resConf);
+                .configure(resConf);
         ServiceRegistry sr = new ServiceRegistryBuilder()
-            .applySettings(
-                cfg.getProperties()
-            ).buildServiceRegistry();
+                .applySettings(
+                        cfg.getProperties()
+                ).buildServiceRegistry();
         this.sf = cfg.buildSessionFactory(sr);
 
         return;
@@ -37,13 +37,13 @@ public class HibernateSessionFactoryWrap
         return;
     }
 
-  // SINGLETON
+    // SINGLETON
     private static class Singleton
     {
         public static final HibernateSessionFactoryWrap INSTANCE =
-            new HibernateSessionFactoryWrap(
-                HibernateSessionFactoryWrap.DEFAULTS
-            );
+                new HibernateSessionFactoryWrap(
+                        HibernateSessionFactoryWrap.DEFAULTS
+                );
     }
 
     public static HibernateSessionFactoryWrap getInstance()
@@ -51,26 +51,26 @@ public class HibernateSessionFactoryWrap
         return(Singleton.INSTANCE);
     }
 
-  // SESSION
+    // SESSION
     public Session openSession()
     {
         return(
-            this.sf.openSession()
+                this.sf.openSession()
         );
     }
 
     private ThreadLocal<Session> threadLocal = new ThreadLocal<Session>()
-        {
-            @Override
-            protected Session initialValue() { return(HibernateSessionFactoryWrap.this.sf.openSession()); }
-        };
+    {
+        @Override
+        protected Session initialValue() { return(HibernateSessionFactoryWrap.this.sf.openSession()); }
+    };
 
     /** returns ThreadLocal session
      */
     public ThreadLocal<Session> getThreadLocal()
     {
         return(
-            this.threadLocal
+                this.threadLocal
         );
     }
 

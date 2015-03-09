@@ -41,21 +41,7 @@ public class ExperUserController{
         return j;
     }
 
-    @RequestMapping("")
-    public void m(PrintWriter out){
-        ExperUserDao experUserDao = ExperUserDao.getInstance();
-        int result = 0;
-        try {
-            experUserDao.begin();
 
-            experUserDao.commit();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            experUserDao.close();
-        }
-        out.print(result);
-    }
 
     @RequestMapping("join")
     public void join(String experId,HttpServletRequest request,PrintWriter out){
