@@ -53,7 +53,7 @@
         <span> </span>
       </li>
 
-      <li class="${userpage} hover">
+      <li class="hover" id="userpage">
         <a href="/mana/index">
           <i class="menu-icon fa fa-users"></i>
           <span class="menu-text"> 用户管理 </span>
@@ -63,7 +63,7 @@
 
       </li>
 
-      <li class="${experpage}hover hsub">
+      <li class="hover hsub" id="experpage">
         <a href="#" class="dropdown-toggle">
           <i class="menu-icon fa fa-flask"></i>
           <span class="menu-text"> 实验管理 </span>
@@ -74,7 +74,7 @@
         <b class="arrow"></b>
       </li>
 
-      <li class="${contentpage} hover hsub">
+      <li class="hover hsub" id="contentpage">
         <a href="#" class="dropdown-toggle">
           <i class="menu-icon fa fa-globe"></i>
           <span class="menu-text"> 竞赛管理 </span>
@@ -103,13 +103,13 @@
         </ul>
       </li>
 
-      <li class="${feedpage} hover hsub">
+      <li class="hover hsub" id="feedpage">
         <a href="/mana/showfeedback?type=3" >
           <i class="menu-icon fa fa-user"></i>
           <span class="menu-text"> 用户反馈 </span>
         </a>
 
-      <li class="${classpage} hover hsub">
+      <li class="hover hsub" id="classpage">
         <a href="/mana/classmanager?page=1" >
           <i class="menu-icon fa fa-pencil-square-o"></i>
           <span class="menu-text"> 班级管理 </span>
@@ -133,7 +133,7 @@
       </ul>
       </li>
 
-      <li class="${oppage}hover">
+      <li class="hover" id="oppage">
         <a href="widgets.html">
           <i class="menu-icon fa fa-list-alt"></i>
           <span class="menu-text"> 操作一览 </span>

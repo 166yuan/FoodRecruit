@@ -13,13 +13,19 @@ import java.util.List;
  * Created by Administrator on 2015/3/2.
  */
 public class ComTeamBean {
-    String competName;
-    Long competId;
-    Long teamId;
-    Date beginTime;
-    Date endTime;
-    static Date now=new Date();
-     static ComDao comDao=ComDao.getInstance();
+    private String competName;
+    private Long competId;
+    private Long teamId;
+    private Date beginTime;
+    private Date endTime;
+    private static Date now=new Date();
+    private static ComDao comDao=ComDao.getInstance();
+
+    /**
+     * 构建单个对象
+     * @param competAndTeam
+     * @return
+     */
     public static ComTeamBean build(CompetAndTeam competAndTeam){
     ComTeamBean comTeamBean=new ComTeamBean();
     Long comId=competAndTeam.getCompet_id();
@@ -31,6 +37,12 @@ public class ComTeamBean {
         comTeamBean.setTeamId(competAndTeam.getTeam_id());
         return comTeamBean;
     }
+
+    /**
+     * 把CompetAndTeam 列表构建成ComTeamBean列表
+     * @param list ComTeamBean列表
+     * @return ComTeamBean列表
+     */
     public static List<ComTeamBean> buildList1(List<CompetAndTeam>list){
         List<ComTeamBean>list1=new ArrayList<ComTeamBean>();
         Iterator<CompetAndTeam>iterator=list.iterator();

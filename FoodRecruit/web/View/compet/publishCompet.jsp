@@ -12,7 +12,7 @@
   <meta charset="UTF-8">
   <!-- 强制国内垃圾浏览器开启高速模式-->
   <meta name="renderer" content="webkit">
-  <title>实验发布</title>
+  <title>竞赛发布</title>
   <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
   <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
 

@@ -56,9 +56,8 @@ public class UserDao extends DaoBase<User>{
     }
 
     public List<User>  getAllUser(){
-        Query query=this.createQuery("from User u");
-        List<User>list=query.list();
-        return list;
+        DetachedCriteria dc = DetachedCriteria.forClass(User.class);
+        return this.search(dc);
     }
 
 

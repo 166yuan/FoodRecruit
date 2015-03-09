@@ -55,6 +55,7 @@
                 <h4 class="lighter no-margin-bottom">
                  <a href="/compet/getById?id=${competition.id}">${competition.name}</a>
 
+                <c:if test="${user_type==2}">&nbsp;&nbsp;<a class="btn btn-info btn-xs">编辑</a></c:if>
                 </h4>
               </li>
             </c:forEach>

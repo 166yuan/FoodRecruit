@@ -228,6 +228,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#editmodgrid-table').hide();
+        $('#classpage').addClass('active');
     });
     $('#addclass').click(function(){$('#editmodgrid-table').show();});
     $('#divclose').click(function(){ $('#editmodgrid-table').hide();});
