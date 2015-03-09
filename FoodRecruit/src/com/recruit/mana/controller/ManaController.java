@@ -43,6 +43,7 @@ public class ManaController {
         //取得所有用户信息
         List<User> list=userDao.getAllUser();
         model.addAttribute("list",list);
+        userDao.close();
         return "View/mana/userManager";
     }
 

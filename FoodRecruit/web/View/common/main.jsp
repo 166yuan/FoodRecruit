@@ -65,6 +65,15 @@
 
             <b class="arrow"></b>
           </li>
+
+            <li class="hover">
+                <a href="/exper/scoreExper">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    实验员评分
+                </a>
+
+                <b class="arrow"></b>
+            </li>
         </ul>
       </li>
        </c:if>

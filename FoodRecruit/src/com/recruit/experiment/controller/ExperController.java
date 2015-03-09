@@ -3,6 +3,7 @@ package com.recruit.experiment.controller;
 import com.recruit.experUser.bean.ExperUserBean;
 import com.recruit.experUser.dao.ExperUserDao;
 import com.recruit.experUser.model.ExperUser;
+import com.recruit.experiment.bean.ExperStatusBean;
 import com.recruit.experiment.dao.ExperimentDao;
 import com.recruit.experiment.model.Experiment;
 
@@ -304,4 +305,21 @@ public class ExperController {
         return date;
     }
     }
+
+    /**
+     * 实验评价页面
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("scoreExper")
+    public String scoreExperiment(HttpSession session,Model model){
+        ExperimentDao eDao=ExperimentDao.getInstance();
+        Long userId=(Long)session.getAttribute("userId");
+        List<Experiment>elist=eDao.findMyPublishExperiment(userId);
+        List<ExperStatusBean>list=ExperStatusBean.buildList(elist);
+        model.addAttribute("list",list);
+        return "View/experiment/scoreExper";
+    }
+
 }

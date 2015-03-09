@@ -1,6 +1,7 @@
 package com.recruit.servlet;
 import com.recruit.Bean.PageBean;
 import com.recruit.Model.Major;
+import com.recruit.experiment.controller.ExperController;
 import com.recruit.mana.dao.MajorDao;
 import com.recruit.notification.dao.NotificationDao;
 import com.recruit.notification.model.Notification;
@@ -49,10 +50,8 @@ public class DevTest extends JUnit4Builder{
         }
     }
     @Test
-    public void fetchNotification(){
-        NotificationDao notificationDao = NotificationDao.getInstance();
-        List<Notification>list=notificationDao.getAllNotification(2);
-        System.out.println(list.size());
+    public void format(){
+        System.out.println(new ExperController().handleLocale("04/08/2016 3:41 下午"));
     }
     @AfterClass
     public static void afterClass(){
