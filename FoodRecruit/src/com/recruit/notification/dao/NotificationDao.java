@@ -43,10 +43,10 @@ public class NotificationDao extends DaoBase<Notification>{
     public List<Notification> getAllNotification(int type){
         DetachedCriteria dc = DetachedCriteria.forClass(Notification.class);
         if(type==1){
-            dc.add(Restrictions.eq("type",3)).add(Restrictions.eq("isNew",1));
+            dc.add(Restrictions.eq("type",3)).add(Restrictions.eq("isNew",true));
             dc.addOrder(Order.desc("createTime"));
         }else if(type==2){
-            dc.add(Restrictions.eq("type",3)).add(Restrictions.eq("isNew",0));
+            dc.add(Restrictions.eq("type",3)).add(Restrictions.eq("isNew",false));
             dc.addOrder(Order.desc("createTime"));
         }else {
             dc.add(Restrictions.eq("type",3));

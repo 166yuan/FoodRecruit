@@ -11,8 +11,8 @@ function update(){
     var content       = document.getElementById("content").value;
     var requirement   = document.getElementById("requirement").value;
     var type          = document.getElementById("type").value;
-    var pretime       = document.getElementsByName("pretime").value;
-    var endtime       = document.getElementsByName("endtime").value;
+    var pretime       = document.getElementById("date-timepicker1").value;
+    var endtime       = document.getElementById("date-timepicker2").value;
     var linkman       = document.getElementById("linkman").value;
     var phone         = document.getElementById("phoneNumber").value;
     var qq            = document.getElementById("QQ").value;
@@ -20,7 +20,6 @@ function update(){
     var count         = document.getElementById("count").value;
     var note          = document.getElementById("remark").value;
     var experId       = document.getElementById("experId").value;
-
 
     var data = {"name":name,"content":content,"requirement":requirement,"type":type,
         "pretime":pretime,"endtime":endtime,"linkman":linkman,"phone":phone,

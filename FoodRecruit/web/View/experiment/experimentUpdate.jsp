@@ -5,6 +5,7 @@
   Time: 上午12:05
   To change this template use File | Settings | File Templates.
 --%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,10 +13,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>experiment_release</title>
-
-  <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.css" >
   <script type="text/javascript" src="/js/experiment/experimentUpdate.js"></script>
-
+    <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/js/moment.min.js"></script>
 </head>
 <body class="no-skin">
 <!--导航栏开始-->
@@ -92,19 +93,21 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-4 control-label">时间</label>
-        <div class="col-sm-4">
-          <input type="text"  name="pretime" id="pretime" placeholder="起始" >&nbsp;到
-          <input type="text"  name="endtime" id="endtime" placeholder="结束" >
+        <div class="form-group">
+            <label class="col-sm-4 control-label">时间</label>
+            <div class="col-sm-4">
+                <input id="date-timepicker1" name="pretime" value="<fmt:formatDate  value="${exper.beginTime}" pattern="dd/MM/yyyy k:m a"/>" type="text" class="form-control">
+                到
+                <br>
+                <input id="date-timepicker2" name="endtime" value="<fmt:formatDate value="${exper.endTime}" pattern="dd/MM/yyyy k:m a"/>" type="text" class="form-control">
+            </div>
         </div>
-      </div>
 
 
       <div class="form-group">
         <label  class="col-sm-4 control-label">联系人</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" name="linkname" id="linkman"  >
+          <input type="text" class="form-control" value="${exper.contact}" name="linkname" id="linkman"  >
         </div>
       </div>
 
@@ -158,8 +161,17 @@
   </div>
   <!--表单结束 -->
 </div>
-
-
+<script type="text/javascript">
+    $(document).ready(
+            function(){
+                $('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+                $('#date-timepicker2').datetimepicker().next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+            });
+</script>
 </body>
 </html>
-
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>

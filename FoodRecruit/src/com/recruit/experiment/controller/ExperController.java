@@ -267,12 +267,15 @@ public class ExperController {
 
 
             Experiment exper = eDao.get(j.getLong("experId"));
-
+            String pretime=j.getString("pretime");
+            String endtime=j.getString("endtime");
+            pretime=handleLocale(pretime);
+            endtime=handleLocale(endtime);
             exper.setName(j.getString("name"));
             exper.setInformation(j.getString("content"));
             exper.setRequirement(j.getString("requirement"));
-       //     exper.setBeginTime(sdf.parse(j.getString("pretime")));
-       //     exper.setEndTime(sdf.parse(j.getString("endtime")));
+            exper.setBeginTime(sdf.parse(pretime));
+            exper.setEndTime(sdf.parse(endtime));
             exper.setContact(j.getString("linkman"));
             exper.setQQ(j.getString("qq"));
             exper.setPhone(j.getString("phone"));
@@ -291,4 +294,14 @@ public class ExperController {
         out.print(result);
     }
 
+    public String handleLocale(String date){
+    String pics[]=date.split(" ");
+    if(pics[2].equals("上午")){
+    return pics[0]+" "+pics[1]+" am";
+    }else if (pics[2].equals("下午")){
+    return pics[0]+" "+pics[1]+" pm";
+    }else{
+        return date;
+    }
+    }
 }
