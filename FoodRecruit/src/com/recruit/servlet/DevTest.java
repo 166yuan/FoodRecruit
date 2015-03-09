@@ -2,6 +2,8 @@ package com.recruit.servlet;
 import com.recruit.Bean.PageBean;
 import com.recruit.Model.Major;
 import com.recruit.mana.dao.MajorDao;
+import com.recruit.notification.dao.NotificationDao;
+import com.recruit.notification.model.Notification;
 import org.hibernate.Query;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -45,6 +47,12 @@ public class DevTest extends JUnit4Builder{
         }catch (ParseException e){
             e.printStackTrace();
         }
+    }
+    @Test
+    public void fetchNotification(){
+        NotificationDao notificationDao = NotificationDao.getInstance();
+        List<Notification>list=notificationDao.getAllNotification(2);
+        System.out.println(list.size());
     }
     @AfterClass
     public static void afterClass(){
