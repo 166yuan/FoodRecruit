@@ -26,12 +26,10 @@ public class TeamComDao extends DaoBase<CompetAndTeam>{
     }
 
     public boolean existMember(Long teamId,Long userId,Long comId){
-        Query query1=this.find("from CompetAndTeam cat where cat.team_id=? and cat.user_id=? and cat.compet_id=?").query;
-        query1.setParameter(0,teamId);
-        query1.setParameter(1,userId);
-        query1.setParameter(2,comId);
+        DetachedCriteria dc=DetachedCriteria.forClass(CompetAndTeam.class);
+        dc.add(Restrictions.eq("team_id",teamId)).add(Restrictions.eq("user_id",userId)).add(Restrictions.eq("compet_id",comId));
         List<CompetAndTeam> list=null;
-        list=query1.list();
+        list=this.search(dc);
         if(list.size()==0){
             return false;
         }else {
@@ -48,10 +46,9 @@ public class TeamComDao extends DaoBase<CompetAndTeam>{
     }
 
     public List<CompetAndTeam>getTeamById(Long teamId,Long comId){
-        Query query1=this.find("from CompetAndTeam com where com.compet_id=? and com.team_id=?").query;
-        query1.setParameter(0,comId);
-        query1.setParameter(1,teamId);
-        return query1.list();
+        DetachedCriteria dc=DetachedCriteria.forClass(CompetAndTeam.class);
+        dc.add(Restrictions.eq("compet_id",comId)).add(Restrictions.eq("team_id",teamId));
+        return this.search(dc);
     }
 
 }

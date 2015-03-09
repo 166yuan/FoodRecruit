@@ -205,6 +205,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#editmodgrid-table').hide();
+        $('#classpage').addClass('active');
         var url=document.URL;
         var index=url.indexOf('?');
 

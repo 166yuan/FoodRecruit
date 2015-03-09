@@ -27,9 +27,9 @@ public class TeamDao extends DaoBase<Team> {
     }
 
     public List<Team> getAllTeamById(Long id){
-        Query query1= this.find("from Team te where competition_id=?").query;
-        query1.setParameter(0,id);
-       return  query1.list();
+        DetachedCriteria dc=DetachedCriteria.forClass(Team.class);
+        dc.add(Restrictions.eq("competition_id",id));
+        return this.search(dc);
     }
 
     public Team getByName(String name){

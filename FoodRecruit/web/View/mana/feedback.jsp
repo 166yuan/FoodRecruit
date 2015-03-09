@@ -24,7 +24,7 @@
   <div data-toggle="buttons" class="btn-group">
 
 
-    <label class="btn btn-primary ${unread}" id="unread">
+    <label class="btn btn-primary" id="unread">
      仅看未读
       <input type="radio" value="1">
       <i class="icon-only ace-icon fa fa-align-left"></i>
@@ -32,14 +32,14 @@
 
 
 
-    <label class="btn btn-primary ${read}" id="read">
+    <label class="btn btn-primary" id="read">
       仅看已读
       <input type="radio" value="2">
       <i class="icon-only ace-icon fa fa-align-center"></i>
     </label>
 
 
-    <label class="btn btn-primary ${all}" id="all">
+    <label class="btn btn-primary" id="all">
      查看所有
       <input type="radio" value="3">
       <i class="icon-only ace-icon fa fa-align-right"></i>
@@ -56,7 +56,7 @@
     </h5>
 
   </div>
-
+<input type="hidden" id="pagetype" value="${type}"/>
   <div class="widget-body">
     <div class="widget-main no-padding">
       <table class="table table-striped table-bordered table-hover">
@@ -123,5 +123,20 @@
 $('#unread').click(function(){window.location.href="/mana/showfeedback?type=1";});
 $('#read').click(function(){window.location.href="/mana/showfeedback?type=2";});
 $('#all').click(function(){window.location.href="/mana/showfeedback?type=3";});
+
+$(document).ready(
+        function(){
+            $('#feedpage').addClass("active");
+            var type=document.getElementById('pagetype').value;
+            if(type==1){
+                $('#unread').addClass("active");
+            }else if(type==2){
+                $('#read').addClass("active");
+            }else{
+                $('#all').addClass("active");
+            }
+        }
+);
+
   </script>
 

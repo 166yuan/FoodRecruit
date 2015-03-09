@@ -58,98 +58,102 @@
 
 
         <tbody role="alert" aria-live="polite" aria-relevant="all">
-        <c:forEach items="${list}" var="user" varStatus="number">
-          <tr class="odd">
-            <td class="center  sorting_1">
-              <label class="position-relative">
-                <input type="checkbox" class="ace">
-                <span class="lbl"></span>
-              </label>
-            </td>
+        <c:choose>
+            <c:when test="${list.size()>0}">
+                <c:forEach items="${list}" var="user" varStatus="number">
+                    <tr class="odd">
+                        <td class="center  sorting_1">
+                            <label class="position-relative">
+                                <input type="checkbox" class="ace">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
 
-            <td class=" ">
-              <a href="/mana/showuserbyid?id=${user.id}">${user.account}</a>
-            </td>
-            <td class=" ">${user.createTime}</td>
-            <td class=" ">${user.name}</td>
-            <c:choose>
-              <c:when test="${user.gender==1}">
-            <td class="">男</td>
-              </c:when>
-              <c:otherwise>
-                <td class="">女</td>
-               </c:otherwise>
-            </c:choose>
-            <td class=" ">${user.major}</td>
-            <td class=" ">${user.classes}</td>
+                        <td class=" ">
+                            <a href="/mana/showuserbyid?id=${user.id}">${user.account}</a>
+                        </td>
+                        <td class=" ">${user.createTime}</td>
+                        <td class=" ">${user.name}</td>
+                        <c:choose>
+                            <c:when test="${user.gender==1}">
+                                <td class="">男</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td class="">女</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td class=" ">${user.major}</td>
+                        <td class=" ">${user.classes}</td>
 
-            <td class=" ">
-                <c:choose>
-                  <c:when test="${user.type==1}">
-                    <span class="lbl">学生</span>
-                  </c:when>
-                  <c:when test="${user.type==2}">
-                    <span class="lbl">管理员</span>
-                  </c:when>
-                  <c:when test="${user.type==3}">
-                  <span class="lbl">超级管理员</span>
-                </c:when>
-                </c:choose>
+                        <td class=" ">
+                            <c:choose>
+                                <c:when test="${user.type==1}">
+                                    <span class="lbl">学生</span>
+                                </c:when>
+                                <c:when test="${user.type==2}">
+                                    <span class="lbl">管理员</span>
+                                </c:when>
+                                <c:when test="${user.type==3}">
+                                    <span class="lbl">超级管理员</span>
+                                </c:when>
+                            </c:choose>
 
-            </td>
+                        </td>
 
-            <td class=" ">
-              <label>
-                <c:choose>
-                <c:when test="${user.status==-1}">
-              <input name="status${number.count}" type="radio" checked="true" class="ace"/>
-                </c:when>
-                  <c:otherwise>
-                    <input name="status${number.count}" type="radio"  class="ace">
-                  </c:otherwise>
-                </c:choose>
-                <span class="lbl">未激活</span>
-            </label>
+                        <td class=" ">
+                            <label>
+                                <c:choose>
+                                    <c:when test="${user.status==-1}">
+                                        <input name="status${number.count}" type="radio" checked="true" class="ace"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input name="status${number.count}" type="radio"  class="ace">
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="lbl">未激活</span>
+                            </label>
 
-              <label>
-                <c:choose>
-                  <c:when test="${user.status==1}">
-                    <input name="status${number.count}" type="radio" checked="true" class="ace" />
-                  </c:when>
-                  <c:otherwise>
-                    <input name="status${number.count}" type="radio"  class="ace">
-                  </c:otherwise>
-                </c:choose>
-                <span class="lbl">激活</span>
-              </label>
+                            <label>
+                                <c:choose>
+                                    <c:when test="${user.status==1}">
+                                        <input name="status${number.count}" type="radio" checked="true" class="ace" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input name="status${number.count}" type="radio"  class="ace">
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="lbl">激活</span>
+                            </label>
 
-              <label>
-                <c:choose>
-                  <c:when test="${user.status==-2}">
-                    <input name="status${number.count}" type="radio" checked="true" class="ace" />
-                  </c:when>
-                  <c:otherwise>
-                    <input name="status${number.count}" type="radio"  class="ace">
-                  </c:otherwise>
-                </c:choose>
-                <span class="lbl">冻结</span>
-              </label>
+                            <label>
+                                <c:choose>
+                                    <c:when test="${user.status==-2}">
+                                        <input name="status${number.count}" type="radio" checked="true" class="ace" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input name="status${number.count}" type="radio"  class="ace">
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="lbl">冻结</span>
+                            </label>
 
-            </td>
-            <td class=" ">
-              <div class="hidden-sm hidden-xs action-buttons">
-                <a class="green" href="#">
-                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                </a>
+                        </td>
+                        <td class=" ">
+                            <div class="hidden-sm hidden-xs action-buttons">
+                                <a class="green" href="#">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
 
-                <a class="red" href="#">
-                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                </a>
-              </div>
-            </td>
-          </tr>
-        </c:forEach>
+                                <a class="red" href="#">
+                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
 
+        </c:choose>
         </tbody>
 
       </table>
@@ -169,5 +173,10 @@
 </body>
 </html>
 </html>
-
-
+<script>
+$(document).ready(
+        function(){
+        $('#userpage').addClass("active");
+        }
+);
+</script>

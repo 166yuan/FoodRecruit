@@ -31,15 +31,14 @@ public class MajorDao extends DaoBase<Major>{
     }
 
     public List<Major>getAllMajorByYear(int year){
-        return  this.find("from Major m where m.year=?").query.setParameter(0,year).list();
-    }
-
-    public List<Integer>getAllYear(){
-        return this.find("select m.year from Major m").query.list();
+        DetachedCriteria dc=DetachedCriteria.forClass(Major.class);
+        dc.add(Restrictions.eq("year",year));
+        return this.search(dc);
     }
 
     public int countAllMajor(){
-       return this.find("from Major m").query.list().size();
+        DetachedCriteria dc=DetachedCriteria.forClass(Major.class);
+        return this.count(dc).intValue();
     }
 
     public Major getMajorById(Long majorId){

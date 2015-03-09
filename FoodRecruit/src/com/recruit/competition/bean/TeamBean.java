@@ -27,6 +27,14 @@ public class TeamBean {
 
     static  List<String>nameList;
     static UserDao userDao=UserDao.getInstance();
+
+    /**
+     * 构建bean对象
+     * @param comId
+     * @param teamId
+     * @param list 处理的list
+     * @return
+     */
     public static TeamBean build(Long comId,Long teamId,List<CompetAndTeam>list){
         TeamBean teamBean=new TeamBean();
         Iterator<CompetAndTeam>it=list.iterator();

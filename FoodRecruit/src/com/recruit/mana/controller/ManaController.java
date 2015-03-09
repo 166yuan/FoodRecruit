@@ -15,6 +15,7 @@ import com.recruit.user.Dao.UserDao;
 import com.recruit.user.model.User;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,46 +25,64 @@ import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
 
-/**
+/** 后台管理
  * Created by Administrator on 2015/2/9.
  */
 @Controller
 @RequestMapping("/mana")
 public class ManaController {
 
-    @RequestMapping(value = "index")
+    /**
+     * 用户管理页面，这里用户管理做未后台的主页面
+     * @param model
+     * @return 用户管理（后台主页）
+     */
+    @RequestMapping("index")
     public String index(Model model){
         UserDao userDao= UserDao.getInstance();
+        //取得所有用户信息
         List<User> list=userDao.getAllUser();
-            System.out.println("size of list:"+list.size()+list.get(0).getName());
         model.addAttribute("list",list);
-        model.addAttribute("userpage","active");
         return "View/mana/userManager";
     }
 
-    @RequestMapping(value = "showuserbyid")
+    /**
+     * 用户展示页面，由用户id取得用户数据，返回前端
+     * @param id 用户id
+     * @param model
+     * @return 用户修改界面
+     */
+    @RequestMapping("showuserbyid")
     public String showUserById(Long id,Model model){
-        User user=UserDao.getInstance().getUserById(id);
+        UserDao userDao=UserDao.getInstance();
+        User user=userDao.getUserById(id);
         model.addAttribute("user",user);
-        model.addAttribute("userpage","active");
         return "View/mana/editUser";
     }
+
+    /**
+     * 反馈展示页面，取得所有用户反馈
+     * @param model
+     * @param type notification的类型，1表示未读，2表示已读，3表示所有
+     * @return 反馈列表页面
+     */
     @RequestMapping("showfeedback")
     public String showFeedBack(Model model,int type){
         NotificationDao notificationDao = NotificationDao.getInstance();
         List<Notification>list=notificationDao.getAllNotification(type);
         List<NotiUserBean>nlist=NotiUserBean.buildList(list);
-        if(type==1){
-            model.addAttribute("unread","active");
-        }else if(type==2){
-            model.addAttribute("read","active");
-        }else {
-            model.addAttribute("all","active");
-        }
         model.addAttribute("list",nlist);
-        model.addAttribute("feedpage","active");
+        model.addAttribute("type",type);
         return "View/mana/feedback";
     }
+
+    /**
+     * 用id找出对应反馈。交给前端
+     * @param id 反馈id
+     * @param name 用户名，减少数据读取。
+     * @param model
+     * @return 反馈页面
+     */
     @RequestMapping("showNotiById")
     public String showNotiById(Long id,String name,Model model){
         NotificationDao notificationDao=NotificationDao.getInstance();
@@ -83,6 +102,12 @@ public class ManaController {
         return "View/mana/showNotiById";
     }
 
+    /**
+     * 专业管理
+     * @param model
+     * @param page 第几页
+     * @return
+     */
     @RequestMapping("majormanager")
     public String majorManager(Model model,int page){
         MajorDao majorDao=MajorDao.getInstance();
@@ -97,6 +122,13 @@ public class ManaController {
         return  "View/mana/majorManage";
     }
 
+    /**
+     * 班级管理
+     * @param model
+     * @param page 第几页
+     * @param session
+     * @return
+     */
     @RequestMapping("classmanager")
     public String classManager(Model model,int page,HttpSession session){
         ClassDao classDao=ClassDao.getInstance();
@@ -121,7 +153,27 @@ public class ManaController {
     }
 
     /*  ------------------------------ 展示页面都写在此线上，增删改都写在下面      ---------------------------------------     */
-    @RequestMapping(value = "edituser")
+
+    /**
+     * 用户修改
+     * @param id
+     * @param password
+     * @param type
+     * @param status
+     * @param name
+     * @param gender
+     * @param major
+     * @param classes
+     * @param phone
+     * @param email
+     * @param qq
+     * @param address
+     * @param self_info
+     * @param isActive
+     * @param model
+     * @return
+     */
+    @RequestMapping("edituser")
     public String edituser(Long id,String password,int type,int status,String name,int gender,String major,String classes
             ,String phone,String email,String qq,String address,String self_info,String isActive,Model model)
     {
@@ -145,9 +197,8 @@ public class ManaController {
                 user.setAddress(address);
                 user.setSelf_info(self_info);
                 user.setIsActive(isActive);
-                userDao.save(user);
+                userDao.update(user);
                 model.addAttribute("user",user);
-                model.addAttribute("userpage","active");
                 userDao.commit();
             }catch (Exception e){
                 e.printStackTrace();
@@ -158,6 +209,11 @@ public class ManaController {
         return "View/mana/editUser";
     }
 
+    /**
+     * 反馈回复
+     * @param id 回复对象id
+     * @param content 回复内容
+     */
     @RequestMapping("reply")
     public void reply(Long id,String content){
         NotificationDao notificationDao=NotificationDao.getInstance();
@@ -169,6 +225,7 @@ public class ManaController {
         notification.setType(4);
         notification.setIsNew(true);
         notificationDao.save(notification);
+        notificationDao.commit();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -177,6 +234,12 @@ public class ManaController {
 
     }
 
+    /**
+     * 新增专业
+     * @param name 名称
+     * @param year 年级
+     * @param out json输出
+     */
     @RequestMapping("addmajor")
     public void addMajor(String name,int year,PrintWriter out){
         MajorDao majorDao=MajorDao.getInstance();
@@ -198,6 +261,12 @@ public class ManaController {
         }
     }
 
+    /**
+     * 新增班级
+     * @param name 班级名称
+     * @param majorId 所属专业id
+     * @param out
+     */
     @RequestMapping("addclass")
     public void addClass(String name,long majorId,PrintWriter out){
         ClassDao classDao=ClassDao.getInstance();
@@ -220,6 +289,11 @@ public class ManaController {
 
     }
 
+    /**
+     * 根据年级获取所有的班级
+     * @param year 对应年级
+     * @return
+     */
     @RequestMapping("getmajor")
     public @ResponseBody List<Major> getMajor(int year){
         MajorDao majorDao=MajorDao.getInstance();

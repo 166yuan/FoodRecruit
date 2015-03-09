@@ -316,5 +316,11 @@
 </body>
 </html>
 </html>
-
+<script>
+    $(document).ready(
+            function(){
+                $('#userpage').addClass("active");
+            }
+    );
+</script>
 
