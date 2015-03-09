@@ -1,6 +1,5 @@
 package com.recruit.servlet;
 
-import com.recruit.user.Dao.Authorizer;
 import com.recruit.user.Dao.UserDao;
 import com.recruit.user.model.User;
 import com.recruit.experiment.model.Experiment;
@@ -18,14 +17,7 @@ import java.util.Date;
  */
 public class Init extends HttpServlet {
    public Init(){
-      Authorizer authorizer = Authorizer.getInstance();
-      UserDao user= UserDao.getInstance();
-       ExperimentDao experdao=ExperimentDao.getInstance();
 
-
-
-
-      System.out.println("the initialization is success");
    }
 
 }
