@@ -4,9 +4,6 @@
 
 
 function update(){
-
-    alert("In");
-
     var name          = document.getElementById("name").value;
     var content       = document.getElementById("content").value;
     var requirement   = document.getElementById("requirement").value;
