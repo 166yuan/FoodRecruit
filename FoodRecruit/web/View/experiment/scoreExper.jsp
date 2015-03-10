@@ -64,7 +64,7 @@
                                         <c:choose>
                                             <c:when test="${exper.status==0}">
                                                 <label class="label label-danger">待评价</label>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-primary">去评分</button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<a href="/exper/scoreList?experId=${exper.experId}"><button class="btn btn-sm btn-primary">去评分</button></a>
                                             </c:when>
                                             <c:when test="${exper.status==1}">
                                                 <label class="label label-success">评价完了</label>

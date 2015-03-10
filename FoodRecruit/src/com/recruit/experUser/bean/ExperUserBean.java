@@ -21,6 +21,7 @@ public class ExperUserBean {
     private Date appTime;
     private int gender;
     private Boolean isAgree;
+    private Boolean isEvaluate;
     static UserDao userDao=UserDao.getInstance();
     public static ExperUserBean  build(ExperUser experUser){
         Long userId=experUser.getUserId();
@@ -32,11 +33,18 @@ public class ExperUserBean {
         experUserBean.setAppTime(experUser.getCreateTime());
         experUserBean.setName(user.getName());
         experUserBean.setGender(user.getGender());
+        experUserBean.setIsEvaluate(experUser.getIsEvaluate());
         //后期要修改这里
         experUserBean.setClasses(user.getClasses());
         experUserBean.setMajor(user.getMajor());
         return experUserBean;
     }
+
+    /**
+     * 用于实验员招收
+     * @param list
+     * @return
+     */
     public static List<ExperUserBean> buildList(List<ExperUser>list){
         List<ExperUserBean>euList=new ArrayList<ExperUserBean>();
         Iterator<ExperUser>iterator=list.iterator();
@@ -45,6 +53,25 @@ public class ExperUserBean {
         }
         return euList;
     }
+
+    /**
+     * 用于实验员评价
+     * @param list
+     * @return
+     */
+    public static List<ExperUserBean> buildList2(List<ExperUser>list){
+        List<ExperUserBean>euList=new ArrayList<ExperUserBean>();
+        Iterator<ExperUser>iterator=list.iterator();
+        while(iterator.hasNext()){
+            ExperUser ex= iterator.next();
+            if(ex.getIsAgree()==true){
+                euList.add(build(ex));
+            }
+
+        }
+        return euList;
+    }
+
 
     public int getGender() {
         return gender;
@@ -108,5 +135,13 @@ public class ExperUserBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsEvaluate() {
+        return isEvaluate;
+    }
+
+    public void setIsEvaluate(Boolean isEvaluate) {
+        this.isEvaluate = isEvaluate;
     }
 }

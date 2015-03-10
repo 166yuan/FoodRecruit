@@ -322,4 +322,24 @@ public class ExperController {
         return "View/experiment/scoreExper";
     }
 
+    /**
+     * 对该实验的所有参与人员进行评分
+     * @param experId
+     * @param model
+     * @return
+     */
+    @RequestMapping("scoreList")
+    public String scoreList(Long experId,Model model){
+        ExperimentDao experimentDao=ExperimentDao.getInstance();
+        ExperUserDao experUserDao=ExperUserDao.getInstance();
+        Experiment experiment=experimentDao.getById(experId);
+        List<ExperUser>list=experUserDao.getByExperId(experId);
+        //过滤没被选中的实验员，以防评分出差错
+        List<ExperUserBean>list1=ExperUserBean.buildList2(list);
+        model.addAttribute("list",list1);
+        model.addAttribute("experName",experiment.getName());
+        return "View/experiment/scoreList";
+    }
+
+
 }
