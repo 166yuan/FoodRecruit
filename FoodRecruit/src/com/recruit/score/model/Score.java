@@ -10,11 +10,11 @@ import javax.persistence.Entity;
 @Entity
 public class Score extends BasicModel {
     //实验id
-    private Integer exper_id;
+    private Long exper_id;
     //实验员id
-    private String userId;
+    private Long userId;
     //评价人id
-    private String fromId;
+    private Long fromId;
 
     //责任心 20分
     private Integer duty;
@@ -58,21 +58,11 @@ public class Score extends BasicModel {
     private Integer secscore;
     private Double total;
 
-    public Integer getExper_id() {
-        return exper_id;
-    }
 
     public Integer getDuty() {
         return duty;
     }
 
-    public String getFromId() {
-        return fromId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
 
     public Integer getDiscipline() {
         return discipline;
@@ -216,5 +206,29 @@ public class Score extends BasicModel {
 
     public void setTotal() {
         this.total = (scoreA+scoreB)*0.5*0.8+secscore*0.2+append;
+    }
+
+    public Long getExper_id() {
+        return exper_id;
+    }
+
+    public void setExper_id(Long exper_id) {
+        this.exper_id = exper_id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(Long fromId) {
+        this.fromId = fromId;
     }
 }

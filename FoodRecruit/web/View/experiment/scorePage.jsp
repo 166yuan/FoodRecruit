@@ -47,7 +47,13 @@
 </div>
 <!-- 面包屑结束-->
 <div class="page-content">
+    <div class="center">
+        <h5>实验名：${experName}</h5>
+        <h5>实验员：${userName}</h5>
+    </div>
     <div class="row">
+        <input type="hidden" name="experId" value="${experId}">
+        <input type="hidden" name="userId" value="${userId}">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
@@ -107,7 +113,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner1" maxlength="3">
+                                                           id="spinner1" name="duty"  maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +126,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner2" maxlength="3">
+                                                           id="spinner2" name="discipline" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -133,7 +139,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner3" maxlength="3">
+                                                           id="spinner3"name="tidy" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -146,7 +152,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner4" maxlength="3">
+                                                           id="spinner4" name="care" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +165,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner5" maxlength="3">
+                                                           id="spinner5" name="operation" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -172,7 +178,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner6" maxlength="3">
+                                                           id="spinner6" name="fault" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +191,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner7" maxlength="3">
+                                                           id="spinner7" name="efficiency" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -198,14 +204,14 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner8" maxlength="3">
+                                                           id="spinner8" name="advise" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                 </form>
-
+                           <div class="center"> <button class="btn btn-info" onclick="scoreA()">保存A项评分</button></div>
                             </div>
 
                             <div class="step-pane" id="step2">
@@ -228,13 +234,14 @@
                                                 <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                     <div class="input-group">
                                                         <input type="text" class="input-mini spinner-input form-control"
-                                                               id="spinner9" maxlength="3">
+                                                               id="spinner9" name="scoreB" maxlength="3">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+                                <div class="center"><button class="btn btn-info" onclick="scoreB()">保存B项评分</button></div>
                             </div>
 
                             <div class="step-pane" id="step3">
@@ -248,7 +255,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner10" maxlength="3">
+                                                           id="spinner10" name="Ttidy" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +267,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner11" maxlength="3">
+                                                           id="spinner11" name="Tcare" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +279,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner12" maxlength="3">
+                                                           id="spinner12" name="Toperation" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -284,7 +291,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner13" maxlength="3">
+                                                           id="spinner13" name="Tconnect"  maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -294,11 +301,11 @@
                                         <div class="col-xs-5"><label>是否主动联系科联负责人备案（<span style="color: #595cff">20分</span>）</label></div>
                                         <div class="col-xs-6">
                                             <label>
-                                                <input name="status1" type="radio" class="ace">
+                                                <input name="recorded" type="radio" class="ace" value="20">
                                                 <span class="lbl">是</span>
                                             </label>
                                             <label>
-                                                <input name="status1" type="radio" class="ace">
+                                                <input name="recorded" type="radio" class="ace" value="0" checked="true">
                                                 <span class="lbl">否</span>
                                             </label>
                                         </div>
@@ -308,11 +315,11 @@
                                         <div class="col-xs-5"><label>是否成为科联会员（<span style="color: #595cff">10分</span>）</label></div>
                                         <div class="col-xs-6">
                                             <label>
-                                                <input name="status2" type="radio" class="ace">
+                                                <input name="member" type="radio" class="ace" value="10">
                                                 <span class="lbl">是</span>
                                             </label>
                                             <label>
-                                                <input name="status2" type="radio" class="ace">
+                                                <input name="member" type="radio" class="ace" value="0" checked="true">
                                                 <span class="lbl">否</span>
                                             </label>
                                         </div>
@@ -325,12 +332,13 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner14" maxlength="3">
+                                                           id="spinner14" name="append" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
+                                <div class="center"><button class="btn btn-info" onclick="scoreC()">保存C项评分</button></div>
                             </div>
 
                             <div class="step-pane" id="step4">
@@ -379,331 +387,4 @@
 <script type="text/javascript" src="/js/ace.min.js"></script>
 <script type="text/javascript" src="/js/fuelux.wizard.min.js"></script>
 <script type="text/javascript" src="/js/select2.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#spinner1').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 20,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner2').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 20,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner3').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 15,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner4').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 15,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner5').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 10,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner6').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 10,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner7').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 10,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-
-        $('#spinner8').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 5,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-
-        $('#spinner9').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 100,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner10').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 20,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner11').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 20,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner12').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 15,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner13').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 15,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-        $('#spinner14').ace_spinner({
-            value: 0,
-            min: 0,
-            max: 5,
-            step: 1,
-            on_sides: true,
-            icon_up: 'ace-icon fa fa-plus smaller-75',
-            icon_down: 'ace-icon fa fa-minus smaller-75',
-            btn_up_class: 'btn-success',
-            btn_down_class: 'btn-danger'
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    jQuery(function($) {
-
-        $('[data-rel=tooltip]').tooltip();
-
-        $(".select2").css('width','200px').select2({allowClear:true})
-                .on('change', function(){
-                    $(this).closest('form').validate().element($(this));
-                });
-
-
-        var $validation = false;
-        $('#fuelux-wizard')
-                .ace_wizard({
-                    //step: 2 //optional argument. wizard will jump to step "2" at first
-                })
-                .on('change' , function(e, info){
-                    if(info.step == 1 && $validation) {
-                        if(!$('#validation-form').valid()) return false;
-                    }
-                })
-                .on('finished', function(e) {
-                    bootbox.dialog({
-                        message: "Thank you! Your information was successfully saved!",
-                        buttons: {
-                            "success" : {
-                                "label" : "OK",
-                                "className" : "btn-sm btn-primary"
-                            }
-                        }
-                    });
-                }).on('stepclick', function(e){
-                    //e.preventDefault();//this will prevent clicking and selecting steps
-                });
-
-
-        //jump to a step
-        $('#step-jump').on('click', function() {
-            var wizard = $('#fuelux-wizard').data('wizard')
-            wizard.currentStep = 3;
-            wizard.setState();
-        })
-        //determine selected step
-        //wizard.selectedItem().step
-
-
-
-        //hide or show the other form which requires validation
-        //this is for demo only, you usullay want just one form in your application
-        $('#skip-validation').removeAttr('checked').on('click', function(){
-            $validation = this.checked;
-            if(this.checked) {
-                $('#sample-form').hide();
-                $('#validation-form').removeClass('hide');
-            }
-            else {
-                $('#validation-form').addClass('hide');
-                $('#sample-form').show();
-            }
-        })
-
-        //documentation : http://docs.jquery.com/Plugins/Validation/validate
-
-
-        $.mask.definitions['~']='[+-]';
-        $('#phone').mask('(999) 999-9999');
-
-        jQuery.validator.addMethod("phone", function (value, element) {
-            return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
-        }, "Enter a valid phone number.");
-
-        $('#validation-form').validate({
-            errorElement: 'div',
-            errorClass: 'help-block',
-            focusInvalid: false,
-            rules: {
-                email: {
-                    required: true,
-                    email:true
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                password2: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#password"
-                },
-                name: {
-                    required: true
-                },
-                phone: {
-                    required: true,
-                    phone: 'required'
-                },
-                url: {
-                    required: true,
-                    url: true
-                },
-                comment: {
-                    required: true
-                },
-                date: {
-                    required: true,
-                    date: true
-                },
-                state: {
-                    required: true
-                },
-                platform: {
-                    required: true
-                },
-                subscription: {
-                    required: true
-                },
-                gender: 'required',
-                agree: 'required'
-            },
-
-            messages: {
-                email: {
-                    required: "Please provide a valid email.",
-                    email: "Please provide a valid email."
-                },
-                password: {
-                    required: "Please specify a password.",
-                    minlength: "Please specify a secure password."
-                },
-                subscription: "Please choose at least one option",
-                gender: "Please choose gender",
-                agree: "Please accept our policy"
-            },
-
-
-            highlight: function (e) {
-                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-            },
-
-            success: function (e) {
-                $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-                $(e).remove();
-            },
-
-            errorPlacement: function (error, element) {
-                if(element.is(':checkbox') || element.is(':radio')) {
-                    var controls = element.closest('div[class*="col-"]');
-                    if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-                }
-                else if(element.is('.select2')) {
-                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-                }
-                else if(element.is('.chosen-select')) {
-                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                }
-                else error.insertAfter(element.parent());
-            },
-
-            submitHandler: function (form) {
-            },
-            invalidHandler: function (form) {
-            }
-        });
-    })
-</script>
+<script type="text/javascript" src="/js/experiment/score.js"></script>

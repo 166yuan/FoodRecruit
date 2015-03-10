@@ -100,6 +100,9 @@
                             colspan="1" aria-label="Clicks: activate to sort column ascending">班级
                         </th>
                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1"
+                            colspan="1" aria-label="Clicks: activate to sort column ascending">分数
+                        </th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1"
                             colspan="1" aria-label="Clicks: activate to sort column ascending">评分状态
                         </th>
                         <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2"
@@ -131,7 +134,7 @@
 
                             <td class=" ">${paticipater.major}</td>
                             <td class=" ">${paticipater.classes}</td>
-
+                            <td class=" ">90分</td>
                             <td class=" ">
                                 <c:choose>
                                     <c:when test="${paticipater.isEvaluate==true}">
@@ -144,7 +147,7 @@
 
                             </td>
                             <td>
-                                <span class="label label-sm label-success">查看</span>
+                                <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experId}&userId=${paticipater.userId}&experName=${experName}&userName=${paticipater.name}">去评分</a>
                             </td>
                         </tr>
                     </c:forEach>
