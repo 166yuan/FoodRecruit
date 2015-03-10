@@ -1,6 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <head>
     <meta charset="UTF-8">
@@ -44,27 +45,27 @@
         </div>
     </div>
     <div class="row">
-        <form action="/compet/addCompet" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+        <form action="/compet/doUpdate" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >竞赛名称 </label>
                 <div class="col-sm-8">
-                    <input type="text" id="name" name="name" placeholder="名称" class="col-xs-10 col-sm-5">
+                    <input type="text" id="name" name="name" value="${compet.name}" class="col-xs-10 col-sm-5">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >首页logo </label>
                 <div class="col-sm-8">
-                    <input type="file"  name="file" >
+                    <input type="file"  name="file">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >队伍人数限制 </label>
                 <div class="col-sm-4">
-                    <input type="text"  placeholder="最小人数" name="minnumber" class="col-xs-10 col-sm-5">
+                    <input type="text"  value="${compet.minNumber}" name="minnumber" class="col-xs-10 col-sm-5">
 
-                    <input type="text"  placeholder="最大人数" name="maxnumber" class="col-xs-10 col-sm-5">
+                    <input type="text"  value="${compet.maxNumber}" name="maxnumber" class="col-xs-10 col-sm-5">
                 </div>
                 <div class="col-sm-4"></div>
             </div>
@@ -72,7 +73,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >时间 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="daterange" id="id-date-range-picker-1" class="col-xs-10 col-sm-5"/>
+                    <input type="text" name="daterange" id="id-date-range-picker-1" value="<fmt:formatDate value="${compet.beginTime}" pattern="MM/dd/yyyy"/>-<fmt:formatDate value="${compet.endTime}" pattern="MM/dd/yyyy"/>" class="col-xs-10 col-sm-5"/>
                     <small>手动修改请严格按照时间格式</small>
                 </div>
             </div>
@@ -86,12 +87,18 @@
             <div class="form-group">
                 <div class="col-xs-1"></div>
                 <div class="col-xs-10">
-                    <textarea name="description" id="ueditor"></textarea><br>
-                    <script>
-                        UE.getEditor('ueditor');
+                    <textarea name="description" id="ueditor">${compet.information}</textarea><br>
+                    <script type="text/plain">
+                        ${compet.information}
                     </script>
                 </div>
                 <div class="col-xs-1"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <input class="form-control" type="hidden" name="id" value="${compet.id}" />
+                </div>
             </div>
 
             <div class="clearfix form-actions">
@@ -183,6 +190,11 @@
 
 
         if(location.protocol == 'file:') alert("For retrieving data from server, you should access this page using a webserver.");
+    });
+
+    var ue = UE.getEditor('ueditor');
+    ue.ready(function () {
+        ue.setContent(ue.getContentTxt());
     });
 </script>
 

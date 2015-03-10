@@ -29,17 +29,6 @@ public class ComDao extends DaoBase<Competition> {
         return this.search(dc);
     }
 
-    /**
-     * 根据id获取竞赛
-     * @param id 竞赛id
-     * @return
-     */
-    public Competition getById(Long id){
-        DetachedCriteria dc = DetachedCriteria.forClass(Competition.class)
-                .add(Restrictions.eq("id", id));
-        return(
-                this.get(dc)
-        );
-    }
+
 
 }

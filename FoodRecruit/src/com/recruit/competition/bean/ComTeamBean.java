@@ -30,7 +30,7 @@ public class ComTeamBean {
     ComTeamBean comTeamBean=new ComTeamBean();
     Long comId=competAndTeam.getCompet_id();
         comTeamBean.setCompetId(comId);
-        Competition competition=comDao.getById(comId);
+        Competition competition=comDao.get(comId);
         comTeamBean.setCompetName(competition.getName());
         comTeamBean.setBeginTime(competition.getBeginTime());
         comTeamBean.setEndTime(competition.getEndTime());
@@ -48,7 +48,7 @@ public class ComTeamBean {
         Iterator<CompetAndTeam>iterator=list.iterator();
         while (iterator.hasNext()){
             CompetAndTeam competAndTeam=iterator.next();
-           Competition competition= comDao.getById(competAndTeam.getCompet_id());
+           Competition competition= comDao.get(competAndTeam.getCompet_id());
            Date date= competition.getEndTime();
             if(date.before(now)){
                 list1.add(build(competAndTeam));
@@ -62,7 +62,7 @@ public class ComTeamBean {
         Iterator<CompetAndTeam>iterator=list.iterator();
         while (iterator.hasNext()){
             CompetAndTeam competAndTeam=iterator.next();
-            Competition competition= comDao.getById(competAndTeam.getCompet_id());
+            Competition competition= comDao.get(competAndTeam.getCompet_id());
             Date date= competition.getEndTime();
             if(!date.before(now)){
                 list1.add(build(competAndTeam));

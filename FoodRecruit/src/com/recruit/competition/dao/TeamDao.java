@@ -40,13 +40,4 @@ public class TeamDao extends DaoBase<Team> {
         );
     }
 
-    public Team getById(Long id){
-        DetachedCriteria dc = DetachedCriteria.forClass(Team.class)
-                .add(Restrictions.eq("id", id));
-        return(
-                this.get(dc)
-        );
-    }
-
-
 }

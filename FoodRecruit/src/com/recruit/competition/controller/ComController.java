@@ -22,6 +22,7 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,61 +43,7 @@ public class ComController {
     return "View/compet/publishCompet";
     }
 
-    /**
-     * 新增竞赛
-     * @param request 文件上传
-     * @param name 竞赛名
-     * @param daterange 时间范围
-     * @param minnumber 每队最小人数
-     * @param maxnumber 每队最大人数
-     * @param description 竞赛描述
-     * @param model
-     * @return
-     */
-    @RequestMapping("addCompet")
-    public String addCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,Model model){
-        CommonsMultipartFile file=(CommonsMultipartFile)request.getFile("file");
-        File uploadFile=null;
-        //判断用户是否上传了logo图片，有才保存地址
-        if(file!=null) {
-            try {
-                String fileName = request.getRealPath("/images/") + File.separator + System.currentTimeMillis() + file.getOriginalFilename().
-                        substring(file.getOriginalFilename().lastIndexOf("."));
-                uploadFile = new File(fileName);
-                FileCopyUtils.copy(file.getBytes(), uploadFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //日期格式化
-        String date[]=daterange.split("-");
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Competition competition=new Competition();
-        ComDao comDao=ComDao.getInstance();
-        try {
-            comDao.begin();
-            Date date1=sdf.parse(date[0]);
-            Date date2=sdf.parse(date[1]);
-            competition.setName(name);
-            competition.setInformation(description);
-            competition.setBeginTime(date1);
-            competition.setEndTime(date2);
-            competition.setMinNumber(minnumber);
-            competition.setMaxNumber(maxnumber);
-            if(uploadFile!=null){
-                competition.setImage_url("/images/"+uploadFile.getName());
-            }
-            model.addAttribute("competition",competition);
-            comDao.save(competition);
-            comDao.commit();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            comDao.close();
-        }
 
-return "View/compet/competition";
-    }
 
     /**
      * 取得所有的竞赛
@@ -120,7 +67,7 @@ return "View/compet/competition";
     @RequestMapping("getById")
     public String getCompetitionById(Long id,Model model){
     ComDao comDao=ComDao.getInstance();
-    Competition competition=comDao.getById(id);
+    Competition competition=comDao.get(id);
     model.addAttribute("competition",competition);
     return "View/compet/competition";
     }
@@ -141,7 +88,7 @@ return "View/compet/competition";
             result= "View/compet/unlogin";
         }else{
             ComDao comDao=ComDao.getInstance();
-            Competition competition=comDao.getById(id);
+            Competition competition=comDao.get(id);
             UserDao userDao=UserDao.getInstance();
             User user = userDao.getUserById(uid);
             model.addAttribute("user",user);
@@ -294,7 +241,7 @@ return "View/compet/competition";
         Long userId=(Long)session.getAttribute("userId");
         TeamComDao teamComDao=TeamComDao.getInstance();
         List<CompetAndTeam> list=teamComDao.getByUser(userId);
-        List<ComTeamBean>list1=ComTeamBean.buildList2(list);
+        List<ComTeamBean> list1=ComTeamBean.buildList2(list);
         model.addAttribute("list",list1);
         return "View/compet/goingCompet";
     }
@@ -329,6 +276,152 @@ return "View/compet/competition";
         TeamBean teamBean=TeamBean.build(comId,teamId,list);
         model.addAttribute("team", teamBean);
         return "View/compet/myTeam";
+    }
+
+    /**
+     * 新增竞赛
+     * @param request 文件上传
+     * @param name 竞赛名
+     * @param daterange 时间范围
+     * @param minnumber 每队最小人数
+     * @param maxnumber 每队最大人数
+     * @param description 竞赛描述
+     * @param model
+     * @return
+     */
+    @RequestMapping("addCompet")
+    public String addCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,Model model){
+        CommonsMultipartFile file=(CommonsMultipartFile)request.getFile("file");
+        File uploadFile=null;
+        //判断用户是否上传了logo图片，有才保存地址
+        if(file!=null) {
+            try {
+                String fileName = request.getRealPath("/images/") + File.separator + System.currentTimeMillis() + file.getOriginalFilename().
+                        substring(file.getOriginalFilename().lastIndexOf("."));
+                uploadFile = new File(fileName);
+                FileCopyUtils.copy(file.getBytes(), uploadFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //日期格式化
+        String date[]=daterange.split("-");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        Competition competition=new Competition();
+        ComDao comDao=ComDao.getInstance();
+        try {
+            comDao.begin();
+            Date date1=sdf.parse(date[0]);
+            Date date2=sdf.parse(date[1]);
+            competition.setName(name);
+            competition.setInformation(description);
+            competition.setBeginTime(date1);
+            competition.setEndTime(date2);
+            competition.setMinNumber(minnumber);
+            competition.setMaxNumber(maxnumber);
+            if(uploadFile!=null){
+                competition.setImage_url("/images/"+uploadFile.getName());
+            }
+            model.addAttribute("competition",competition);
+            comDao.save(competition);
+            comDao.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            comDao.close();
+        }
+
+        return "View/compet/competition";
+
+    }
+
+    /**
+     * 跳转到竞赛更新页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("update")
+    public String updateCompetition(Long id,Model model){
+        ComDao comDao = ComDao.getInstance();
+        Competition competition = comDao.get(id);
+
+        model.addAttribute("compet",competition);
+
+        return "View/compet/editCompet";
+    }
+
+    /**
+     * 更新竞赛
+     * @param request
+     * @param name
+     * @param daterange
+     * @param minnumber
+     * @param maxnumber
+     * @param description
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("doUpdate")
+    public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,long id,Model model){
+        CommonsMultipartFile file = (CommonsMultipartFile)request.getFile("file");
+        File uploadFile = null;
+
+        System.out.println("id = " + id);
+
+        ComDao comDao = ComDao.getInstance();
+        Competition competition = comDao.get(id);
+
+        if (file.getOriginalFilename().length() > 0){
+            try {
+                //删除旧文件
+                if (competition.getImage_url() != null) {
+                    File oldFile = new File(competition.getImage_url());
+                    oldFile.delete();
+                }
+
+                System.out.println(file);
+
+                System.out.println(file.getName() + " 1 " + file.getOriginalFilename() + " 2 " + competition.getImage_url());
+
+                String fileName = request.getRealPath("/images/") + File.separator + System.currentTimeMillis() + file.getOriginalFilename().
+                        substring(file.getOriginalFilename().lastIndexOf("."));
+                uploadFile = new File(fileName);
+                FileCopyUtils.copy(file.getBytes(), uploadFile);
+
+            }catch (IOException ex){
+                ex.printStackTrace();
+            }
+        }
+
+        String date[]=daterange.split("-");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        try {
+            comDao.begin();
+            Date date1 = sdf.parse(date[0]);
+            Date date2 = sdf.parse(date[1]);
+            competition.setName(name);
+            competition.setInformation(description);
+            competition.setBeginTime(date1);
+            competition.setEndTime(date2);
+            competition.setMinNumber(minnumber);
+            competition.setMaxNumber(maxnumber);
+            if(uploadFile!=null){
+                competition.setImage_url("/images/"+uploadFile.getName());
+            }
+            comDao.update(competition);
+            comDao.commit();
+
+            model.addAttribute("competition",competition);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            comDao.close();
+        }
+
+        return "/View/compet/competition";
     }
 
 }
