@@ -40,8 +40,8 @@ public class TeamBean {
         Iterator<CompetAndTeam>it=list.iterator();
         ComDao comDao=ComDao.getInstance();
         TeamDao teamDao=TeamDao.getInstance();
-        Competition competition=comDao.getById(comId);
-        Team team=teamDao.getById(teamId);
+        Competition competition=comDao.get(comId);
+        Team team=teamDao.get(teamId);
         Long leaderId=team.getLeader_id();
         if(team.getType()==0){
             teamBean.setTeamType(false);

@@ -134,7 +134,7 @@
 
                             <td class=" ">${paticipater.major}</td>
                             <td class=" ">${paticipater.classes}</td>
-                            <td class=" ">90分</td>
+                            <td class=" ">${paticipater.score}</td>
                             <td class=" ">
                                 <c:choose>
                                     <c:when test="${paticipater.isEvaluate==true}">
@@ -147,7 +147,14 @@
 
                             </td>
                             <td>
-                                <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experId}&userId=${paticipater.userId}&experName=${experName}&userName=${paticipater.name}">去评分</a>
+                                <c:choose>
+                                    <c:when test="${paticipater.isEvaluate==true}">
+                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experId}&userId=${paticipater.userId}&experName=${experName}&userName=${paticipater.name}">查看/修改</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experId}&userId=${paticipater.userId}&experName=${experName}&userName=${paticipater.name}">去评分</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </c:forEach>

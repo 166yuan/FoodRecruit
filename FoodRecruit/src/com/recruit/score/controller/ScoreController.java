@@ -19,11 +19,29 @@ import java.io.PrintWriter;
 @RequestMapping("/score")
 public class ScoreController {
     @RequestMapping("scorePage")
-    public String scorePage(Long experId,Long userId,String experName,String userName,Model model){
+    public String scorePage(HttpSession session,Long experId,Long userId,String experName,String userName,Model model){
         model.addAttribute("userName",userName);
         model.addAttribute("experName",experName);
-        model.addAttribute("experId",experId);
-        model.addAttribute("userId",userId);
+        ScoreDao scoreDao=ScoreDao.getInstance();
+        Score score=scoreDao.getByExperIdAndUserId(experId, userId);
+        Long fromId=(Long)session.getAttribute("userId");
+        if(score==null){
+            score=new Score();
+            try{
+                scoreDao.begin();
+                score.setExper_id(experId);
+                score.setUserId(userId);
+                score.setFromId(fromId);
+                scoreDao.save(score);
+                scoreDao.commit();
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                scoreDao.close();
+            }
+
+        }
+        model.addAttribute("score",score);
         return "View/experiment/scorePage";
     }
     @RequestMapping("saveScoreA")
@@ -53,6 +71,8 @@ public class ScoreController {
                 score.setFromId(fromId);
                 scoreDao.save(score);
             }else {
+             if(score.getScoreB()!=null&&score.getSecscore()!=null)
+                 score.setTotal();
              scoreDao.update(score);
             }
         scoreDao.commit();
@@ -79,11 +99,13 @@ public class ScoreController {
         scoreDao.begin();
         score.setScoreB(scoreB);
         if(temp==1){
-        scoreDao.save(score);
-        }else {
             score.setExper_id(experId);
             score.setUserId(userId);
             score.setFromId(fromId);
+        scoreDao.save(score);
+        }else {
+        if(score.getScoreA()!=null&&score.getSecscore()!=null)
+            score.setTotal();
         scoreDao.update(score);
         }
         scoreDao.commit();

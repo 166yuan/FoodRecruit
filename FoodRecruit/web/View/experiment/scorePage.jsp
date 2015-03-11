@@ -49,11 +49,11 @@
 <div class="page-content">
     <div class="center">
         <h5>实验名：${experName}</h5>
-        <h5>实验员：${userName}</h5>
+        <h5>实验员：${userName}<c:if test="${score.total!=null}">，总分 ：${score.total}</c:if></h5>
     </div>
     <div class="row">
-        <input type="hidden" name="experId" value="${experId}">
-        <input type="hidden" name="userId" value="${userId}">
+        <input type="hidden" name="experId" value="${score.exper_id}">
+        <input type="hidden" name="userId" value="${score.userId}">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
@@ -104,6 +104,7 @@
                                 <p class="alert alert-success">
                                     一、实验员的评价根据在实验过程中的表现进行评分，以下两项得分取平均值后*80%：
                                 </p>
+                                <c:if test="${score.scoreA!=null}"><div class="center"><h3>评分完毕，该项得分为：${score.scoreA}</h3></div></c:if>
                                 <form class="form-horizontal" id="sample-form">
 
                                     <div class="form-group">
@@ -113,7 +114,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner1" name="duty"  maxlength="3">
+                                                           id="spinner1" name="duty"  value="${score.duty}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -126,7 +127,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner2" name="discipline" maxlength="3">
+                                                           id="spinner2" value="${score.discipline}" name="discipline" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +140,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner3"name="tidy" maxlength="3">
+                                                           id="spinner3"name="tidy" value="${score.tidy}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -152,7 +153,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner4" name="care" maxlength="3">
+                                                           id="spinner4" name="care" value="${score.care}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +166,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner5" name="operation" maxlength="3">
+                                                           id="spinner5" name="operation" value="${score.operation}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -178,7 +179,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner6" name="fault" maxlength="3">
+                                                           id="spinner6" name="fault" value="${score.fault}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +192,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner7" name="efficiency" maxlength="3">
+                                                           id="spinner7" name="efficiency" value="${score.efficiency}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -204,7 +205,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner8" name="advise" maxlength="3">
+                                                           id="spinner8" name="advise" value="${score.advise}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -225,6 +226,7 @@
                                 <p class="alert alert-info">
                                     <span style="color: #ff0000;font-size: larger">评分范围：0~50</span>   &nbsp;:经常缺席且没请假，被动接受任务，不善于思考，手脚笨拙，越帮越忙的，屡教不改
                                 </p>
+                                <c:if test="${score.scoreB!=null}"><div class="center"><h3>评分完毕，该项得分为：${score.scoreB}</h3></div></c:if>
                                 <div>
                                     <form class="form-horizontal" >
                                         <div class="form-group">
@@ -234,7 +236,7 @@
                                                 <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                     <div class="input-group">
                                                         <input type="text" class="input-mini spinner-input form-control"
-                                                               id="spinner9" name="scoreB" maxlength="3">
+                                                               id="spinner9" value="${score.scoreB}" name="scoreB" maxlength="3">
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,7 +248,7 @@
 
                             <div class="step-pane" id="step3">
                                 <div class="center"><h4 class="light-red">评分说明：科联负责人进行一次跟踪调查后评分，以下得分*20%+附加分</h4></div>
-
+                                <c:if test="${score.secscore!=null}"><div class="center"><h3>评分完毕，该项得分为：${score.secscore}(不含附加分)</h3></div></c:if>
                                 <form class="form-horizontal" >
                                     <div class="form-group">
                                         <div class="col-xs-1"></div>
@@ -255,7 +257,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner10" name="Ttidy" maxlength="3">
+                                                           id="spinner10" value="${score.ttidy}" name="Ttidy" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -267,7 +269,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner11" name="Tcare" maxlength="3">
+                                                           id="spinner11" value="${score.tcare}" name="Tcare" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -279,7 +281,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner12" name="Toperation" maxlength="3">
+                                                           id="spinner12" name="Toperation" value="${score.toperation}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -291,7 +293,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner13" name="Tconnect"  maxlength="3">
+                                                           id="spinner13" name="Tconnect" value="${score.tconnect}" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -300,28 +302,56 @@
                                         <div class="col-xs-1"></div>
                                         <div class="col-xs-5"><label>是否主动联系科联负责人备案（<span style="color: #595cff">20分</span>）</label></div>
                                         <div class="col-xs-6">
-                                            <label>
-                                                <input name="recorded" type="radio" class="ace" value="20">
-                                                <span class="lbl">是</span>
-                                            </label>
-                                            <label>
-                                                <input name="recorded" type="radio" class="ace" value="0" checked="true">
-                                                <span class="lbl">否</span>
-                                            </label>
+                                            <c:choose>
+                                                <c:when test="${score.recorded==20}">
+                                                    <label>
+                                                        <input name="recorded" type="radio" class="ace" value="20" checked="true">
+                                                        <span class="lbl">是</span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="recorded" type="radio" class="ace" value="0" >
+                                                        <span class="lbl">否</span>
+                                                    </label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <label>
+                                                        <input name="recorded" type="radio" class="ace" value="20">
+                                                        <span class="lbl">是</span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="recorded" type="radio" class="ace" value="0" checked="true">
+                                                        <span class="lbl">否</span>
+                                                    </label>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-xs-1"></div>
                                         <div class="col-xs-5"><label>是否成为科联会员（<span style="color: #595cff">10分</span>）</label></div>
                                         <div class="col-xs-6">
-                                            <label>
-                                                <input name="member" type="radio" class="ace" value="10">
-                                                <span class="lbl">是</span>
-                                            </label>
-                                            <label>
-                                                <input name="member" type="radio" class="ace" value="0" checked="true">
-                                                <span class="lbl">否</span>
-                                            </label>
+                                            <c:choose>
+                                                <c:when test="${score.member==10}">
+                                                    <label>
+                                                        <input name="member" type="radio" class="ace" value="10" checked="true">
+                                                        <span class="lbl">是</span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="member" type="radio" class="ace" value="0" >
+                                                        <span class="lbl">否</span>
+                                                    </label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <label>
+                                                        <input name="member" type="radio" class="ace" value="10">
+                                                        <span class="lbl">是</span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="member" type="radio" class="ace" value="0" checked="true">
+                                                        <span class="lbl">否</span>
+                                                    </label>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                      <div class="center"><h5 class="light-red">以下是附加分</h5></div>
@@ -332,7 +362,7 @@
                                             <div class="ace-spinner touch-spinner" style="width: 100px;">
                                                 <div class="input-group">
                                                     <input type="text" class="input-mini spinner-input form-control"
-                                                           id="spinner14" name="append" maxlength="3">
+                                                           id="spinner14" value="${score.append}" name="append" maxlength="3">
                                                 </div>
                                             </div>
                                         </div>
@@ -344,7 +374,8 @@
                             <div class="step-pane" id="step4">
                                 <div class="center">
                                     <h3 class="green">评分完成!</h3>
-                                   您可以查看并修改结果，或者继续评分。
+                                 <span style="font-size: larger">  您可以查看并修改结果，或者
+                                    <a href="/exper/scoreList?experId=${score.exper_id}" target="_blank">继续评分</a></span>
                                 </div>
                             </div>
                         </div>

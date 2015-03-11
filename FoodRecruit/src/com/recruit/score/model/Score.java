@@ -231,4 +231,8 @@ public class Score extends BasicModel {
     public void setFromId(Long fromId) {
         this.fromId = fromId;
     }
+
+    public Integer getSecscore() {
+        return secscore;
+    }
 }

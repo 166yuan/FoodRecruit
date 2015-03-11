@@ -1,6 +1,8 @@
 package com.recruit.experUser.bean;
 
 import com.recruit.experUser.model.ExperUser;
+import com.recruit.score.dao.ScoreDao;
+import com.recruit.score.model.Score;
 import com.recruit.user.Dao.UserDao;
 import com.recruit.user.model.User;
 
@@ -20,9 +22,11 @@ public class ExperUserBean {
     private String classes;
     private Date appTime;
     private int gender;
+    private double score;
     private Boolean isAgree;
     private Boolean isEvaluate;
     static UserDao userDao=UserDao.getInstance();
+    static ScoreDao scoreDao=ScoreDao.getInstance();
     public static ExperUserBean  build(ExperUser experUser){
         Long userId=experUser.getUserId();
         User user=userDao.getUserById(userId);
@@ -37,6 +41,12 @@ public class ExperUserBean {
         //后期要修改这里
         experUserBean.setClasses(user.getClasses());
         experUserBean.setMajor(user.getMajor());
+        if(experUser.getIsEvaluate()==true){
+            Score score=scoreDao.getByExperIdAndUserId(experUser.getExperId(), userId);
+            experUserBean.setScore(score.getTotal());
+        }else {
+            experUserBean.setScore(0);
+        }
         return experUserBean;
     }
 
@@ -72,6 +82,13 @@ public class ExperUserBean {
         return euList;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 
     public int getGender() {
         return gender;

@@ -72,7 +72,7 @@
                                             </c:when>
                                             <c:when test="${exper.status==-1}">
                                                 <label class="label label-info">评价中</label>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-info">继续评分</button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<a href="/exper/scoreList?experId=${exper.experId}"><button class="btn btn-sm btn-info">继续评分</button></a>
                                             </c:when>
                                         </c:choose>
                                     </h4>
