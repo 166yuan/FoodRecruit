@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.recruit.Bean.PageBean;
 import com.recruit.Model.Classes;
 import com.recruit.Model.Major;
+import com.recruit.competition.dao.ComDao;
+import com.recruit.competition.model.Competition;
 import com.recruit.mana.bean.ClaMajBean;
 import com.recruit.mana.dao.ClassDao;
 import com.recruit.mana.dao.MajorDao;
@@ -300,6 +302,18 @@ public class ManaController {
         MajorDao majorDao=MajorDao.getInstance();
         List<Major> list=majorDao.getAllMajorByYear(year);
         return list;
+    }
+
+    /**
+     * 取得所有的竞赛
+     * @return 竞赛管理页面
+     */
+    @RequestMapping("competManage")
+    public String competManage(Model model){
+        ComDao comDao=ComDao.getInstance();
+        List<Competition>list= comDao.getAllCompetition();
+        model.addAttribute("list",list);
+        return "View/mana/competManage";
     }
 
 

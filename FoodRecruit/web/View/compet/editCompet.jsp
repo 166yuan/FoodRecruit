@@ -87,8 +87,8 @@
             <div class="form-group">
                 <div class="col-xs-1"></div>
                 <div class="col-xs-10">
-                    <textarea name="description" id="ueditor">${compet.information}</textarea><br>
-                    <script type="text/plain">
+
+                    <script type="text/plain" id="myEditor" name="description">
                         ${compet.information}
                     </script>
                 </div>
@@ -192,10 +192,12 @@
         if(location.protocol == 'file:') alert("For retrieving data from server, you should access this page using a webserver.");
     });
 
-    var ue = UE.getEditor('ueditor');
+   /* var ue = UE.getEditor('ueditor');
     ue.ready(function () {
         ue.setContent(ue.getContentTxt());
-    });
+    });*/
+    var editor =new UE.ui.Editor();
+    editor.render("myEditor");
 </script>
 
 </body>

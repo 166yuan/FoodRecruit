@@ -365,6 +365,7 @@ public class ComController {
      */
     @RequestMapping("doUpdate")
     public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,long id,Model model){
+        System.out.println("the content is:"+description);
         CommonsMultipartFile file = (CommonsMultipartFile)request.getFile("file");
         File uploadFile = null;
 
@@ -422,6 +423,24 @@ public class ComController {
         }
 
         return "/View/compet/competition";
+    }
+
+    @RequestMapping("delete")
+    public void delete(Long id,PrintWriter out){
+        int result=1;
+        ComDao comDao = ComDao.getInstance();
+        try{
+            comDao.begin();
+            Competition competition = comDao.get(id);
+            comDao.delete(competition);
+            comDao.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            result=-1;
+        }finally {
+            comDao.close();
+        }
+        out.print(result);
     }
 
 }

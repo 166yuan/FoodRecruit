@@ -75,32 +75,12 @@
       </li>
 
       <li class="hover hsub" id="contentpage">
-        <a href="#" class="dropdown-toggle">
+        <a href="/mana/competManage" class="dropdown-toggle">
           <i class="menu-icon fa fa-globe"></i>
           <span class="menu-text"> 竞赛管理 </span>
 
           <b class="arrow fa fa-angle-down"></b>
         </a>
-
-        <b class="arrow"></b>
-
-        <ul class="submenu">
-          <li class="hover">
-            <a href="tables.html">
-              <i class="menu-icon fa fa-caret-right"></i>
-              下拉栏1
-            </a>
-
-            <b class="arrow"></b>
-          </li>
-          <li class="hover">
-            <a href="jqgrid.html">
-              <i class="menu-icon fa fa-caret-right"></i>
-              下拉栏2
-            </a>
-            <b class="arrow"></b>
-          </li>
-        </ul>
       </li>
 
       <li class="hover hsub" id="feedpage">
