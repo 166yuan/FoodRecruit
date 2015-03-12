@@ -1,4 +1,6 @@
-package com.recruit.Model;
+package com.recruit.mana.model;
+
+import com.recruit.Model.BasicModel;
 
 import javax.persistence.Entity;
 

@@ -2,11 +2,10 @@ package com.recruit.mana.dao;
 
 import com.recruit.BaseDao.DaoBase;
 import com.recruit.Bean.PageBean;
-import com.recruit.Model.Classes;
-import com.recruit.Model.Major;
+import com.recruit.mana.model.Classes;
+import com.recruit.mana.model.Major;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 

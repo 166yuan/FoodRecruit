@@ -24,13 +24,13 @@ public class NotiUserBean {
     static UserDao userDao=UserDao.getInstance();
     public static NotiUserBean build(Notification notification){
         NotiUserBean notiUserBean=new NotiUserBean();
-        notiUserBean.userId=notification.getUserId();
+        notiUserBean.userId=notification.getReceiverId();
         notiUserBean.info=notification.getInfo();
         notiUserBean.isNew=notification.getIsNew();
         notiUserBean.type=notification.getType();
         notiUserBean.createTime=notification.getCreateTime();
         notiUserBean.notiId=notification.getId();
-        User user=userDao.getUserById(notification.getUserId());
+        User user=userDao.getUserById(notification.getReceiverId());
         notiUserBean.name=user.getName();
         return  notiUserBean;
     }

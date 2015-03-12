@@ -1,7 +1,7 @@
 package com.recruit.mana.bean;
 
-import com.recruit.Model.Classes;
-import com.recruit.Model.Major;
+import com.recruit.mana.model.Classes;
+import com.recruit.mana.model.Major;
 import com.recruit.mana.dao.MajorDao;
 
 import java.util.ArrayList;

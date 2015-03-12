@@ -1,10 +1,8 @@
 package com.recruit.mana.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.recruit.Bean.PageBean;
-import com.recruit.Model.Classes;
-import com.recruit.Model.Major;
+import com.recruit.mana.model.Classes;
+import com.recruit.mana.model.Major;
 import com.recruit.competition.dao.ComDao;
 import com.recruit.competition.model.Competition;
 import com.recruit.experiment.dao.ExperimentDao;
@@ -17,9 +15,6 @@ import com.recruit.notification.dao.NotificationDao;
 import com.recruit.notification.model.Notification;
 import com.recruit.user.Dao.UserDao;
 import com.recruit.user.model.User;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -136,21 +131,17 @@ public class ManaController {
      */
     @RequestMapping("classmanager")
     public String classManager(Model model,int page,HttpSession session){
+       int year=0;
         ClassDao classDao=ClassDao.getInstance();
         //分页时要统计所有的元素个数
         int total=classDao.countAllClass();
-        Object obj=session.getAttribute("yearList");
-        if(obj==null) {
             List<Integer> yearList = classDao.getAllYear();
-            int year=yearList.get(0);
+            if(yearList.size()!=0){ year=yearList.get(0);}
             List<Major>majorList=MajorDao.getInstance().getAllMajorByYear(year);
-            System.out.println(yearList.size());
-            session.setAttribute("majorList",majorList);
-            session.setAttribute("yearList", yearList);
-        }
+            model.addAttribute("majorList",majorList);
+            model.addAttribute("yearList", yearList);
         PageBean pageBean=PageBean.getInstance(page,total,"/mana","/classmanager");
         List<ClaMajBean>list=ClaMajBean.buildList(classDao.getAllClass(pageBean));
-        System.out.println("the size of all class is:"+list.size());
         model.addAttribute("list", list);
         model.addAttribute("pageBean",pageBean);
         model.addAttribute("classpage","active");
@@ -250,20 +241,25 @@ public class ManaController {
         MajorDao majorDao=MajorDao.getInstance();
         int result=1;
         try{
-        majorDao.begin();
-            Major major=new Major();
-            major.setMajorName(name);
-            major.setYear(year);
-            majorDao.save(major);
-            majorDao.commit();
-            out.print(result);
+
+            Major major=majorDao.getByNameAndYear(name,year);
+            if(major!=null){
+                result=-2;
+            }else {
+                majorDao.begin();
+                major=new Major();
+                major.setMajorName(name);
+                major.setYear(year);
+                majorDao.save(major);
+                majorDao.commit();
+            }
         }catch (Exception e){
         e.printStackTrace();
             result=-1;
-            out.print(result);
         }finally {
         majorDao.close();
         }
+        out.print(result);
     }
 
     /**

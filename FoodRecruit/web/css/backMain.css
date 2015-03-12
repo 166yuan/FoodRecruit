@@ -1,0 +1,391 @@
+html{
+	height:100%;
+}
+
+/*body设置无边距*/
+body{
+	padding:0px;
+	margin:0px;
+	width:100%;
+	height:100%;
+}
+
+a:link{
+	color:white;
+	text-decoration: none;
+}
+
+a:visited{
+	color:white;
+}
+
+a:hover{
+	color:red;
+}
+
+/*头div*/
+div.header{
+	width:100%;
+	height:5%;
+	min-height:55px;
+	min-width:700px;
+	background-color: #3a4450;/*#272822;*/
+	color: white;
+	position: fixed;
+}
+
+/*提示信息 和个人信息、退出登录*/
+.tips{
+	float:right;
+	margin:20px 20px 0px 0px;
+}
+
+/*导航div，漂移到左边，设置最小高度*/
+div.nav{
+	/*border:1px solid red;*/
+	width:220px;
+	min-height:100%; 
+	float:left;
+	background-color: #2BA0DB; /*#5C9ADF;*/ 
+	color: #E9F6F0;
+	margin-top:55px;
+	position: fixed;
+}
+
+/*导航的ul*/
+.nav ul{
+	margin:0px;
+	padding:0px;
+	height:100%;
+	text-align: center;
+}
+
+/*导航ul的列表项*/
+.nav ul li{
+	list-style-type: none;
+	height:50px;
+	/*padding:20px 0px 20px 0px;*/
+	/*border:1px solid red;*/
+	/*border-bottom: 1px solid #264253;*/
+	overflow: hidden;
+	padding:0px;
+	margin:0px;
+}
+
+/*导航超链接*/
+.nav ul li>a{
+	color:#E9F6F0;
+	display: block;
+	width:100%;
+	height:100%;
+	padding-top:20px;
+	/* height:200px; */
+	/*padding:5px 0px;*/
+	font-weight: bolder;
+	text-decoration: none;
+	 /*line-height: 60px; */
+}
+
+
+.nav ul li a:hover{
+	background-color: #6BBEF6;
+}
+
+.nav ul li .search{
+	position:relative;
+	margin:9px 0 10px 0;
+}
+
+.nav ul li input.searchInput{
+	border:0;
+	color:#fff;
+	margin:0 8px;
+	width:192px;
+	height: 30px;
+	font-size: 15px;
+	font-weight: normal;
+	background-color: #3a4450;
+}
+
+
+.nav ul li input.submit{	
+	position:absolute;
+	border:0px;
+	width:30px;
+	height:30px;
+	padding:0;
+	margin:0;
+	top:1px;
+	right:14.5px;
+	background-position: 3px 5px;
+	background-repeat: no-repeat;
+	background-color: #3a4450;
+	background-image: url("../images/search.png");
+}
+
+/*开始设置导航中的主页的背景色被白色，字体为黑色*/
+.nav ul li a.now{
+	color:black;
+	background-color: white;
+
+}
+
+/*导航----食试----选项*/
+.nav ul li ul{
+	position: absolute;
+	top:100px;
+	left:220px;
+	display: none;
+	background-color: #2BA0DB; 
+	color: #E9F6F0;
+	height: 150px;
+}
+
+
+/*导航------求士------选项*/
+.nav ul li ul#seekList{
+	top:150px;
+} 
+
+/*导航------竞赛------选项*/
+.nav ul li ul#competitionList{
+	top:200px;
+} 
+
+.nav ul li ul li{
+	/*display: inline;*/
+	width:180px;
+	padding:0px;
+	line-height: 10px;
+	height:50px;
+}
+
+
+/*主版块div*/
+div.main{
+	min-width:700px;
+	min-height:92.6%; 
+	/*float:right;*/
+	padding:30px 20px 0px 20px;
+	background-color: white;
+	/*text-align: center;*/
+}
+
+/*主板块的内容区，与main之间有margin*/
+div.mainContent{
+	min-width:1100px;
+	min-height: 750px;
+	margin:0 auto;
+}
+
+/*主页，图片展示区*/
+div.broadcastImage{
+	width:100%;
+	height:300px;
+	min-width: 1100px;
+	margin:0 auto;
+	background-color:#F0F0F0; /*#F7F7FD;*/
+}
+
+div.project{
+	width:100%;
+	height:380px;
+	/*height:427px;*/
+	min-width: 1100px;
+	margin:30px auto;
+	background-color:#F0F0F0; /*#F7F7FD;*/
+}
+
+/*内容区，标题*/
+/*div.project .title,div.assistant .title,div.releaseExperiment */.title{
+	color:white;
+	font-size:1.2em;
+	font-weight: bold;
+	margin:0px;
+	background-color:#0099CC;/*#336699;*/ /*#272822;*/
+}
+
+/*内容区大标题*/
+/*div.project .bigTitle,div.assistant .bigTitle,div.releaseExperiment */
+.bigTitle{
+	background-color:#336699;
+	font-size:1.3em;
+	line-height: 40px;
+	height:40px;
+	margin-bottom:10px;
+}
+
+/*更多*/
+.more{
+	float:right;
+}
+
+.more:hover{
+	text-decoration: underline;
+}
+/*内容区---实验项目----学院项目*/
+.collegeProject{
+	margin-left:10px;
+	width:48.5%;
+	float:left;
+}
+
+/*内容区----实验项目----实验员项目*/
+.studentProject{
+	width:48.5%;
+	margin-left:51%;
+}
+/*
+.collegeProject ul{
+	padding:0;
+	margin:0;
+	width:100%;
+	height:300px;
+	background-color: yellow;
+}*/
+
+
+/*内容区-----实验项目----最新实验信息*/
+marquee{
+	/*behavior:scroll;*/
+	direction:up;
+	width:100%;
+	height:300px;
+	background-color: #FFFFCC;/*yellow;*//*#FFFF66;*/
+}
+
+.project ul li{
+	height:40px;
+	padding-left:20px;
+	/*list-style-type: none;*/
+}
+
+.project ul li a{
+	color:black;
+}
+
+.project ul li a:hover{
+	text-decoration: underline;
+	color:red;
+}
+
+/*内容区-------实验助手*/
+.assistant{
+	background-color:#F0F0F0; /*#F7F7FD;*/
+	height:250px;
+}
+
+/*内容区-------实验助手-----最新实验助手*/
+/*.assistant */table{
+	margin:10px auto;
+	width:96%;
+	/*border:1px solid skyblue;*/
+	border-collapse: collapse;
+}
+
+/*内容区------实验助手-----最新实验助手----表格*/
+/*.assistant */table tr td{
+	background-color: white;
+}
+
+/*内容区------实验助手-----最新实验助手----表格-----基数行*/
+/*.assistant */table tr.even td{
+	background-color: #F0F0F6;/*#E7E6EC;*/
+}
+
+/*内容区------实验助手-----最新实验助手----表格------表头*/
+/*.assistant */table tr.th td{
+	font-weight: bolder;
+	font-size: 1.1em;
+	color:white;
+	background-color: #2BA0DB;
+}
+
+/*.assistant */table tr.hightLight td{
+	background-color: #CCCCCC;
+}
+
+/*内容区-----最新消息*/
+.newMessage{
+	background-color:#FFFFCC;/*#FFFFCC;*//*#F0F0F0;*/ /*#F7F7FD;*/
+	width:23%;
+	height:30%;
+	position: fixed;
+	top:70%;
+	left:77%;
+	padding:0px;
+	margin:0px;
+	border:1px solid gray;
+}
+
+.newMessage p.title{
+	padding-left:10px;
+	margin:0;
+	line-height: 35px;
+	height: 35px;
+	font-weight: bolder;
+	background-color:#99CCFF; /*#ccc;*/
+}
+.close{
+	
+	margin-top:3px;
+	margin-right: 5px;
+	float:right;
+
+}
+
+.newMessage ul li{
+	padding-top:5px;
+	padding-bottom: 5px;
+}
+
+
+
+/*模态对话框*/
+.model{
+	width:100%;
+	height:100%;
+	/*background-color:#F0F0F0; /*white;*/
+	background-color: rgba(0, 0, 0, 0.8);  
+	position: fixed;
+	top:0;
+	left:0;
+	display: none;
+	text-align: center;
+}
+
+.model div.back{
+	width:100%;
+	height:100%;
+	background-color: white;
+	opacity: 0.7;
+	position: fixed;
+	text-align: center;
+	z-index: 1;
+}
+
+.model div.dialog{
+	width:50%;
+	min-height:70%;
+	margin:100px auto;
+	background-color: white;
+	position: relative;
+	border-radius: 20px;
+	z-index: 2;
+	padding-bottom: 10px;
+}
+
+
+
+.model div.dialog .top{
+	width:200px;
+	height:200px;
+	margin:0 auto;
+	background-color:white;
+	z-index: 1;
+}
+
+.navbar {
+    min-height: 75px;
+    background:rgba(204, 255, 255, 0.68);
+}

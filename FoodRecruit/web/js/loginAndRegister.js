@@ -2,6 +2,7 @@
  * Created by Mklaus on 15/1/28.
  */
 
+var checkSubmitFlg = false;
 
 $(document).ready(function() {
     var registerForm = document.getElementById("register");
@@ -25,7 +26,8 @@ function submitRegisterForm(){
         $("#message").html("<p style='color: red'>两次密码不一致</p>");
         return false;
     }
-
+if(!checkSubmitFlg){
+    checkSubmitFlg=true;
     $.ajax({
         url:"/user/register",
         type:"post",
@@ -44,7 +46,9 @@ function submitRegisterForm(){
         }
 
     });
-
+}else{
+alert("请勿再次提交！");
+}
     return false;
 }
 

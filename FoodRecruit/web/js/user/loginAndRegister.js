@@ -2,6 +2,7 @@
  * Created by Mklaus on 15/1/28.
  */
 
+var flag=false;
 
 $(document).ready(function() {
     var registerForm      = document.getElementById("register");
@@ -27,23 +28,29 @@ function submitRegisterForm(){
         return false;
     }
 
-    $.ajax({
-        url:"/user/register",
-        type:"post",
-        dataType:"text",
-        data:{"account":account,"password":password},
-        success:function(data){
-            result = parseInt(data);
-            if(result == -1) {
-                var message = $("#register-message");
-                message.html("<p style='color: red'>帐号已存在</p>");
-                return false;
-            }else if(result == 1){
-                window.location.href = "/View/user/regSuccess.jsp";
+    if(!flag){
+        flag=true;
+        $.ajax({
+            url:"/user/register",
+            type:"post",
+            dataType:"text",
+            data:{"account":account,"password":password},
+            success:function(data){
+                result = parseInt(data);
+                if(result == -1) {
+                    var message = $("#register-message");
+                    message.html("<p style='color: red'>帐号已存在</p>");
+                    return false;
+                }else if(result == 1){
+                    window.location.href = "/View/user/regSuccess.jsp";
+                }
             }
-        }
 
-    });
+        });
+
+    }else{
+alert("请勿重复提交");
+    }
 
     return false;
 }

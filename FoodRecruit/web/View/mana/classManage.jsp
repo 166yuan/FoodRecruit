@@ -51,10 +51,18 @@
                         <td class="CaptionTD">年级</td>
                         <td class="DataTD">&nbsp;<select role="select" id="year" name="year" size="1"
                                                          class="FormElement ui-widget-content ui-corner-all"  onchange="addyear(this.value)">
-                            <c:forEach items="${sessionScope.get('yearList')}" var="year">
+                            <c:choose>
+                                <c:when test="${yearList.size()!=0}">
+                                    <c:forEach items="${yearList}" var="year">
 
-                                <option role="option" value="${year}"><c:out value="${year}"/></option>
-                            </c:forEach>
+                                        <option role="option" value="${year}"><c:out value="${year}"/></option>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <option role="option" >暂无专业，请添加</option>
+                                </c:otherwise>
+                            </c:choose>
+
                         </select> </td>
                     </tr>
 
@@ -62,7 +70,7 @@
                         <td class="CaptionTD">专业</td>
                         <td class="DataTD">&nbsp;<select role="select" id="major" name="major" size="1"
                                                          class="FormElement ui-widget-content ui-corner-all">
-                            <c:forEach items="${sessionScope.get('majorList')}" var="major">
+                            <c:forEach items="${majorList}" var="major">
 
                                 <option role="option" value="${major.id}"><c:out value="${major.majorName}"/></option>
                             </c:forEach>
@@ -134,13 +142,6 @@
     <div>
         <div id="sample-table-2_wrapper" class="dataTables_wrapper form-inline" role="grid">
             <div class="row">
-                <div class="col-xs-6">
-                    <div id="sample-table-4_length" class="dataTables_length"><label>选择专业 <select size="1"
-                                                                                                  name="sample-table-2_length"
-                                                                                                  aria-controls="sample-table-2">
-                        <option value="10" selected="selected">软件工程</option>
-                    </select></label></div>
-                </div>
                 <div class="col-xs-6">
                     <div class="ui-pg-div"><span class="label label-lg label-success arrowed-right">新增班级</span><span
                             class="ui-icon ace-icon fa fa-plus-circle purple" id="addclass"></span></div>

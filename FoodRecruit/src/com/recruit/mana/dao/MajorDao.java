@@ -2,8 +2,7 @@ package com.recruit.mana.dao;
 
 import com.recruit.BaseDao.DaoBase;
 import com.recruit.Bean.PageBean;
-import com.recruit.Model.Major;
-import org.hibernate.Query;
+import com.recruit.mana.model.Major;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -47,5 +46,11 @@ public class MajorDao extends DaoBase<Major>{
         return(
                 this.get(dc)
         );
+    }
+
+    public Major getByNameAndYear(String name,int year){
+        DetachedCriteria dc=DetachedCriteria.forClass(Major.class);
+        dc.add(Restrictions.eq("majorName",name)).add(Restrictions.eq("year",year));
+        return this.get(dc);
     }
 }

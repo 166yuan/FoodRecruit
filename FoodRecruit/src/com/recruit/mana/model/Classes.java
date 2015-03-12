@@ -1,4 +1,6 @@
-package com.recruit.Model;
+package com.recruit.mana.model;
+
+import com.recruit.Model.BasicModel;
 
 import javax.persistence.Entity;
 
@@ -6,7 +8,7 @@ import javax.persistence.Entity;
  * Created by Administrator on 2015/2/13.
  */
 @Entity
-public class Classes extends  BasicModel{
+public class Classes extends BasicModel {
     private String className;
 
     private Long majorId;

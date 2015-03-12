@@ -34,7 +34,7 @@
         <b class="arrow"></b>
       </li>
 
-        <c:if test="${user_type==2}">
+
       <li class="hover hsub" id="foodtest">
         <a href="#" class="dropdown-toggle">
           <i class="menu-icon fa fa-list"></i>
@@ -60,7 +60,7 @@
           <li class="hover">
             <a href="/exper/myPublishExperiment">
               <i class="menu-icon fa fa-caret-right"></i>
-              已发布的实验信息
+              我发布的实验
             </a>
 
             <b class="arrow"></b>
@@ -69,21 +69,21 @@
             <li class="hover">
                 <a href="/exper/scoreExper">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    实验员评分
+                    我的实验员评分
                 </a>
 
                 <b class="arrow"></b>
             </li>
         </ul>
       </li>
-       </c:if>
 
 
-        <c:if test="${user_type==1}">
+
+
       <li class="hover hsub" id="recruit">
         <a href="#" class="dropdown-toggle">
           <i class="menu-icon fa fa-list"></i>
-          <span class="menu-text"> 实验参与 </span>
+          <span class="menu-text"> 参与实验 </span>
 
           <b class="arrow fa fa-angle-down"></b>
         </a>
@@ -112,14 +112,14 @@
           <li class="hover">
             <a href="#">
               <i class="menu-icon fa fa-caret-right"></i>
-              查看实验评分
+              我得到的实验评分
             </a>
 
             <b class="arrow"></b>
           </li>
         </ul>
       </li>
-        </c:if>
+
 
 
       <c:choose>

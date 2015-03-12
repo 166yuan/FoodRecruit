@@ -24,8 +24,8 @@
         <mapping class="com.recruit.competition.model.Team"/>
         <mapping class="com.recruit.competition.model.Competition"/>
         <mapping class="com.recruit.competition.model.CompetAndTeam"/>
-        <mapping class="com.recruit.Model.Major"/>
-        <mapping class="com.recruit.Model.Classes"/>
+        <mapping class="com.recruit.mana.model.Major"/>
+        <mapping class="com.recruit.mana.model.Classes"/>
         <mapping class="com.recruit.score.model.Score"/>
         <mapping class="com.recruit.experiment.model.Experiment"/>
         <mapping class="com.recruit.experUser.model.ExperUser"/>

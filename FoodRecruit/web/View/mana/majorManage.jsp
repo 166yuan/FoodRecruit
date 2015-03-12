@@ -52,7 +52,7 @@
                         <td class="CaptionTD">年级</td>
                         <td class="DataTD">&nbsp;<input type="text" size="20" maxlength="30" id="m_year" name="year"
                                                         role="textbox"
-                                                        class="FormElement ui-widget-content ui-corner-all"></td>
+                                                        class="FormElement ui-widget-content ui-corner-all">级</td>
                     </tr>
 
                     <tr class="FormData" style="display:none">
@@ -244,12 +244,22 @@
     function submit(){
         var name=document.getElementById('m_name').value;
         var year=document.getElementById('m_year').value;
-        $.getJSON('/mana/addmajor?name='+name+'&year='+year,function(data){
-                    if(data==1){
-                        alert("添加成功");
-                        window.location.href="/mana/majormanager?page=1";
-                    }
-                });
+        if(isNaN(year)){
+        alert("年级必须是数字");
+        }else if(year<2000||year>3000){
+        alert("年级格式必须是20XX");
+        }else{
+            $.getJSON('/mana/addmajor?name='+name+'&year='+year,function(data){
+                if(data==1){
+                    alert("添加成功");
+                    window.location.href="/mana/majormanager?page=1";
+                }else if(data==-2){
+                    alert("改专业已存在");
+                }else{
+                    alert("添加失败，未知错误");
+                }
+            });
+        }
     }
 
 </script>

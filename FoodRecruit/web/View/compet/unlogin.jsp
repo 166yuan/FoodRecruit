@@ -21,7 +21,7 @@
 <div id="container">
   <div class="header-wrap" style="height: 140px;!important;">
     <header>
-      <img src="/images/logo.gif"/>
+      <img src="/images/logo.png"  style="margin-top: 10px"/>
     </header>
 
   </div>

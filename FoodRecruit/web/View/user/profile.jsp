@@ -51,7 +51,7 @@
         </button>
 
         <i class="ace-icon fa fa-umbrella bigger-120 blue"></i>
-        点击更改头像 ...
+        点击下面头像可更改哦！
     </div>
 
     <div class="pull-right">
@@ -93,7 +93,7 @@
                             <span>
                                 <label class="ace-file-input ace-file-multiple" style="width: 150px;">
                                     <input type="file" name="file" id="upfile" onchange="uploadFile(this)">
-                                    <span class="ace-file-container" data-title="点击修改头像">
+                                    <span class="ace-file-container" data-title="点我选择新头像">
                                         <span class="ace-file-name" data-title="No File ...">
                                             <i class=" ace-icon fa fa-picture-o"></i>
                                         </span>
