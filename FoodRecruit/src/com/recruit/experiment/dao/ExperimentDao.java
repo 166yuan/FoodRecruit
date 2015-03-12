@@ -42,6 +42,12 @@ public class ExperimentDao extends DaoBase<Experiment> {
         return list;
     }
 
+    public List<Experiment> getAllExperiment(){
+        DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
+        List<Experiment>list=this.search(dc);
+        return list;
+    }
+
     public List<Experiment> findMyPublishExperiment(Long publishId){
         DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class)
                 .add(Restrictions.eq("publishId",publishId));

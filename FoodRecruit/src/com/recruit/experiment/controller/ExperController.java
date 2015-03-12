@@ -9,6 +9,7 @@ import com.recruit.experiment.model.Experiment;
 
 import com.recruit.user.Dao.UserDao;
 import com.recruit.user.model.User;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONObject;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -341,5 +342,13 @@ public class ExperController {
         return "View/experiment/scoreList";
     }
 
+    @RequestMapping("myAttend")
+    public String attendExperiment(HttpSession session,Model model){
+        Long userId=(Long)session.getAttribute("userId");
+        ExperUserDao exDao=ExperUserDao.getInstance();
+        List<ExperUser>list=exDao.getAllExperByUser(userId);
+
+    return "View/experiment/myAttendExper";
+    }
 
 }

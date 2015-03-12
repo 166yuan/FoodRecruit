@@ -88,10 +88,16 @@
 				    </tr>
 				  </table>
 				</div>
-				
-				<div class="center">
-					<a  class="btn btn-primary" onclick="joinIn()">加入实验</a>
-				</div>
+
+               <c:choose>
+                   <c:when test="${user_type!=1}"></c:when>
+                   <c:otherwise>
+                       <div class="center">
+                           <a  class="btn btn-primary" onclick="joinIn()">加入实验</a>
+                       </div>
+                   </c:otherwise>
+               </c:choose>
+
 			</div><!-- #content -->
 
 </div><!-- #page -->

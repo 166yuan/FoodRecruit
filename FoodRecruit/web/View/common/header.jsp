@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- #section:basics/navbar.dropdown -->
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" >
@@ -28,7 +29,8 @@
     <!-- /section:basics/sidebar.mobile.toggle -->
     <div class="navbar-header pull-left">
       <!-- #section:basics/navbar.layout.brand -->
-      <a href="#" class="navbar-brand">
+
+                <a href="#" class="navbar-brand">
         <small>
           <i class="fa fa-leaf"></i>
           食试求士

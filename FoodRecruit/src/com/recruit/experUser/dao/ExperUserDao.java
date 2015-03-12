@@ -59,4 +59,10 @@ public class ExperUserDao extends DaoBase<ExperUser>{
         return this.count(dc).intValue();
     }
 
+    public List<ExperUser> getAllExperByUser(Long userId){
+        DetachedCriteria dc = DetachedCriteria.forClass(ExperUser.class)
+                .add(Restrictions.eq("userId",userId));
+        return this.search(dc);
+    }
+
 }

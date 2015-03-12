@@ -7,6 +7,8 @@ import com.recruit.Model.Classes;
 import com.recruit.Model.Major;
 import com.recruit.competition.dao.ComDao;
 import com.recruit.competition.model.Competition;
+import com.recruit.experiment.dao.ExperimentDao;
+import com.recruit.experiment.model.Experiment;
 import com.recruit.mana.bean.ClaMajBean;
 import com.recruit.mana.dao.ClassDao;
 import com.recruit.mana.dao.MajorDao;
@@ -316,7 +318,13 @@ public class ManaController {
         return "View/mana/competManage";
     }
 
-
+    @RequestMapping("experManage")
+    public String experManage(Model model){
+        ExperimentDao experimentDao=ExperimentDao.getInstance();
+        List<Experiment>list=experimentDao.getAllExperiment();
+        model.addAttribute("list",list);
+        return "View/mana/experManage";
+    }
 
 
 }

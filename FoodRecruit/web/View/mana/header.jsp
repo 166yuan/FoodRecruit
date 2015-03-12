@@ -64,14 +64,12 @@
       </li>
 
       <li class="hover hsub" id="experpage">
-        <a href="#" class="dropdown-toggle">
+        <a href="/mana/experManage" class="dropdown-toggle">
           <i class="menu-icon fa fa-flask"></i>
           <span class="menu-text"> 实验管理 </span>
 
           <b class="arrow fa fa-angle-down"></b>
         </a>
-
-        <b class="arrow"></b>
       </li>
 
       <li class="hover hsub" id="contentpage">

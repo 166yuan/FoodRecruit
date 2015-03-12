@@ -73,6 +73,8 @@ function submitLoginForm(){
                 var message = $("#login-message");
                 message.html("<p style='color: red'>帐号未通过审核或被冻结，请联系管理员</p>");
                 return false;
+            }else if(result == 2){
+                window.location.href = "/mana/index";
             }else if(result == 1){
                 window.location.href = "/user/home";
             }

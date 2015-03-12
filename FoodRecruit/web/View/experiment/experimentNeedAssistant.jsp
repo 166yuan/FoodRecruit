@@ -58,10 +58,13 @@
 							<c:forEach items="${list}" var="exper">
 							<li>
 								<h4 class="lighter no-margin-bottom">
-									<a href="#"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp;
-									<a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
+                                    <span >${exper.id}.</span><a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
 									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
-								</h4>
+                                    <c:set var="now" value="<%=System.currentTimeMillis()%>"/>
+                                    <c:if test="${(now-exper.createTime.time)<1209600000}">
+                                        <img src="/images/new.gif" alt="">
+                                    </c:if>
+                                </h4>
 							</li>
 							</c:forEach>
 						</ul>

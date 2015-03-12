@@ -28,7 +28,7 @@ import java.io.*;
 public class UserController {
     public static final int SUCCESS = 1;
     public static final int FAILURE = -1;
-
+    public static final int ADMIN=2;
     //从request中提取出json数据
     public JSONObject createJson (HttpServletRequest request) throws IOException {
         StringBuffer sb = new StringBuffer();
@@ -75,7 +75,9 @@ public class UserController {
                         request.getSession().setAttribute("userId",user.getId());
                         request.getSession().setAttribute("user_type",user.getType());
                         request.getSession().setAttribute("imageUrl",user.getImage_url());
-
+                        if(user.getType()==3){
+                            result=ADMIN;
+                        }
                     } else {
                         result = FAILURE;
                     }
@@ -101,6 +103,7 @@ public class UserController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().setAttribute("account",null);
+        request.getSession().removeAttribute("userId");
         return "redirect:/user/login";
     }
 
