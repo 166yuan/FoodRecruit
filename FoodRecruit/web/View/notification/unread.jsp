@@ -19,10 +19,11 @@
 
 	<div class="ui divider"></div>
 
+	<!-- 通知左侧 -->
 	<div class="four wide column" id="notifications_filter">
 		<div class="ui vertical menu">
 			<a href="#">
-				<li class="active item"><span class="ui label">${list.size()}</span>未读</li>
+				<li class="active item"><span id="unReadSize1" class="ui label">${list.size()}</span>未读</li>
 			</a>
 			<li class="item">
 				<span class="ui label">0</span>
@@ -33,65 +34,74 @@
 			</a>
 		</div>
 
-		<a href="./通知 - 代码托管 - 开源中国社区_files/通知 - 代码托管 - 开源中国社区.html" class="ui tiny button">清除</a>
+		<a href="#" class="ui tiny button">清除</a>
 		<style>
 		  .ui.vertical.menu .item:hover{background-color:#f7f7f7}
 		</style>
 
 	</div>
+
+	<!-- 通知列表 -->
 	<div class="twelve wide column">
 		<table class="ui table notifications-table">
 			<thead>
 				<tr>
 					<th>
-					  <i>共有${list.size()}未读通知</i>
+					  <i>共有<span id="unReadSize2">${list.size()}</span>未读通知</i>
 					</th>
 				</tr>
 			</thead>
 
 			<tbody>
+				<c:forEach items="${list}" var="noti">
 				<tr>
-				<td>
-					<div class="notification-item unread issue-notification">
-					<div class="float-right">
-						<div class="">
-						<a href="http://git.oschina.net/Mklaus" ><img alt="F15185c7aad3f7a73d8689b16cfb0e64?s=16&amp;d=mm" class="ui avatar image" src="./f15185c7aad3f7a73d8689b16cfb0e64" title="标记为已读"">
-						</a>2分钟前
+					<td>
+						<div class="notification-item unread issue-notification">
+							<div class="float-right">
+									<a href="#" onclick="setReaded(this,${noti.id})" ><span class="glyphicon glyphicon-remove"  title="标记为已读"/>
+									</a>&nbsp;2分钟前
+							</div>
+							<strong>
+								<a href="#" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+							</strong>
 						</div>
-					</div>
-					<strong>
-					<a href="http://git.oschina.net/Mklaus/learnGit/issues/1" id="mark_notification" noti_id="2240646" target="_blank"><i class="icon file"></i>
-					fdsa
-					</a></strong>
-					</div>
-				<style>
-				  .ui.avatar{height:1.5rem !important;width:1.5rem !important}
-				</style>
-				<script>
-				  $(document).ready(function() {
-				    $("#mark_notification").click(function(){
-				      var id = $(this).attr("noti_id");
-				      mark_recomm(id);
-				    });
-				  });
-				  function mark_recomm(id) {
-				    $.ajax({
-				      url:"/notifications/mark",
-				      data: {"ids":id},
-				      type: "POST"
-				    });
-				  }
-				</script>
-
-				</td>
+					</td>
 				</tr>
+				</c:forEach>
 			</tbody>
+
 		</table>
 	</div>
 
 </div>
 <!-- 主体结束-->
 </body>
+
+<script type="text/javascript" >
+
+	function setReaded(obj,notiId){
+
+		$.ajax({
+			url: "/notification/readed",
+			type: "post",
+			dataType: "text",
+			data: {"notiId": notiId},
+			success: function (data) {
+				var result = parseInt(data);
+
+				$("#unReadSize1").html(result);
+				$("#unReadSize2").html(result);
+
+				var tr =obj.parentNode.parentNode.parentNode;
+				tr.parentNode.removeChild(tr);
+
+
+			}
+		});
+	}
+
+</script>
+
 </html>
 </html>
 

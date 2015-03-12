@@ -12,6 +12,7 @@
 <html>
 <body class="no-skin">
 <c:import  url="/View/common/header.jsp"/>
+
 	<div class="ui grid page" id="index-nav">
 	<h3 class="page_title notifications_page_title">
 	通知
@@ -19,10 +20,11 @@
 
 	<div class="ui divider"></div>
 
+	<!--通知右侧-->
 	<div class="four wide column" id="notifications_filter">
 		<div class="ui vertical menu">
 			<a href="/notification/myNotification">
-				<li class="item"><span class="ui label">0</span>未读</li>
+				<li class="item"><span class="ui label">${unreadSize}</span>未读</li>
 			</a>
 
 			<li class="item">
@@ -34,12 +36,14 @@
 			</a>
 		</div>
 
-		<a href="./通知 - 代码托管 - 开源中国社区_files/通知 - 代码托管 - 开源中国社区.html" class="ui tiny button">清除</a>
+		<a href="#" class="ui tiny button">清除</a>
 		<style>
 		  .ui.vertical.menu .item:hover{background-color:#f7f7f7}
 		</style>
 
 	</div>
+
+	<!--通知表-->
 	<div class="twelve wide column">
 		<style>
 			.ui.avatar{height:1.5rem !important;width:1.5rem !important}
@@ -53,24 +57,24 @@
 				</tr>
 			</thead>
 
-			<c:forEach items="${list}" var="noti">
 			<tbody>
-				<tr>
-				<td>
-					<div class="notification-item unread issue-notification">
-					<div class="float-right">
-						<div class="">
-						<a href="http://git.oschina.net/Mklaus" ><img alt="F15185c7aad3f7a73d8689b16cfb0e64?s=16&amp;d=mm" class="ui avatar image"  title="标记为已读"">
-						</a>2分钟前
+				<c:forEach items="${list}" var="noti">
+					<tr>
+					<td>
+						<div class="notification-item unread issue-notification">
+						<div class="float-right">
+							<div class="">
+							<a href="http://git.oschina.net/Mklaus" >
+							</a>2分钟前
+							</div>
 						</div>
-					</div>
-					<strong>
-					<a href="#" id="mark_notification" noti_id="2240646" target="_blank">${noti.info}</a></strong>
-					</div>
-				</td>
-				</tr>
+						<strong>
+						<a href="#" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a></strong>
+						</div>
+					</td>
+					</tr>
+				</c:forEach>
 			</tbody>
-			</c:forEach>
 		</table>
 	</div>
 

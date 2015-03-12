@@ -37,22 +37,29 @@ public class NotificationController extends BasicModel {
         out.print(result);
     }
 
+    /**
+     * 设置指定的通知为已读
+     * @param notiId
+     * @param out
+     */
     @RequestMapping("readed")
-    public void setReaded(Long notificationId,PrintWriter out){
+    public void setReaded(HttpServletRequest req, Long notiId,PrintWriter out){
         NotificationDao notificationDao = NotificationDao.getInstance();
+        Long uid = (Long)req.getSession().getAttribute("userId");
         int result = 0;
         try {
             notificationDao.begin();
 
-            Notification noti = notificationDao.get(notificationId);
+            Notification noti = notificationDao.get(notiId);
 
             noti.setIsNew(false);
 
             notificationDao.update(noti);
 
+            result = notificationDao.getUnreadNotificationByUserId(uid).size();
+
             notificationDao.commit();
 
-            result = SUCCESS;
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
@@ -61,11 +68,16 @@ public class NotificationController extends BasicModel {
         out.print(result);
     }
 
+    /**
+     * 得到个人所有未读通知
+     * @param req
+     * @param model
+     * @return
+     */
     @RequestMapping("myNotification")
     public String myNotification(HttpServletRequest req,Model model){
         NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
-        System.out.println("In ");
         try {
             notificationDao.begin();
 
@@ -83,19 +95,56 @@ public class NotificationController extends BasicModel {
         return "View/notification/unread";
     }
 
+    /**
+     * 判断个人是否有新的通知 并返回新通知个数 用于/common/header.jsp
+     * @param req
+     * @param out
+     */
+    @RequestMapping("getNew")
+    public void haveNewNotification(HttpServletRequest req,PrintWriter out){
+        NotificationDao notificationDao = NotificationDao.getInstance();
+        Long uid = (Long)req.getSession().getAttribute("userId");
+
+        int result = 0;
+        try {
+            notificationDao.begin();
+
+            List<Notification> list = notificationDao.getUnreadNotificationByUserId(uid);
+
+            result = list.size();
+
+            notificationDao.commit();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            notificationDao.close();
+        }
+
+        out.print(result);
+    }
+
+    /**
+     * 返回个人的所有通知
+     * @param req
+     * @param model
+     * @return
+     */
     @RequestMapping("allNotification")
     public String allNotification(HttpServletRequest req,Model model){
         NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
-        System.out.println("In ");
         try {
             notificationDao.begin();
+
+            int unreadSize = notificationDao.getUnreadNotificationByUserId(uid).size();
 
             List<Notification> list = notificationDao.getAllNotificationByUserId(uid);
 
             notificationDao.commit();
 
             model.addAttribute("list",list);
+            model.addAttribute("unreadSize",unreadSize);
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {

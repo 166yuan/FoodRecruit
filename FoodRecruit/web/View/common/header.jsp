@@ -49,8 +49,8 @@
       <ul class="nav ace-nav">
         <li class="purple">
           <a  href="/notification/myNotification">
-            <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-            <span class="badge badge-important">8</span>
+            <i id="ring" class="ace-icon fa fa-bell icon-animated-bell"></i>
+            <span class="badge badge-important" id="badge" type="hidden">8</span>
           </a>
 
         </li>
@@ -76,7 +76,7 @@
             </li>
 
             <li>
-              <a href="/user/profile">
+              <a href="/user/getProfile">
                 <i class="ace-icon fa fa-user"></i>
                 个人信息
               </a>
@@ -100,5 +100,38 @@
     <!-- /section:basics/navbar.dropdown -->
   </div><!-- /.navbar-container -->
 
+
+
 </div>
 <!--导航栏结束-->
+
+<script type="text/javascript" >
+
+  $(document).ready(function(){
+    getNotification();
+  });
+
+  //  window.setInterval(getNotification,5000);
+
+  function getNotification() {
+    $("#ring").removeClass("icon-animated-bell");
+    $("#badge").hide();
+
+    $.ajax({
+      url: "/notification/getNew",
+      type: "get",
+      success: function (data) {
+        var size = parseInt(data);
+
+        if (size >= 1) {
+          $("#ring").addClass("icon-animated-bell");
+          $("#badge").show();
+          $("#badge").html(size);
+        }
+      }
+    });
+  }
+
+</script>
+
+
