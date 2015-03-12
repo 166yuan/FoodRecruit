@@ -7,15 +7,14 @@ function publish(){
     var pretime       = document.getElementById("date-timepicker1").value;
     var endtime       = document.getElementById("date-timepicker2").value;
     var linkman       = document.getElementById("linkman").value;
-    var role          = document.getElementById("Role").value;
     var phone         = document.getElementById("phoneNumber").value;
     var qq            = document.getElementById("QQ").value;
     var email         = document.getElementById("Email").value;
     var count         = document.getElementById("count").value;
     var note          = document.getElementById("remark").value;
-alert()
+
     var data = {"name":name,"content":content,"requirement":requirement,"type":type,
-                "pretime":pretime,"endtime":endtime,"linkman":linkman,"role":role,"phone":phone,
+                "pretime":pretime,"endtime":endtime,"linkman":linkman,"phone":phone,
                 "qq":qq,"email":email,"count":count,"note":note};
 
 

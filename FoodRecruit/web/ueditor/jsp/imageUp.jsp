@@ -7,7 +7,7 @@
 	response.setCharacterEncoding("utf-8");
     Uploader up = new Uploader(request);
     up.setSavePath("upload");
-    String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp"};
+    String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".JPG",".bmp"};
     up.setAllowFiles(fileType);
     up.setMaxSize(10000); //单位KB
     up.upload();

@@ -74,7 +74,7 @@ public class ManaController {
     @RequestMapping("showfeedback")
     public String showFeedBack(Model model,int type){
         NotificationDao notificationDao = NotificationDao.getInstance();
-        List<Notification>list=notificationDao.getAllNotification(type);
+        List<Notification>list=notificationDao.getAllFeedback(type);
         List<NotiUserBean>nlist=NotiUserBean.buildList(list);
         model.addAttribute("list",nlist);
         model.addAttribute("type",type);
@@ -91,7 +91,7 @@ public class ManaController {
     @RequestMapping("showNotiById")
     public String showNotiById(Long id,String name,Model model){
         NotificationDao notificationDao=NotificationDao.getInstance();
-        Notification notification=notificationDao.getNotiById(id);
+        Notification notification=notificationDao.get(id);
         try {
             notificationDao.begin();
             notification.setIsNew(false);
@@ -225,7 +225,7 @@ public class ManaController {
         Notification notification=new Notification();
         try {
         notificationDao.begin();
-        notification.setUserId(id);
+        notification.setReceiverId(id);
         notification.setInfo(content);
         notification.setType(4);
         notification.setIsNew(true);

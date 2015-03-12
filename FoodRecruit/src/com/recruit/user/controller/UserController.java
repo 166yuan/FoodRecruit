@@ -312,7 +312,7 @@ public class UserController {
             Notification notification=new Notification();
             notification.setType(3);
             notification.setInfo(info);
-            notification.setUserId(user.getId());
+            notification.setReceiverId(user.getId());
             notificationDao.save(notification);
             notificationDao.commit();
         }catch (Exception e){

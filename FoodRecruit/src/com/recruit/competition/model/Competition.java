@@ -2,6 +2,7 @@ package com.recruit.competition.model;
 
 import com.recruit.Model.BasicModel;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class Competition extends BasicModel {
     //竞赛名称
     private String name;
     //竞赛介绍
+    @Column(length = 65534)
     private String information;
     //竞赛队伍人数限制
     private Integer minNumber;

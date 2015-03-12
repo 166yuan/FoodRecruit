@@ -7,6 +7,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,21 +27,35 @@ public class NotificationDao extends DaoBase<Notification>{
         return Singleton.INSTANCE;
     }
 
-    //根据接受者ID 查看输入该接受者的通知
-    public List<Notification> forUserId(Long userId){
+    //根据接受者ID 获取所有的通知
+    public List<Notification> getAllNotificationByUserId(Long userId){
         DetachedCriteria dc = DetachedCriteria.forClass(Notification.class)
-                .add(Restrictions.eq("userId",userId));
+                .add(Restrictions.eq("receiverId",userId));
         List<Notification> list = this.search(dc);
         return list;
     }
 
-    public Notification CreateNotification(){
+    //根据用户ID 返回所有未读的通知
+    public List<Notification> getUnreadNotificationByUserId(Long userId){
+        DetachedCriteria dc = DetachedCriteria.forClass(Notification.class)
+                .add(Restrictions.eq("receiverId",userId))
+                .add(Restrictions.eq("isNew",true));
+        List<Notification> list = this.search(dc);
+        return list;
+    }
+
+    public Notification Create(){
         Notification notification = new Notification();
+
+        Date now = new Date();
+        notification.setCreateTime(now);
+
         this.save(notification);
         return notification;
     }
 
-    public List<Notification> getAllNotification(int type){
+
+    public List<Notification> getAllFeedback(int type){
         DetachedCriteria dc = DetachedCriteria.forClass(Notification.class);
         if(type==1){
             dc.add(Restrictions.eq("type",3)).add(Restrictions.eq("isNew",true));
@@ -53,13 +68,5 @@ public class NotificationDao extends DaoBase<Notification>{
             dc.addOrder(Order.desc("createTime"));
         }
         return this.search(dc);
-    }
-
-    public Notification getNotiById(Long id){
-        DetachedCriteria dc = DetachedCriteria.forClass(Notification.class)
-                .add(Restrictions.eq("id",id));
-        return(
-                this.get(dc)
-        );
     }
 }

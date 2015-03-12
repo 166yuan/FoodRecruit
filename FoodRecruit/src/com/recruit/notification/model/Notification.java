@@ -10,32 +10,46 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Notification extends BasicModel {
+    //通知发起人id
+    private Long creatorId;
     //信息接受人id
-    private Long userId;
+    private Long receiverId;
     //信息内容
     private String info;
-    //反馈类型 默认为 0申请通知 1录取通知 2 竞赛通知 3反馈 4.回复用户
+    //反馈类型  0申请通知 1录取通知 2 竞赛通知 3反馈 4回复 9只是消息
     private Integer type;
     //true:未读  false:已读
     private Boolean isNew;
 
-    public Notification(){
-        isNew = true;
-    }
-    public Boolean getIsNew() {
-        return isNew;
+    //参考关联id 表示该通知关联的实验id 或者是 在竞赛中关联的队伍id
+    private Long refId;
+
+    public Notification() {
+        this.isNew = true;
     }
 
-    public void setIsNew(Boolean isNew) {
-        this.isNew = isNew;
+    public Long getRefId() {
+        return refId;
     }
 
-    public Integer getType() {
-        return type;
+    public void setRefId(Long refId) {
+        this.refId = refId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Long getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
     public String getInfo() {
@@ -46,13 +60,19 @@ public class Notification extends BasicModel {
         this.info = info;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Integer getType() {
+        return type;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
+    public Boolean getIsNew() {
+        return isNew;
+    }
 
+    public void setIsNew(Boolean isNew) {
+        this.isNew = isNew;
+    }
 }

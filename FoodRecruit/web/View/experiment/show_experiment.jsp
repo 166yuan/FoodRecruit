@@ -24,7 +24,7 @@
 		<ul class="breadcrumb">
 			<li>
 				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="/View/user/myspace.jsp">主页${from}</a>
+				<a href="/View/user/myspace.jsp">主页</a>
 			</li>
 			<li>
 				<c:choose>

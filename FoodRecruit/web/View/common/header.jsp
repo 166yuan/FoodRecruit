@@ -48,64 +48,11 @@
     <div class="navbar-buttons navbar-header pull-right" role="navigation">
       <ul class="nav ace-nav">
         <li class="purple">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+          <a  href="/notification/myNotification">
             <i class="ace-icon fa fa-bell icon-animated-bell"></i>
             <span class="badge badge-important">8</span>
           </a>
 
-          <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-            <li class="dropdown-header">
-              <i class="ace-icon fa fa-exclamation-triangle"></i>
-              您有8个新消息
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
-												您被录取为<a>化学分析</a>的实验员了。
-											</span>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <i class="btn btn-xs btn-primary fa fa-user"></i>
-                您已经成功加入队伍
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
-												您的评分结果已经出来了
-											</span>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
-												您的审核没有通过啊。
-											</span>
-                </div>
-              </a>
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">
-                查看所有消息
-                <i class="ace-icon fa fa-arrow-right"></i>
-              </a>
-            </li>
-          </ul>
         </li>
 
         <!-- #section:basics/navbar.user_menu -->

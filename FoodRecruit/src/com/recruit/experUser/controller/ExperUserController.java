@@ -73,8 +73,8 @@ public class ExperUserController{
             Long publisherId = experiment.getPublishId();
 
             nDao.begin();
-            Notification noti = nDao.CreateNotification();
-            noti.setUserId(publisherId);
+            Notification noti = nDao.Create();
+            noti.setReceiverId(publisherId);
             noti.setType(0);
             noti.setInfo("你有一个新的助手申请");
             nDao.commit();
