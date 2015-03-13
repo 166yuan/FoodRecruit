@@ -25,6 +25,7 @@
 </head>
 
 <body class="no-skin">
+
 <!-- #section:basics/navbar.layout -->
 <div id="navbar" class="navbar navbar-default">
     <script type="text/javascript">
@@ -53,6 +54,10 @@
         </div>
         <!-- #section:basics/navbar.dropdown -->
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            点击进入主页
+            <a href="/user/login">主页</a>
+            <br>
+            <a href="/mana/index">进入后台管理</a>
         </div>
     </div><!-- /.navbar-container -->
 </div>

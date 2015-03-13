@@ -211,7 +211,7 @@
 
         <div class="center">
             <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                <span class="bigger-110">修改个人信息</span>
+                <span class="bigger-110" ><a onclick="alterInfo()">修改个人信息</a></span>
 
                 <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
             </button>
@@ -473,7 +473,6 @@
             function(){
                 $('#user-profile-3').show();
                 $('#user-profile-1').hide();
-
             }
     );
     $('#avatar').click(
@@ -490,4 +489,10 @@
           $('#avatar').show();
       }
     );
+    function alterInfo(){
+        $('#user-profile-3').show();
+        $('#user-profile-1').hide();
+        $('#change1').removeClass("active");
+        $('#change2').addClass("active");
+    }
 </script>

@@ -1,3 +1,4 @@
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -53,21 +54,30 @@
 								${exper.name}
 							</h1>
 					</div>
-				<br>
 				<h3 class="strong">实验内容：</h3><br>
             <input id="experId" value="${exper.id}" type="hidden"/>
 				<div class="article">
 					<p>${exper.information}</p>
 				</div>
-				<br>
+            <hr>
 				<h3 class="strong">实验要求：</h3><br>
 				<div class="article">
 					<p>${exper.requirement}</p>
 				</div>
-
-				<br><br><br>
-				<p>实验性质：<span id="exper_type">${exper.type}</span></p>
-				<p>需要助手：<span id="numberLimit">${exper.count}</span>&nbsp;个</p>
+            <hr>
+            <p><h4>实验时间</h4><span id="experTime"><strong><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日 HH:mm"/></strong> 到 <strong><fmt:formatDate value="${exper.endTime}" pattern="yyyy年MM月dd日 HH:mm"/></strong></span></p>
+                <hr>
+				<p><h4>实验性质</h4><span id="exper_type">${exper.type}</span></p>
+                <hr>
+				<p><h4>需要助手</h4><span id="numberLimit">${exper.count}</span>&nbsp;个</p><hr>
+                <p><h4>备注</h4><c:choose>
+                <c:when test="${exper.type!=null}">
+                    <span>${exper.note}</span>
+                </c:when>
+                <c:otherwise>
+                    <span>暂无</span>
+                </c:otherwise>
+        </c:choose></p>
 				<hr>
 
 				<div class="panel panel-default">
@@ -90,7 +100,7 @@
 				</div>
 
                <c:choose>
-                   <c:when test="${user_type!=1}"></c:when>
+                   <c:when test="${userId==exper.publishId}"></c:when>
                    <c:otherwise>
                        <div class="center">
                            <a  class="btn btn-primary" onclick="joinIn()">加入实验</a>

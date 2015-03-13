@@ -83,14 +83,54 @@
       <div class="form-group">
         <label  class="col-sm-4 control-label">实验性质</label>
         <div class="col-sm-2">
-          <select class="form-control" name="type" id="type">
-            <option value="院级创新项目">院级创新项目</option>
-            <option value="校级创新项目">校级创新项目</option>
-            <option value="省级创新项目">省级创新项目</option>
-            <option value="国家级创新项目">国家级创新项目</option>
-            <option value="普通项目">普通项目</option>
-          </select>
+        <c:if test="${exper.type.equals('普通项目')}">
+            <select class="form-control" name="type" id="type">
+                <option value="普通项目">普通项目</option>
+                <option value="院级创新项目">院级创新项目</option>
+                <option value="校级创新项目">校级创新项目</option>
+                <option value="省级创新项目">省级创新项目</option>
+                <option value="国家级创新项目">国家级创新项目</option>
+            </select>
+        </c:if>
+            <c:if test="${exper.type.equals('院级创新项目')}">
+                <select class="form-control" name="type" id="type">
+                    <option value="院级创新项目">院级创新项目</option>
+                    <option value="校级创新项目">校级创新项目</option>
+                    <option value="省级创新项目">省级创新项目</option>
+                    <option value="国家级创新项目">国家级创新项目</option>
+                    <option value="普通项目">普通项目</option>
+                </select>
+            </c:if>
+            <c:if test="${exper.type.equals('校级创新项目')}">
+                <select class="form-control" name="type" id="type">
+                    <option value="校级创新项目">校级创新项目</option>
+                    <option value="院级创新项目">院级创新项目</option>
+                    <option value="省级创新项目">省级创新项目</option>
+                    <option value="国家级创新项目">国家级创新项目</option>
+                    <option value="普通项目">普通项目</option>
+                </select>
+            </c:if>
+            <c:if test="${exper.type.equals('省级创新项目')}">
+                <select class="form-control" name="type" id="type">
+                    <option value="省级创新项目">省级创新项目</option>
+                    <option value="校级创新项目">校级创新项目</option>
+                    <option value="院级创新项目">院级创新项目</option>
+                    <option value="国家级创新项目">国家级创新项目</option>
+                    <option value="普通项目">普通项目</option>
+                </select>
+            </c:if>
+            <c:if test="${exper.type.equals('国家级创新项目')}">
+                <select class="form-control" name="type" id="type">
+                    <option value="国家级创新项目">国家级创新项目</option>
+                    <option value="校级创新项目">校级创新项目</option>
+                    <option value="院级创新项目">院级创新项目</option>
+                    <option value="省级创新项目">省级创新项目</option>
+                    <option value="普通项目">普通项目</option>
+                </select>
+            </c:if>
+
         </div>
+
       </div>
 
         <div class="form-group">

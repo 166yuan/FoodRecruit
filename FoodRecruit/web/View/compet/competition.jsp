@@ -20,35 +20,17 @@
         <li id="topmenu-item-first-a" class="topmenu-item topmenu-item-first">
           <a href="#" target="_blank" title="登录" seed="topmenuItem-link">登录</a><b class="split">-</b><a href="#" target="_blank" title="注册">注册</a></li><li class="topmenu-item topmenu-item-last topmenu-jingkao-help"><a href="#" target="_blank" title="帮助中心">帮助中心</a></li></ul></div></div></div>
 <div id="container">
-  <c:choose>
-    <c:when test="${competition.image_url!=null}">
-      <div class="header-wrap">
-        <header>
-          <img src="${competition.image_url}"/>
-        </header>
-        <p>
-          欢迎各位莘莘学子参与我们的比赛！
-        </p>
-      </div>
-    </c:when>
-    <c:otherwise>
       <div class="header-wrap" style="height: 90px;!important;">
         <header>
+            <img src="/images/logo_min.png" />
         </header>
         <p>
           欢迎各位莘莘学子参与我们的比赛！
         </p>
       </div>
-    </c:otherwise>
-  </c:choose>
-
-
-
-
 
   <div id="last-p"></div>
   <div id="content">
-
 
     <section id="intro">
       <h1>竞赛入口</h1>

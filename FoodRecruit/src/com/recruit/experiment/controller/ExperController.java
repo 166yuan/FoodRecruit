@@ -172,6 +172,7 @@ public class ExperController {
             exper.setBeginTime(sdf.parse(j.getString("pretime")));
             exper.setEndTime(sdf.parse(j.getString("endtime")));
             exper.setContact(j.getString("linkman"));
+            exper.setType(j.getString("type"));
             exper.setQQ(j.getString("qq"));
             exper.setPhone(j.getString("phone"));
             exper.setEmail(j.getString("email"));
@@ -266,8 +267,6 @@ public class ExperController {
             JSONObject j = createJson(request);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
             eDao.begin();
-
-
             Experiment exper = eDao.get(j.getLong("experId"));
             String pretime=j.getString("pretime");
             String endtime=j.getString("endtime");
@@ -279,6 +278,7 @@ public class ExperController {
             exper.setBeginTime(sdf.parse(pretime));
             exper.setEndTime(sdf.parse(endtime));
             exper.setContact(j.getString("linkman"));
+            exper.setType(j.getString("type"));
             exper.setQQ(j.getString("qq"));
             exper.setPhone(j.getString("phone"));
             exper.setEmail(j.getString("email"));
