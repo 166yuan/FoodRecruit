@@ -39,9 +39,11 @@ public class ManaController {
     @RequestMapping("index")
     public String index(Model model){
         UserDao userDao= UserDao.getInstance();
+        userDao.begin();
         //取得所有用户信息
         List<User> list=userDao.getAllUser();
         model.addAttribute("list",list);
+        userDao.commit();
         userDao.close();
         return "View/mana/userManager";
     }
@@ -55,8 +57,11 @@ public class ManaController {
     @RequestMapping("showuserbyid")
     public String showUserById(Long id,Model model){
         UserDao userDao=UserDao.getInstance();
+        userDao.begin();
         User user=userDao.getUserById(id);
         model.addAttribute("user",user);
+        userDao.commit();
+        userDao.close();
         return "View/mana/editUser";
     }
 

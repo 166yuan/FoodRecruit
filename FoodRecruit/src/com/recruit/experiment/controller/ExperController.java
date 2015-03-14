@@ -73,10 +73,13 @@ public class ExperController {
     @RequestMapping(value = "showExper")
     public String showExperById(Long id,String from,HttpSession session,Model model){
         ExperimentDao exdao=ExperimentDao.getInstance();
+        exdao.begin();
         Experiment experiment = exdao.get(id);
         model.addAttribute("exper",experiment);
         System.out.println("from " + from);
         model.addAttribute("from", from);
+        exdao.commit();
+        exdao.close();
      return "/View/experiment/show_experiment";
     }
 
@@ -93,6 +96,7 @@ public class ExperController {
     @RequestMapping(value = "myPublishExperiment")
     public  String myPublishExperiment(Integer start, Integer size, String order, String by, HttpSession session, Model model){
         ExperimentDao eDao=ExperimentDao.getInstance();
+        eDao.begin();
         Long userId = (Long)session.getAttribute("userId");
 
         DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
@@ -108,7 +112,8 @@ public class ExperController {
         size  = size  != null? size  : 10;
 
         List<Experiment> list = eDao.search(dc, start, size);
-
+        eDao.commit();
+        eDao.close();
         model.addAttribute("list",list);
 
         return "View/experiment/myPublishExperiment";
