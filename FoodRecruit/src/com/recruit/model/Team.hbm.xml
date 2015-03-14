@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-13 22:56:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.recruit.model.Team" table="TEAM">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME"  length="20"/>
+        </property>
+        <property name="maxSize" type="java.lang.Integer">
+            <column name="MAXSIZE" />
+        </property>
+        <property name="slogan" type="java.lang.String">
+            <column name="SLOGAN"  length="50"/>
+        </property>
+        <many-to-one name="leader" class="com.recruit.model.User" fetch="join">
+            <column name="LEADER" />
+        </many-to-one>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD"  length="20"/>
+        </property>
+        <many-to-one name="competition" class="com.recruit.model.Competition" fetch="join">
+            <column name="COMPETITION" />
+        </many-to-one>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE" />
+        </property>
+        <!-- 映射组成关系 -->
+        <component name="basicModel" class="com.recruit.model.BasicModel">
+
+        	<!-- 指定组成关系的组件的属性 -->
+        	<property name="createTime" type="timestamp" column="createTime"></property>
+        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
+        </component>
+        <list name="participtList" inverse="false" table="COMPETANDTEAM" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="com.recruit.model.CompetAndTeam" />
+        </list>
+    </class>
+</hibernate-mapping>

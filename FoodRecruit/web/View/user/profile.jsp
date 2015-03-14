@@ -172,7 +172,7 @@
 
                 <div class="profile-info-value">
                     <i class="fa fa-map-marker light-orange bigger-110"></i>
-                    ${user.major}${user.classes}
+                    ${user.major.majorName}${user.classes.className}
                 </div>
             </div>
 

@@ -1,44 +1,45 @@
-package com.recruit.Model;
+package com.recruit.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /** model基类,继承了这个类的model都会拥有下面的属性方法。
  * @author Yuan
  */
-@MappedSuperclass
-public class BasicModel implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    /**
-    每个的id都是从1开始自增长的
-     */
-    private Long id;
-    @Column(name = "create_time")
+
+public class BasicModel{
+
+
+   
     public Date createTime;
-    @Column(name = "update_time")
+    
     public Date updateTime;
+    
+
 
     public BasicModel(){
         createTime=new Date();
         updateTime=new Date();
     }
-    void beforeSave(){
-        Date now=new Date();
-        if (createTime == null) {
-            createTime = now;
-        }
-        updateTime = now;
-    }
+    
+    
+    
+public BasicModel(Date createTime, Date updateTime) {
+		super();
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+	}
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
+//    void beforeSave(){
+//        Date now=new Date();
+//        if (createTime == null) {
+//            createTime = now;
+//        }
+//        updateTime = now;
+//    }
+
+
 
     public Date getCreateTime() {
         return createTime;

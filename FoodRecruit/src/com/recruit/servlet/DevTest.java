@@ -1,6 +1,6 @@
 package com.recruit.servlet;
 import com.recruit.mana.model.Major;
-import com.recruit.experiment.controller.ExperController;
+import com.recruit.controller.ExperController;
 import com.recruit.mana.dao.MajorDao;
 import org.hibernate.Query;
 import org.junit.AfterClass;

@@ -1,4 +1,4 @@
-package com.recruit.Model;
+package com.recruit.model;
 
 /** 竞赛和队伍中间表
  *  @author 陈思远

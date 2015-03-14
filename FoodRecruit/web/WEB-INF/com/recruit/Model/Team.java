@@ -1,4 +1,4 @@
-package com.recruit.Model;
+package com.recruit.model;
 
 /**
  * Created by Administrator on 2014/11/21.

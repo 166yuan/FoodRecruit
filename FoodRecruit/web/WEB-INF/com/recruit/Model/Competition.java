@@ -1,4 +1,4 @@
-package com.recruit.Model;
+package com.recruit.model;
 
 import java.util.Date;
 

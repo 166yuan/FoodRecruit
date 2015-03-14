@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-13 22:56:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.recruit.model.Score" table="SCORE">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join">
+            <column name="EXPERIMENT" />
+        </many-to-one>
+        <many-to-one name="student" class="com.recruit.model.User" fetch="join">
+            <column name="STUDENT" />
+        </many-to-one>
+        <many-to-one name="teacher" class="com.recruit.model.User" fetch="join">
+            <column name="TEACHER" />
+        </many-to-one>
+        <property name="duty" type="java.lang.Integer">
+            <column name="DUTY" />
+        </property>
+        <property name="discipline" type="java.lang.Integer">
+            <column name="DISCIPLINE" />
+        </property>
+        <property name="tidy" type="java.lang.Integer">
+            <column name="TIDY" />
+        </property>
+        <property name="care" type="java.lang.Integer">
+            <column name="CARE" />
+        </property>
+        <property name="operation" type="java.lang.Integer">
+            <column name="OPERATION" />
+        </property>
+        <property name="fault" type="java.lang.Integer">
+            <column name="FAULT" />
+        </property>
+        <property name="efficiency" type="java.lang.Integer">
+            <column name="EFFICIENCY" />
+        </property>
+        <property name="advise" type="java.lang.Integer">
+            <column name="ADVISE" />
+        </property>
+        <property name="scoreA" type="java.lang.Integer">
+            <column name="SCOREA" />
+        </property>
+        <property name="scoreB" type="java.lang.Integer">
+            <column name="SCOREB" />
+        </property>
+        <property name="Ttidy" type="java.lang.Integer">
+            <column name="TTIDY" />
+        </property>
+        <property name="Tcare" type="java.lang.Integer">
+            <column name="TCARE" />
+        </property>
+        <property name="Toperation" type="java.lang.Integer">
+            <column name="TOPERATION" />
+        </property>
+        <property name="Tconnect" type="java.lang.Integer">
+            <column name="TCONNECT" />
+        </property>
+        <property name="member" type="java.lang.Integer">
+            <column name="MEMBER" />
+        </property>
+        <property name="recorded" type="java.lang.Integer">
+            <column name="RECORDED" />
+        </property>
+        <property name="append" type="java.lang.Integer">
+            <column name="APPEND" />
+        </property>
+        <property name="secscore" type="java.lang.Integer">
+            <column name="SECSCORE" />
+        </property>
+        <property name="total" type="java.lang.Double">
+            <column name="TOTAL" />
+        </property>
+        <!-- 映射组成关系 -->
+        <component name="basicModel" class="com.recruit.model.BasicModel">
+
+        	<!-- 指定组成关系的组件的属性 -->
+        	<property name="createTime" type="timestamp" column="createTime"></property>
+        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
+        </component>
+    </class>
+</hibernate-mapping>

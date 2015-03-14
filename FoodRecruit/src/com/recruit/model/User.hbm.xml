@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-13 22:56:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.recruit.model.User" table="USER">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="account" type="java.lang.String">
+            <column name="ACCOUNT"  length="20"/>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD"  length="20"/>
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="STATUS" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="NAME"  length="20"/>
+        </property>
+        <property name="image_url" type="java.lang.String">
+            <column name="IMAGE_URL" />
+        </property>
+        <property name="gender" type="int">
+            <column name="GENDER" />
+        </property>
+        <many-to-one name="major" class="com.recruit.model.Major" fetch="join">
+            <column name="MAJOR" />
+        </many-to-one>
+        <many-to-one name="classes" class="com.recruit.model.Classes" fetch="join">
+            <column name="CLASSES" />
+        </many-to-one>
+        <property name="phone" type="java.lang.String">
+            <column name="PHONE"  length="20"/>
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL"  length="40"/>
+        </property>
+        <property name="qq" type="java.lang.String">
+            <column name="QQ"  length="20"/>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="ADDRESS"  length="100"/>
+        </property>
+        <property name="self_info" type="java.lang.String">
+            <column name="SELF_INFO"  />
+        </property>
+        <property name="isActive" type="java.lang.Boolean">
+            <column name="ISACTIVE" />
+        </property>
+        <!-- 映射组成关系 -->
+        <component name="basicModel" class="com.recruit.model.BasicModel">
+
+        	<!-- 指定组成关系的组件的属性 -->
+        	<property name="createTime" type="timestamp" column="createTime"></property>
+        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
+        </component>
+    </class>
+</hibernate-mapping>

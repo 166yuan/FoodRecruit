@@ -10,7 +10,7 @@
       http://www.springframework.org/schema/context/spring-context.xsd  
       http://www.springframework.org/schema/mvc  
       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-    <context:component-scan base-package="com.recruit.*.controller"/>
+    <context:component-scan base-package="com.recruit.controller"/>
     <bean
             class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />  <!-- 这个类里面你可以注册拦截器什么的 -->
     <bean id="jacksonMessageConverter"
