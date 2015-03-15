@@ -42,7 +42,7 @@ public class Experiment{
     
     private BasicModel basicModel;
     
-    List<ExperUser> experUsers = new ArrayList<>();
+    List<ExperUser> experUsers = new ArrayList<ExperUser>();
 
     
 

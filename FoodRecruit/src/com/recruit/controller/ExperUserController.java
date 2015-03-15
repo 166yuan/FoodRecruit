@@ -1,12 +1,5 @@
 package com.recruit.controller;
 
-
-import com.recruit.experUser.model.ExperUser;
-import com.recruit.experiment.dao.ExperimentDao;
-import com.recruit.experiment.model.Experiment;
-import com.recruit.notification.dao.NotificationDao;
-import com.recruit.notification.model.Notification;
-import com.recruit.user.Dao.UserDao;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import com.recruit.experUser.dao.ExperUserDao;
 
 /**
  * Created by Mklaus on 15/2/1.

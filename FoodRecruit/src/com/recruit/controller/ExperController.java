@@ -1,14 +1,14 @@
 package com.recruit.controller;
 
-import com.recruit.experUser.bean.ExperUserBean;
-import com.recruit.experUser.dao.ExperUserDao;
-import com.recruit.experUser.model.ExperUser;
-import com.recruit.experiment.bean.ExperStatusBean;
-import com.recruit.experiment.dao.ExperimentDao;
-import com.recruit.experiment.model.Experiment;
 
-import com.recruit.user.Dao.UserDao;
-import com.recruit.user.model.User;
+import com.recruit.bean.ExperUserBean;
+import com.recruit.impl.ExperUserImpl;
+import com.recruit.impl.ExperimentImpl;
+
+import com.recruit.impl.UserImpl;
+import com.recruit.model.ExperUser;
+import com.recruit.model.Experiment;
+import com.recruit.model.User;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONObject;
 import org.hibernate.criterion.DetachedCriteria;
@@ -72,14 +72,13 @@ public class ExperController {
      */
     @RequestMapping(value = "showExper")
     public String showExperById(Long id,String from,HttpSession session,Model model){
-        ExperimentDao exdao=ExperimentDao.getInstance();
-        exdao.begin();
-        Experiment experiment = exdao.get(id);
-        model.addAttribute("exper",experiment);
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        eml.startTransaction();
+        Experiment experiment =eml.getById(id);
+        model.addAttribute("exper", experiment);
         System.out.println("from " + from);
         model.addAttribute("from", from);
-        exdao.commit();
-        exdao.close();
+        eml.commitTransaction();
      return "/View/experiment/show_experiment";
     }
 
@@ -95,27 +94,21 @@ public class ExperController {
      */
     @RequestMapping(value = "myPublishExperiment")
     public  String myPublishExperiment(Integer start, Integer size, String order, String by, HttpSession session, Model model){
-        ExperimentDao eDao=ExperimentDao.getInstance();
-        eDao.begin();
+        ExperimentImpl eml =ExperimentImpl.getInstance();
+        eml.startTransaction();
         Long userId = (Long)session.getAttribute("userId");
 
-        DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
-
-        dc.add(Restrictions.eq("publishId", userId));
-
-        if ("asc".equals(order))
+       /* if ("asc".equals(order))
             dc.addOrder(Order.asc(by));
         if ("desc".equals(order))
-            dc.addOrder(Order.desc(by));
+            dc.addOrder(Order.desc(by));*/
 
         start = start != null? start : 0;
         size  = size  != null? size  : 10;
 
-        List<Experiment> list = eDao.search(dc, start, size);
-        eDao.commit();
-        eDao.close();
+        List<Experiment> list = eml.findByProperty("publishId",userId);
+        eml.commitTransaction();
         model.addAttribute("list",list);
-
         return "View/experiment/myPublishExperiment";
     }
 
@@ -131,26 +124,18 @@ public class ExperController {
      */
     @RequestMapping("nendAssistant")
     public String needAssistant(Integer start, Integer size, String order, String by, HttpSession session, Model model){
-        ExperimentDao eDao = ExperimentDao.getInstance();
-        eDao.begin();
-
-        DetachedCriteria dc = DetachedCriteria.forClass(Experiment.class);
-
-        dc.add(Restrictions.eq("isOk",false));
-
-        if ("asc".equals(order))
+       ExperimentImpl eml=ExperimentImpl.getInstance();
+       /* if ("asc".equals(order))
             dc.addOrder(Order.asc(by));
         if ("desc".equals(order))
             dc.addOrder(Order.desc(by));
-
+*/
         start = start != null? start : 0;
         size  = size  != null? size  : 8;
 
-        List<Experiment> list = eDao.search(dc, start, size);
-
-        eDao.close();
+        List<Experiment> list = eml.findByProperty("isOk",false);
+        eml.commitTransaction();
         model.addAttribute("list",list);
-
         return "View/experiment/experimentNeedAssistant";
     }
 
@@ -161,16 +146,17 @@ public class ExperController {
      */
     @RequestMapping(value = "/addExper")
     public void newExper(HttpServletRequest request,PrintWriter out){
-        ExperimentDao experDao= ExperimentDao.getInstance();
-        Long experId = -1L;
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        UserImpl uml=UserImpl.getInstance();
+        Integer experId = -1;
         try{
-
             JSONObject j = createJson(request);
             Long publisherId = (Long)request.getSession().getAttribute("userId");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
-            experDao.begin();
+            eml.startTransaction();
+            User user= uml.getById(publisherId);
             Experiment exper=new Experiment();
-            exper.setPublishId(publisherId);
+            exper.setPublisher(user);
             exper.setName(j.getString("name"));
             exper.setInformation(j.getString("content"));
             exper.setRequirement(j.getString("requirement"));
@@ -183,17 +169,12 @@ public class ExperController {
             exper.setEmail(j.getString("email"));
             exper.setNote(j.getString("note"));
             exper.setCount(j.getInt("count"));
-            experDao.save(exper);
-
+            eml.save(exper);
             experId = exper.getId();
-            experDao.commit();
-            System.out.println("test: " + experId);
+           eml.commitTransaction();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            experDao.close();
         }
-
         out.print(experId);
     }
 
@@ -206,16 +187,13 @@ public class ExperController {
     @RequestMapping("delete")
     public void delete(Long id,PrintWriter out){
         int result = 0;
-        ExperimentDao eDao = ExperimentDao.getInstance();
+        ExperimentImpl eml=ExperimentImpl.getInstance();
         try{
-            eDao.begin();
-            eDao.remove(id);
-            eDao.commit();
+            eml.startTransaction();
+            eml.delete(id);
             result = 1;
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            eDao.close();
         }
         out.print(result);
     }
@@ -224,10 +202,10 @@ public class ExperController {
 
     @RequestMapping("attendList")
     public String attendList(Long experId,Model model){
-        ExperimentDao experimentDao=ExperimentDao.getInstance();
-        ExperUserDao experUserDao=ExperUserDao.getInstance();
-        Experiment experiment=experimentDao.getById(experId);
-        List<ExperUser>list=experUserDao.getByExperId(experId);
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        ExperUserImpl euml=ExperUserImpl.getInstance();
+        Experiment experiment=eml.getById(experId);
+        List<ExperUser>list=euml.findByProperty("experiment",experiment);
         List<ExperUserBean>list1=ExperUserBean.buildList(list);
         model.addAttribute("list",list1);
         model.addAttribute("experName",experiment.getName());
@@ -236,19 +214,17 @@ public class ExperController {
     }
 
     @RequestMapping("employ")
-    public void employ(long experId,long userId,boolean isAgree,PrintWriter out){
+    public void employ(Integer experId,Integer userId,boolean isAgree,PrintWriter out){
         int result=1;
-        ExperUserDao experUserDao=ExperUserDao.getInstance();
+        ExperUserImpl euml=ExperUserImpl.getInstance();
         try{
-            experUserDao.begin();
-            ExperUser experUser=experUserDao.forExperIdAndUserId(experId, userId);
+            euml.startTransaction();
+            ExperUser experUser=euml.findByExperAndUserId(experId,userId);
             experUser.setIsAgree(isAgree);
-            experUserDao.save(experUser);
-            experUserDao.commit();
+            euml.save(experUser);
+            euml.commitTransaction();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            experUserDao.close();
         }
         out.print(result);
     }
@@ -257,8 +233,8 @@ public class ExperController {
 
     @RequestMapping("update")
     public String update(Long id,Model model){
-        ExperimentDao eDao = ExperimentDao.getInstance();
-        Experiment experiment = eDao.get(id);
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        Experiment experiment = eml.getById(id);
         model.addAttribute("id",id);
         model.addAttribute("exper",experiment);
         return "View/experiment/experimentUpdate";
@@ -267,12 +243,12 @@ public class ExperController {
     @RequestMapping("doUpdate")
     public void doUpdate(HttpServletRequest request,PrintWriter out){
         Long result = -1L;
-        ExperimentDao eDao = ExperimentDao.getInstance();
+        ExperimentImpl eml=ExperimentImpl.getInstance();
         try{
             JSONObject j = createJson(request);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
-            eDao.begin();
-            Experiment exper = eDao.get(j.getLong("experId"));
+            eml.startTransaction();
+            Experiment exper = eml.getById(j.getLong("experId"));
             String pretime=j.getString("pretime");
             String endtime=j.getString("endtime");
             pretime=handleLocale(pretime);
@@ -289,14 +265,11 @@ public class ExperController {
             exper.setEmail(j.getString("email"));
             exper.setNote(j.getString("note"));
             exper.setCount(j.getInt("count"));
-            eDao.update(exper);
-
+            eml.update(exper);
             result = j.getLong("experId");
-            eDao.commit();
+            eml.commitTransaction();
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            eDao.close();
         }
         out.print(result);
     }
@@ -320,11 +293,12 @@ public class ExperController {
      */
     @RequestMapping("scoreExper")
     public String scoreExperiment(HttpSession session,Model model){
-        ExperimentDao eDao=ExperimentDao.getInstance();
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        UserImpl uml=UserImpl.getInstance();
         Long userId=(Long)session.getAttribute("userId");
-        List<Experiment>elist=eDao.findMyPublishExperiment(userId);
-        List<ExperStatusBean>list=ExperStatusBean.buildList(elist);
-        model.addAttribute("list",list);
+        User user=uml.getById(userId);
+        List<Experiment>elist=eml.getAllByUser(user);
+        model.addAttribute("list",elist);
         return "View/experiment/scoreExper";
     }
 
@@ -336,24 +310,23 @@ public class ExperController {
      */
     @RequestMapping("scoreList")
     public String scoreList(Long experId,Model model){
-        ExperimentDao experimentDao=ExperimentDao.getInstance();
-        ExperUserDao experUserDao=ExperUserDao.getInstance();
-        Experiment experiment=experimentDao.getById(experId);
-        List<ExperUser>list=experUserDao.getByExperId(experId);
-        //过滤没被选中的实验员，以防评分出差错
-        List<ExperUserBean>list1=ExperUserBean.buildList2(list);
-        model.addAttribute("list",list1);
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        ExperUserImpl euml=ExperUserImpl.getInstance();
+        Experiment experiment=eml.getById(experId);
+        List<ExperUser>list=euml.findByProperty("experiment",experiment);
+        model.addAttribute("list",list);
         model.addAttribute("experName",experiment.getName());
         return "View/experiment/scoreList";
     }
 
     @RequestMapping("myAttend")
     public String attendExperiment(HttpSession session,Model model){
+        UserImpl uml=UserImpl.getInstance();
         Long userId=(Long)session.getAttribute("userId");
-        ExperUserDao exDao=ExperUserDao.getInstance();
-        List<ExperUser>list=exDao.getAllExperByUser(userId);
-
-    return "View/experiment/myAttendExper";
+        User user=uml.getById(userId);
+        ExperUserImpl euml=ExperUserImpl.getInstance();
+        List<ExperUser>list=euml.findByProperty("user",user);
+        return "View/experiment/myAttendExper";
     }
 
 }

@@ -57,32 +57,7 @@ public interface DaoSupport<T> {
 	 */
 	List<T> findAll();
 
-	/**
-	 * 公共的查询分页信息的方法
-	 * 
-	 * @param pageNum
-	 * @param pageSize
-	 * @param hql
-	 *            查询数据列表的HQL
-	 * @param parameters
-	 *            参数列表，与HQL中问号一一对应
-	 * @return
-	 */
-	
-	PageBean getPageBean(int pageNum, int pageSize, String hql, List<Object> parameters);
 
-	/**
-	 * 公共的查询分页信息的方法（最终版）
-	 * 
-	 * @param pageNum
-	 * @param pageSize
-	 * @param queryHelper
-	 *            HQL语句与参数列表
-	 * @return
-	 */
-	PageBean getPageBean(int pageNum, int pageSize, QueryHelper queryHelper);
-	
-	
 	/**分页查找，查找本对象对应表的数据
 	 * @param page  页号，从1开始
 	 * @param pageSize  每页的大小

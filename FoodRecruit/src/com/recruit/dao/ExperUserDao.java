@@ -5,4 +5,5 @@ import com.recruit.model.ExperUser;
 
 public interface ExperUserDao extends DaoSupport<ExperUser>{
 
+
 }
