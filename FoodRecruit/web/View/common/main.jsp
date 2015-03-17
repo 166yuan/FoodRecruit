@@ -58,7 +58,7 @@
 
 
           <li class="hover">
-            <a href="/exper/myPublishExperiment">
+            <a href="/exper/myPublishExperiment?page=1">
               <i class="menu-icon fa fa-caret-right"></i>
               我发布的实验
             </a>
@@ -67,7 +67,7 @@
           </li>
 
             <li class="hover">
-                <a href="/exper/scoreExper">
+                <a href="/exper/scoreExper?page=1">
                     <i class="menu-icon fa fa-caret-right"></i>
                     我的实验员评分
                 </a>
@@ -92,7 +92,7 @@
 
         <ul class="submenu">
           <li class="hover">
-            <a href="/exper/nendAssistant">
+            <a href="/exper/nendAssistant?page=1">
               <i class="menu-icon fa fa-caret-right"></i>
               成为实验助手
             </a>
@@ -171,7 +171,7 @@
               </li>
 
               <li class="hover">
-                <a href="/compet/getAll">
+                <a href="/compet/getAll?page=1">
                   <i class="menu-icon fa fa-caret-right"></i>
                   竞赛管理
                 </a>

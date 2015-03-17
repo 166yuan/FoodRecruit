@@ -8,13 +8,13 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join">
+        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join" not-null="true">
             <column name="EXPERIMENT" />
         </many-to-one>
-        <many-to-one name="student" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="student" class="com.recruit.model.User" fetch="join" not-null="true">
             <column name="STUDENT" />
         </many-to-one>
-        <many-to-one name="teacher" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="teacher" class="com.recruit.model.User" fetch="join" not-null="true">
             <column name="TEACHER" />
         </many-to-one>
         <property name="duty" type="java.lang.Integer">
@@ -74,12 +74,11 @@
         <property name="total" type="java.lang.Double">
             <column name="TOTAL" />
         </property>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

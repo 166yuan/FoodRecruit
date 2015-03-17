@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /**
@@ -12,24 +14,35 @@ public class Major {
 	
     private String majorName;
 
-    private int year;
+    private Integer year;
     
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
 
     
     
     public Major() {
 		super();
+        inite();
 	}
 
-	public Major(String majorName, int year, BasicModel basicModel) {
+	public Major(String majorName, int year) {
 		super();
 		this.majorName = majorName;
 		this.year = year;
-		this.basicModel = basicModel;
 	}
 
-	public int getYear() {
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public Major inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
+	}
+	
+	public Integer getYear() {
         return year;
     }
 
@@ -41,15 +54,25 @@ public class Major {
 		this.id = id;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public void setYear(int year) {
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public void setYear(Integer year) {
         this.year = year;
     }
 

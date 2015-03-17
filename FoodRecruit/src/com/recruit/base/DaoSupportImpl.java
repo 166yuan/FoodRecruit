@@ -2,35 +2,31 @@ package com.recruit.base;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-//import org.springframework.transaction.annotation.Transactional;
-
-
 
 
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Example;
 
-import com.recruit.base.PageBean;
 import com.recruit.util.HibernateUtils;
-import com.recruit.util.QueryHelper;
 
-// @Transactional注解可以被继承
-// @Transactional注解对父类中声明的方法无效
-//@Transactional
-//@SuppressWarnings("unchecked")
-public  class DaoSupportImpl<T> implements DaoSupport<T> {
 
-	//@Resource
-	//private SessionFactory sessionFactory;
+/**实现一些数据库实体的相关常用方法
+ * @author 牵手无奈
+ *
+ * @param <T>
+ */
+public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
+
+
+	String orderByTimeDesc ;
+	String orderByTimeAsc  ;
+	String from_table_t ;
 	private Session session;
 	private Transaction transaction;
 	private Class<T> clazz;
@@ -39,7 +35,7 @@ public  class DaoSupportImpl<T> implements DaoSupport<T> {
 		// 使用反射技术得到T的真实类型
 		ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass(); // 获取当前new的对象的 泛型的父类 类型
 		this.clazz = (Class<T>) pt.getActualTypeArguments()[0]; // 获取第一个类型参数的真实类型
-		
+		from_table_t="from "+clazz.getSimpleName()+" t ";
 		System.out.println("clazz ---> " + clazz);
 	}
 	
@@ -82,7 +78,12 @@ public  class DaoSupportImpl<T> implements DaoSupport<T> {
 			getSession().delete(obj);
 		}
 	}
-
+    public void delete(Integer id) {
+        Object obj = getById(id);
+        if (obj != null) {
+            getSession().delete(obj);
+        }
+    }
 	public T getById(Long id) {
 		if (id == null) {
 			return null;
@@ -95,88 +96,162 @@ public  class DaoSupportImpl<T> implements DaoSupport<T> {
 		if (id == null) {
 			return null;
 		} else {
-			return (T) getSession().get(clazz, id);
+			return (T) session.get(clazz, id);
 		}
 	}
 
 	public List<T> getByIds(Long[] ids) {
 		if (ids == null || ids.length == 0) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		} else {
-			return getSession().createQuery(//
-					"FROM " + clazz.getSimpleName() + " WHERE id IN (:ids)")//
-					.setParameterList("ids", ids)//
-					.list();
+			String hql ="FROM " + clazz.getSimpleName() + " t WHERE id IN (:ids) ";
+			return session.createQuery(hql).setParameterList("ids", ids).list();
 		}
 	}
 	
 	public List<T> getByIds(Integer[] ids) {
-		if (ids == null || ids.length == 0) {
-			return Collections.EMPTY_LIST;
-		} else {
-			return getSession().createQuery(//
-					"FROM " + clazz.getSimpleName() + " WHERE id IN (:ids)")//
-					.setParameterList("ids", ids)//
-					.list();
-		}
+		return getByIds(ids);
 	}
 
 	public List<T> findAll() {
-		return getSession().createQuery(//
-				"FROM " + clazz.getSimpleName())//
-				.list();
+		
+		return findByPage(1, 50);
 	}
 
+	
 
 
 	@Override
 	public List<T> findByPage(int page, int pageSize) {
-		String hql = "from "+clazz.getSimpleName();
-		int firstResult= (page-1)*pageSize;
-		int lastResult= firstResult+pageSize-1;
-		return session.createQuery(hql).setFirstResult(firstResult).setMaxResults(lastResult).list();
+		return findByHql(from_table_t, page, pageSize);
 
+	}
+	
+	@Override
+	public List<T> findByPage(int page, int pageSize, String property,
+			boolean isAsc) {
+
+		return findByHql(from_table_t, page, pageSize,property,isAsc);
 	}
 
 
 	@Override
-	public List<T> find(String hql) {
-		// TODO Auto-generated method stub
-		return session.createQuery(hql).list();
+	public List<T> findByHql(String hql,int page, int pageSize) {
+		int firstResult= (page-1)*pageSize;
+		int lastResult= firstResult+pageSize;
+		Query query = session.createQuery(hql).setFirstResult(firstResult).setMaxResults(lastResult);
+		System.out.println("query="+query.toString());
+		return query.list();
 	}
-
 
 	@Override
-	public List<T> findByPage(String hql, int page, int pageSize) {
-		// TODO Auto-generated method stub
-		int firstResult= (page-1)*pageSize;
-		int lastResult= firstResult+pageSize-1;
-		return session.createQuery(hql).setFirstResult(firstResult).setMaxResults(lastResult).list();
+	public List<T> findByHql(String hql, int page, int pageSize,
+			String property, boolean isAsc) {
+		String asc_desc = " desc ";
+		if(isAsc) asc_desc =" asc ";
+		hql = hql+" order by t."+property+asc_desc;
+		return findByHql(hql, page, pageSize);
 	}
-
 
 	@Override
 	public Integer getSize() {
-		Query query = session.createQuery("select count(*) from User");
-		int count = ((Number)query.uniqueResult()).intValue();
-		return count;
+		return getSize(from_table_t);
 	}
 
 
 	@Override
 	public Integer getSize(String hql) {
+		hql ="select count(*) "+ hql;
 		Query query = session.createQuery(hql);
 		int count = ((Number)query.uniqueResult()).intValue();
 		return count;
 	}
 
 
+//	@Override
+//	public List<T> findByProperty(String propertyName, Object value) {
+//		// TODO Auto-generated method stub
+//		return createCriteria(Restrictions.eq(propertyName, value)).list();
+//	}
+	
 	@Override
-	public List<T> findByProperty(String propertyName, Object value) {
-		// TODO Auto-generated method stub
-		return createCriteria(Restrictions.eq(propertyName, value)).list();
+	public List<T> findByProperty(String property, Object value, int page,
+			int pageSize) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(property, value);
+		return findByProperties(map, page, pageSize);
 	}
 
+
+	@Override
+	public List<T> findByProperty(String myProperty, Object value, int page,
+			int pageSize, String property, boolean isAsc) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(myProperty, value);
+		return findByProperties(map, page, pageSize, property, isAsc);
+	}
+	
+	@Override
+	public List<T> findByProperties(T entity,int page , int pageSize) {
+        if(page<1){
+            page=1;
+        }
+		int firstResult= (page-1)*pageSize;
+		int lastResult=pageSize;
+		
+		return session.createCriteria(clazz).add(Example.create(entity))
+				.setFirstResult(firstResult).setMaxResults(lastResult).list();
+	}
+	
+	@Override
+	public List<T> findByProperties(Map<String, Object> map,int page , int pageSize,
+			String property, boolean isAsc) {
+		
+		String hql = createFindByPropertiesHql(map);
+		return findByHql(hql, page, pageSize, property, isAsc);
+	}
+	
+
+	@Override
+	public List<T> findByProperties(Map<String, Object> map, int page,
+			int pageSize) {
+		String hql = createFindByPropertiesHql(map);
+		return findByHql(hql, page, pageSize);
+	}
+	
+	@Override
+	public Integer getFindByPropertiesSize(Map<String, Object> map) {
+		String hql = createFindByPropertiesHql(map);
+		return getSize(hql);
+	}
+
+
+	@Override
+	public String createFindByPropertiesHql(Map<String, Object> map) {
+
+		StringBuffer stringBuffer = new StringBuffer(from_table_t);
+		stringBuffer.append(" where ");
+		int size = map.size();
+		int i=1;
+		for(String key:map.keySet()){
+			Object value = map.get(key);
+			if(value.getClass().getSimpleName().equals("String")){
+				stringBuffer.append(" t."+key + " = '"+value+"' ");
+			}else {
+				stringBuffer.append(" t."+key + " = "+value+" ");
+			}
+				
+			if(i<size){
+				stringBuffer.append(" and ");
+			}
+			i++;
+		}
+		
+		System.out.println(stringBuffer.toString());
+		
+		return stringBuffer.toString();
+		
+	}
 
 	@Override
 	public Query createQuery(String queryString, Object... values) {
@@ -193,43 +268,72 @@ public  class DaoSupportImpl<T> implements DaoSupport<T> {
 	
 
 
+
+
 	@Override
-	public boolean isPropertyUnique(String propertyName, Object newValue,
-			Object orgValue) {
-		if (newValue == null || newValue.equals(orgValue))
-            return true;
- 
-        Object object = findUniqueByProperty(propertyName, newValue);
-        return (object == null);
+	public List<T> findByTime(String timeBegin, String timeEnd,int page , int pageSize) {
+		String hql = createFindByTimeHql(timeBegin, timeEnd);
+		return findByHql(hql, page, pageSize);
+	}
+
+
+
+	@Override
+	public List<T> findByTime(String timeBegin, String timeEnd,int page , int pageSize,
+			String property, boolean isAsc) {
+		
+		String hql = createFindByTimeHql(timeBegin, timeEnd);
+		return findByHql(hql, page, pageSize, property, isAsc);
+	}
+
+
+	
+
+
+	@Override
+	public Integer getFindByTimeSize(String timeBegin, String timeEnd) {
+		String hql = createFindByTimeHql(timeBegin, timeEnd);
+		return getSize(hql);
 	}
 
 
 	@Override
-	public List<T> findByTime(String timeBegin, String timeEnd) {
-		String hql = "from "+clazz.getSimpleName()+" t where t.basicModel.createTime between :timeBegin and :timeEnd";
-		System.out.println("hql="+hql);
+	public String createFindByTimeHql(String timeBegin, String timeEnd) {
+		String hql = from_table_t+" where t.createTime between :timeBegin and :timeEnd";
 		Query query = session.createQuery(hql).setString("timeBegin", timeBegin)
 											  .setString("timeEnd", timeEnd);
-		System.out.println("query="+query.getQueryString());
-		return query.list();
+		hql = query.getQueryString();
+		return hql;
 	}
 
 
-	@Override
-	public Criteria createCriteria(Criterion... criterions) {
-		Criteria criteria = session.createCriteria(clazz);
-        for (Criterion c : criterions) {
-            criteria.add(c);
-        }
-        return criteria;
-	}
+	
 
 
-	@Override
-	public T findUniqueByProperty(String propertyName, Object value) {
-		return (T) createCriteria(Restrictions.eq(propertyName, value))
-        .uniqueResult();
-	}
+
+
+	
+	
+
+
+
+//	@Override
+//	public Criteria createCriteria(Criterion... criterions) {
+//		Criteria criteria = session.createCriteria(clazz);
+//        for (Criterion c : criterions) {
+//            criteria.add(c);
+//        }
+//        return criteria;
+//	}
+
+
+//	@Override
+//	public T findUniqueByProperty(String propertyName, Object value) {
+//		return (T) createCriteria(Restrictions.eq(propertyName, value))
+//        .uniqueResult();
+//	}
+	
+
 
 
 }

@@ -68,6 +68,9 @@
 							</li>
 							</c:forEach>
 						</ul>
+                        <div class="dataTables_paginate paging_bootstrap">
+                            <c:import url="/View/common/page.jsp"/>
+                        </div>
 					</div>
 				</div>
 			</div>

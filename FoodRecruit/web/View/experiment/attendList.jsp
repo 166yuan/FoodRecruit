@@ -127,9 +127,10 @@
                     </tr>
                     </thead>
 
-
+                    <c:forEach items="${list}">
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-                    <c:forEach items="${list}" var="exper">
+
+
                         <tr class="odd">
                             <td class="center  sorting_1">
                                 <label class="position-relative">
@@ -138,34 +139,19 @@
                                 </label>
                             </td>
 
-                            <td class=" "><fmt:formatDate value="${exper.appTime}" pattern="yyyy年MM月dd日 HH:mm:ss"/></td>
-                            <td class=" ">${exper.name}</td>
-                            <c:choose>
-                                <c:when test="${exper.gender==1}">
-                                    <td class="">男</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td class="">女</td>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <td class=" ">${exper.major}</td>
-                            <td class=" ">${exper.classes}</td>
+                            <td class=" ">vvv</td>
+                            <td class=" ">xxxxx</td>
+                            <td class="">男</td>
+                            <td class=" ">aa</td>
+                            <td class=" ">aa</td>
                             <td class=" ">
-                                <c:choose>
-                                    <c:when test="${exper.isAgree==true}">
-                                        <span class="label label-sm label-danger">未招收</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="label label-sm label-success">招收</span>
-                                    </c:otherwise>
-                                </c:choose>
-
+                                <span class="label label-sm label-danger">未招收</span>
+                                <span class="label label-sm label-success">招收</span>
                             </td>
                         </tr>
-                    </c:forEach>
-                    </tbody>
 
+                    </tbody>
+                    </c:forEach>
                 </table>
 
                 <div class="row">

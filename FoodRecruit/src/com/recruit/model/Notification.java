@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /**
@@ -23,17 +25,21 @@ public class Notification {
     private Boolean isNew;
 
     //参考关联id 表示该通知关联的实验id 或者是 在竞赛中关联的队伍id
-    private Long refId;
+    private Integer refId;
     
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
 
     public Notification() {
         this.isNew = true;
+        this.createTime=new Date();
+        this.updateTime=new Date();
     }
     
 
     public Notification(User creator, User receiver, String info, Integer type,
-			Boolean isNew, Long refId) {
+			Boolean isNew, Integer refId) {
 		super();
 		this.creator = creator;
 		this.receiver = receiver;
@@ -42,13 +48,21 @@ public class Notification {
 		this.isNew = isNew;
 		this.refId = refId;
 	}
+    /**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * isNew = true;
+	 */
+	public Notification inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        this.isNew=true;
+        return this;
+	}
 
-
-	public Long getRefId() {
+	public Integer getRefId() {
         return refId;
     }
 
-    public void setRefId(Long refId) {
+    public void setRefId(Integer refId) {
         this.refId = refId;
     }
 
@@ -64,13 +78,26 @@ public class Notification {
 	}
 
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 
@@ -113,6 +140,8 @@ public class Notification {
     public void setIsNew(Boolean isNew) {
         this.isNew = isNew;
     }
+    
+    
 
 	@Override
 	public String toString() {

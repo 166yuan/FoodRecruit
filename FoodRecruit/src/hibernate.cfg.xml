@@ -7,8 +7,8 @@
     <property name="connection.username">root</property>
     <property name="connection.password">root</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="connection.url">jdbc:mysql:///test</property>
-    
+    <property name="connection.url">jdbc:mysql:///foodrecruit</property>
+
     <!-- 配置hibernate 的基本信息 -->
     <!-- hibernate 所使用的数据库方言 -->
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -18,6 +18,9 @@
     <property name="format_sql">true</property>
     <!-- 指定自动 生成数据 的策略-->
     <property name="hbm2ddl.auto">update</property>
+
+     <property name="connection.useUnicode">true</property>
+     <property name="connection.characterEncoding">UTF-8</property>
     <!-- 设置hibernate的事务隔离级别 -->
     <property name="connection.isolation">2</property>
     <!-- 配置c3p0数据源 -->

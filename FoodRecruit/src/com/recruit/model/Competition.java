@@ -1,5 +1,6 @@
 package com.recruit.model;
 
+
 import java.util.Date;
 
 /** 竞赛类
@@ -25,10 +26,13 @@ public class Competition {
 
     private Date endTime;
     
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
     
     public Competition(){
-
+    	super();
+        inite();
     }
     
     
@@ -45,20 +49,18 @@ public class Competition {
 		this.maxNumber = maxNumber;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
+		
 	}
 
 
-
-	public BasicModel getBasicModel() {
-		return basicModel;
+    /**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public Competition inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
 	}
-
-
-
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
-	}
-
 
 
 	public Integer getId() {
@@ -142,6 +144,30 @@ public class Competition {
 				+ ", name=" + name + ", information=" + information
 				+ ", minNumber=" + minNumber + ", maxNumber=" + maxNumber
 				+ ", beginTime=" + beginTime + ", endTime=" + endTime + "]";
+	}
+
+
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
     
     

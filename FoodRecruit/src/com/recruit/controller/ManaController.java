@@ -1,26 +1,17 @@
 package com.recruit.controller;
 
 import com.recruit.base.PageBean;
-import com.recruit.mana.model.Classes;
-import com.recruit.mana.model.Major;
-import com.recruit.competition.dao.ComDao;
-import com.recruit.competition.model.Competition;
-import com.recruit.experiment.dao.ExperimentDao;
-import com.recruit.experiment.model.Experiment;
-import com.recruit.mana.bean.ClaMajBean;
-import com.recruit.mana.dao.ClassDao;
-import com.recruit.mana.dao.MajorDao;
-import com.recruit.mana.bean.NotiUserBean;
-import com.recruit.notification.dao.NotificationDao;
-import com.recruit.notification.model.Notification;
-import com.recruit.user.Dao.UserDao;
-import com.recruit.user.model.User;
+import com.recruit.impl.MajorImpl;
+import com.recruit.impl.UserImpl;
+import com.recruit.model.Major;
+import com.recruit.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -37,14 +28,17 @@ public class ManaController {
      * @return 用户管理（后台主页）
      */
     @RequestMapping("index")
-    public String index(Model model){
-        UserDao userDao= UserDao.getInstance();
-        userDao.begin();
+    public String index(Model model,int page){
+        UserImpl uml= UserImpl.getInstance();
+        uml.startTransaction();
         //取得所有用户信息
-        List<User> list=userDao.getAllUser();
+        int total=uml.getSize();
+        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/index");
+        List<User> list=uml.findAll(pageBean);
+        list.size();
         model.addAttribute("list",list);
-        userDao.commit();
-        userDao.close();
+        model.addAttribute("pageBean",pageBean);
+        uml.commitTransaction();
         return "View/mana/userManager";
     }
 
@@ -55,13 +49,13 @@ public class ManaController {
      * @return 用户修改界面
      */
     @RequestMapping("showuserbyid")
-    public String showUserById(Long id,Model model){
-        UserDao userDao=UserDao.getInstance();
-        userDao.begin();
-        User user=userDao.getUserById(id);
-        model.addAttribute("user",user);
-        userDao.commit();
-        userDao.close();
+    public String showUserById(Integer id,Model model){
+        UserImpl uml=UserImpl.getInstance();
+        uml.startTransaction();
+        User user=uml.getById(id);
+        System.out.println("type:"+user.getType());
+        model.addAttribute("user", user);
+        uml.commitTransaction();
         return "View/mana/editUser";
     }
 
@@ -73,11 +67,11 @@ public class ManaController {
      */
     @RequestMapping("showfeedback")
     public String showFeedBack(Model model,int type){
-        NotificationDao notificationDao = NotificationDao.getInstance();
+       /* NotificationDao notificationDao = NotificationDao.getInstance();
         List<Notification>list=notificationDao.getAllFeedback(type);
         List<NotiUserBean>nlist=NotiUserBean.buildList(list);
         model.addAttribute("list",nlist);
-        model.addAttribute("type",type);
+        model.addAttribute("type",type);*/
         return "View/mana/feedback";
     }
 
@@ -90,7 +84,7 @@ public class ManaController {
      */
     @RequestMapping("showNotiById")
     public String showNotiById(Long id,String name,Model model){
-        NotificationDao notificationDao=NotificationDao.getInstance();
+      /*  NotificationDao notificationDao=NotificationDao.getInstance();
         Notification notification=notificationDao.get(id);
         try {
             notificationDao.begin();
@@ -103,7 +97,7 @@ public class ManaController {
             notificationDao.close();
         }
         model.addAttribute("notification",notification);
-        model.addAttribute("name",name);
+        model.addAttribute("name",name);*/
         return "View/mana/showNotiById";
     }
 
@@ -115,15 +109,15 @@ public class ManaController {
      */
     @RequestMapping("majormanager")
     public String majorManager(Model model,int page){
-        MajorDao majorDao=MajorDao.getInstance();
+        MajorImpl mml=MajorImpl.getInstance();
         //分页时要统计所有的元素个数
-        int total=majorDao.countAllMajor();
+        int total=mml.getSize();
         //构造pagebean其中mana和majormanager是spring mvc的映射名。
         PageBean pageBean=PageBean.getInstance(page,total,"/mana","/majormanager");
-        model.addAttribute("list",majorDao.getAllMajor(pageBean));
+        List<Major>list=mml.getAllMajor(pageBean);
+        model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
-        model.addAttribute("classpage","active");
-        majorDao.close();
+        mml.commitTransaction();
         return  "View/mana/majorManage";
     }
 
@@ -136,7 +130,7 @@ public class ManaController {
      */
     @RequestMapping("classmanager")
     public String classManager(Model model,int page,HttpSession session){
-       int year=0;
+       /*int year=0;
         ClassDao classDao=ClassDao.getInstance();
         //分页时要统计所有的元素个数
         int total=classDao.countAllClass();
@@ -149,7 +143,7 @@ public class ManaController {
         List<ClaMajBean>list=ClaMajBean.buildList(classDao.getAllClass(pageBean));
         model.addAttribute("list", list);
         model.addAttribute("pageBean",pageBean);
-        model.addAttribute("classpage","active");
+        model.addAttribute("classpage","active");*/
         return "View/mana/classManage";
     }
 
@@ -178,7 +172,7 @@ public class ManaController {
     public String edituser(Long id,String password,int type,int status,String name,int gender,String major,String classes
             ,String phone,String email,String qq,String address,String self_info,String isActive,Model model)
     {
-        System.out.println("the gender is:" + gender);
+     /*   System.out.println("the gender is:" + gender);
         UserDao userDao=UserDao.getInstance();
         User user=userDao.getUserById(id);
         System.out.println("user is:" + user.getName());
@@ -206,7 +200,7 @@ public class ManaController {
             }finally {
                 userDao.close();
             }
-        }
+        }*/
         return "View/mana/editUser";
     }
 
@@ -217,7 +211,7 @@ public class ManaController {
      */
     @RequestMapping("reply")
     public void reply(Long id,String content){
-        NotificationDao notificationDao=NotificationDao.getInstance();
+     /*   NotificationDao notificationDao=NotificationDao.getInstance();
         Notification notification=new Notification();
         try {
         notificationDao.begin();
@@ -231,7 +225,7 @@ public class ManaController {
             e.printStackTrace();
         }finally {
         notificationDao.close();
-        }
+        }*/
 
     }
 
@@ -241,7 +235,7 @@ public class ManaController {
      * @param year 年级
      * @param out json输出
      */
-    @RequestMapping("addmajor")
+  /*  @RequestMapping("addmajor")
     public void addMajor(String name,int year,PrintWriter out){
         MajorDao majorDao=MajorDao.getInstance();
         int result=1;
@@ -265,7 +259,7 @@ public class ManaController {
         majorDao.close();
         }
         out.print(result);
-    }
+    }*/
 
     /**
      * 新增班级
@@ -273,7 +267,7 @@ public class ManaController {
      * @param majorId 所属专业id
      * @param out
      */
-    @RequestMapping("addclass")
+   /* @RequestMapping("addclass")
     public void addClass(String name,long majorId,PrintWriter out){
         ClassDao classDao=ClassDao.getInstance();
         Classes classes=new Classes();
@@ -294,18 +288,18 @@ public class ManaController {
         }
 
     }
-
+*/
     /**
      * 根据年级获取所有的班级
      * @param year 对应年级
      * @return
      */
-    @RequestMapping("getmajor")
+/*    @RequestMapping("getmajor")
     public @ResponseBody List<Major> getMajor(int year){
         MajorDao majorDao=MajorDao.getInstance();
         List<Major> list=majorDao.getAllMajorByYear(year);
         return list;
-    }
+    }*/
 
     /**
      * 取得所有的竞赛
@@ -313,17 +307,17 @@ public class ManaController {
      */
     @RequestMapping("competManage")
     public String competManage(Model model){
-        ComDao comDao=ComDao.getInstance();
+      /*  ComDao comDao=ComDao.getInstance();
         List<Competition>list= comDao.getAllCompetition();
-        model.addAttribute("list",list);
+        model.addAttribute("list",list);*/
         return "View/mana/competManage";
     }
 
     @RequestMapping("experManage")
     public String experManage(Model model){
-        ExperimentDao experimentDao=ExperimentDao.getInstance();
+     /*   ExperimentDao experimentDao=ExperimentDao.getInstance();
         List<Experiment>list=experimentDao.getAllExperiment();
-        model.addAttribute("list",list);
+        model.addAttribute("list",list);*/
         return "View/mana/experManage";
     }
 

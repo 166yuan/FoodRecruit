@@ -8,18 +8,17 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="user" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="user" class="com.recruit.model.User" fetch="join" not-null="true">
             <column name="USER" />
         </many-to-one>
-        <many-to-one name="team" class="com.recruit.model.Team" fetch="join">
+        <many-to-one name="team" class="com.recruit.model.Team" fetch="join" not-null="true">
             <column name="TEAM" />
         </many-to-one>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

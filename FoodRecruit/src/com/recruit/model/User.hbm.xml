@@ -4,35 +4,35 @@
 <!-- Generated 2015-3-13 22:56:06 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.recruit.model.User" table="USER">
-        <id name="id" type="java.lang.Integer">
+        <id name="id" type="java.lang.Integer" >
             <column name="ID" />
             <generator class="native" />
         </id>
-        <property name="account" type="java.lang.String">
+        <property name="account" type="java.lang.String" not-null="true" unique="true">
             <column name="ACCOUNT"  length="20"/>
         </property>
-        <property name="password" type="java.lang.String">
+        <property name="password" type="java.lang.String" not-null="true">
             <column name="PASSWORD"  length="20"/>
         </property>
-        <property name="type" type="java.lang.Integer">
+        <property name="type" type="java.lang.Integer" not-null="true">
             <column name="TYPE" />
         </property>
-        <property name="status" type="java.lang.Integer">
+        <property name="status" type="java.lang.Integer" not-null="true">
             <column name="STATUS" />
         </property>
-        <property name="name" type="java.lang.String">
+        <property name="name" type="java.lang.String" not-null="false">
             <column name="NAME"  length="20"/>
         </property>
-        <property name="image_url" type="java.lang.String">
+        <property name="image_url" type="java.lang.String" not-null="false" unique="true">
             <column name="IMAGE_URL" />
         </property>
-        <property name="gender" type="int">
+        <property name="gender" type="java.lang.Boolean" not-null="false">
             <column name="GENDER" />
         </property>
-        <many-to-one name="major" class="com.recruit.model.Major" fetch="join">
+        <many-to-one name="major" class="com.recruit.model.Major" fetch="join" not-null="false">
             <column name="MAJOR" />
         </many-to-one>
-        <many-to-one name="classes" class="com.recruit.model.Classes" fetch="join">
+        <many-to-one name="classes" class="com.recruit.model.Classes" fetch="join" not-null="false">
             <column name="CLASSES" />
         </many-to-one>
         <property name="phone" type="java.lang.String">
@@ -50,15 +50,14 @@
         <property name="self_info" type="java.lang.String">
             <column name="SELF_INFO"  />
         </property>
-        <property name="isActive" type="java.lang.Boolean">
+        <property name="isActive" type="java.lang.Boolean" not-null="true">
             <column name="ISACTIVE" />
         </property>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+        <property name="createTime" type="java.util.Date" not-null="true">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date" not-null="true">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

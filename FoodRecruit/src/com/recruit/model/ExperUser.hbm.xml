@@ -8,30 +8,29 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join">
+        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join" not-null="true">
             <column name="EXPERIMENT" />
         </many-to-one>
-        <many-to-one name="user" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="user" class="com.recruit.model.User" fetch="join" not-null="true">
             <column name="USER" />
         </many-to-one>
-        <many-to-one name="score" class="com.recruit.model.Score" fetch="join">
+        <many-to-one name="score" class="com.recruit.model.Score" fetch="join" >
             <column name="SCORE" />
         </many-to-one>
-        <property name="isPassed" type="java.lang.Boolean">
+        <property name="isPassed" type="java.lang.Boolean" not-null="true">
             <column name="ISPASSED" />
         </property>
-        <property name="isEvaluate" type="java.lang.Boolean">
+        <property name="isEvaluate" type="java.lang.Boolean" not-null="true">
             <column name="ISEVALUATE" />
         </property>
-        <property name="isAgree" type="java.lang.Boolean">
+        <property name="isAgree" type="java.lang.Boolean" not-null="true">
             <column name="ISAGREE" />
         </property>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

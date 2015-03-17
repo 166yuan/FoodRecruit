@@ -187,13 +187,14 @@ public class UserController {
             uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
             User u=uml.forAccount(account);
+            uml.commitTransaction();
             JSONObject j = createJson(request);
             u.setName(j.getString("name"));
             Major major=mml.getById(j.getInt("major"));
             u.setMajor(major);
             Classes classes=cml.getById(j.getInt("classes"));
             u.setClasses(classes);
-            u.setGender(j.getInt("gender"));
+            u.setGender(j.getBoolean("gender"));
             u.setSelf_info(j.getString("self_info"));
             u.setEmail(j.getString("email"));
             u.setPhone(j.getString("phone"));
@@ -220,6 +221,9 @@ public class UserController {
             uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
             User user = uml.forAccount(account);
+            //去除hibernate延迟加载取数据，下面两条一定要
+            user.getMajor().getMajorName();
+            user.getClasses().getClassName();
             model.addAttribute("user", user);
             uml.commitTransaction();
         }catch (Exception ex){

@@ -1,10 +1,6 @@
 package com.recruit.controller;
 
-import com.recruit.experUser.dao.ExperUserDao;
-import com.recruit.experUser.model.ExperUser;
-import com.recruit.experiment.dao.ExperimentDao;
-import com.recruit.score.dao.ScoreDao;
-import com.recruit.score.model.Score;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +16,7 @@ import java.io.PrintWriter;
 public class ScoreController {
     @RequestMapping("scorePage")
     public String scorePage(HttpSession session,Long experId,Long userId,String experName,String userName,Model model){
-        model.addAttribute("userName",userName);
+       /* model.addAttribute("userName",userName);
         model.addAttribute("experName",experName);
         ScoreDao scoreDao=ScoreDao.getInstance();
         Score score=scoreDao.getByExperIdAndUserId(experId, userId);
@@ -41,10 +37,10 @@ public class ScoreController {
             }
 
         }
-        model.addAttribute("score",score);
+        model.addAttribute("score",score);*/
         return "View/experiment/scorePage";
     }
-    @RequestMapping("saveScoreA")
+   /* @RequestMapping("saveScoreA")
     public void saveScoreA(int duty,int discipline,int tidy,int care,int operation,int fault,int efficiency,int advise,Long experId,Long userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
         Long fromId=(Long)session.getAttribute("userId");
@@ -83,9 +79,9 @@ public class ScoreController {
             scoreDao.close();
         }
         out.print(result);
-    }
+    }*/
 
-    @RequestMapping("saveScoreB")
+    /*@RequestMapping("saveScoreB")
     public void saveScoreB(int scoreB,Long experId,Long userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
         Long fromId=(Long)session.getAttribute("userId");
@@ -115,9 +111,9 @@ public class ScoreController {
         scoreDao.close();
         }
         out.print(result);
-    }
+    }*/
 
-    @RequestMapping("saveScoreC")
+    /*@RequestMapping("saveScoreC")
     public void saveScoreC(int Ttidy,int Tcare,int Toperation,int Tconnect,int member,int recorded,int append,Long experId,Long userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
         Long fromId=(Long)session.getAttribute("userId");
@@ -158,6 +154,6 @@ public class ScoreController {
             scoreDao.close();
         }
         out.print(result);
-    }
+    }*/
 
 }

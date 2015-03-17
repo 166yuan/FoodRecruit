@@ -8,18 +8,17 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <property name="type" type="java.lang.Integer">
+        <property name="type" type="java.lang.Integer" not-null="true">
             <column name="TYPE" />
         </property>
-        <property name="info" type="java.lang.String">
+        <property name="info" type="java.lang.String" not-null="true">
             <column name="INFO" />
         </property>
-       <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+      <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

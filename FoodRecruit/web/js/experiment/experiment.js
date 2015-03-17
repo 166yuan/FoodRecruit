@@ -28,7 +28,7 @@ function publish(){
       success:function(data){
         var result = parseInt(data);
         if(result != -1){
-          alert("success");
+          alert("成功");
           window.location.href = "/exper/showExper?id="+ result +"&from=me";
         }else{
           alert("发布不成功，未知错误");

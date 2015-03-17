@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
   <meta charset="UTF-8">
   <!-- 强制国内垃圾浏览器开启高速模式-->
@@ -17,7 +18,7 @@
   <script type="text/javascript" src="/js/ace.min.js"></script>
   <script type="text/javascript" src="/js/mana/edit.js"></script>
 </head>
-<html>
+
 <body class="no-skin" >
 <c:import url="header.jsp"/>
 
@@ -90,43 +91,46 @@
         <div class="form-group">
           <label  class="col-sm-3 control-label no-padding-right" for="form-field-2"> 账号状态 </label>
           <div class="col-sm-9">
-            <c:choose>
+          <%--  <c:choose>
               <c:when test="${user.status==1}" >
           <input name="status" type="radio" checked="true" class="ace" value="1"/>
               </c:when>
               <c:otherwise>
                 <input name="status" type="radio" class="ace" value="1"/>
               </c:otherwise>
-            </c:choose>
+            </c:choose>--%>
           <span class="lbl">激活</span>
 
-            <c:choose>
+          <%--  <c:choose>
               <c:when test="${user.status==-1}" >
                 <input name="status" type="radio" checked="true" class="ace" value="-1"/>
               </c:when>
               <c:otherwise>
                 <input name="status" type="radio" class="ace" value="-1"/>
               </c:otherwise>
-            </c:choose>
+            </c:choose>--%>
             <span class="lbl">未激活</span>
 
-            <c:choose>
+          <%--  <c:choose>
               <c:when test="${user.status==-2}" >
                 <input name="status" type="radio" checked="true" class="ace" value="-2"/>
               </c:when>
               <c:otherwise>
                 <input name="status" type="radio" class="ace" value="-2"/>
               </c:otherwise>
-            </c:choose>
+            </c:choose>--%>
             <span class="lbl">冻结</span>
 
           </div>
         </div>
+
         <div class="space-4"></div>
         <div class="form-group">
+
+
           <label  class="col-sm-3 control-label no-padding-right" for="form-field-2"> 用户等级</label>
           <div class="col-sm-9">
-            <c:choose>
+            <%--<c:choose>
               <c:when test="${user.type==1}" >
                 <input name="type" type="radio" checked="true" class="ace" value="1"/>
               </c:when>
@@ -154,7 +158,7 @@
                 <input name="type" type="radio" class="ace" value="3"/>
               </c:otherwise>
             </c:choose>
-            <span class="lbl">超级管理员</span>
+            <span class="lbl">超级管理员</span>--%>
           </div>
         </div>
 
@@ -308,13 +312,10 @@
   </div><!-- /.row -->
     </div>
 
-</div>
-
 <!-- 下面这个div不是多余的，是include页面中header.jsp的另一半-->
 </div>
 <!-- 主体结束-->
 </body>
-</html>
 </html>
 <script>
     $(document).ready(

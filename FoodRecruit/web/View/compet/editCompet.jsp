@@ -49,7 +49,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >竞赛名称 </label>
                 <div class="col-sm-8">
-                    <input type="text" id="name" name="name" value="${compet.name}" class="col-xs-10 col-sm-5">
+                    <input type="text" id="name" name="name" value="${competition.name}" class="col-xs-10 col-sm-5">
                 </div>
             </div>
 
@@ -63,9 +63,9 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >队伍人数限制 </label>
                 <div class="col-sm-4">
-                    <input type="text"  value="${compet.minNumber}" name="minnumber" class="col-xs-10 col-sm-5">
+                    <input type="text"  value="${competition.minNumber}" name="minnumber" class="col-xs-10 col-sm-5">
 
-                    <input type="text"  value="${compet.maxNumber}" name="maxnumber" class="col-xs-10 col-sm-5">
+                    <input type="text"  value="${competition.maxNumber}" name="maxnumber" class="col-xs-10 col-sm-5">
                 </div>
                 <div class="col-sm-4"></div>
             </div>
@@ -73,7 +73,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label no-padding-right" >时间 </label>
                 <div class="col-sm-8">
-                    <input type="text" name="daterange" id="id-date-range-picker-1" value="<fmt:formatDate value="${compet.beginTime}" pattern="MM/dd/yyyy"/>-<fmt:formatDate value="${compet.endTime}" pattern="MM/dd/yyyy"/>" class="col-xs-10 col-sm-5"/>
+                    <input type="text" name="daterange" id="id-date-range-picker-1" value="<fmt:formatDate value="${competition.beginTime}" pattern="MM/dd/yyyy"/>-<fmt:formatDate value="${competition.endTime}" pattern="MM/dd/yyyy"/>" class="col-xs-10 col-sm-5"/>
                     <small>手动修改请严格按照时间格式</small>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 <div class="col-xs-10">
 
                     <script type="text/plain" id="myEditor" name="description">
-                        ${compet.information}
+                        ${competition.information}
                     </script>
                 </div>
                 <div class="col-xs-1"></div>
@@ -97,7 +97,7 @@
 
             <div class="form-group">
                 <div class="col-sm-5">
-                    <input class="form-control" type="hidden" name="id" value="${compet.id}" />
+                    <input class="form-control" type="hidden" name="id" value="${competition.id}" />
                 </div>
             </div>
 

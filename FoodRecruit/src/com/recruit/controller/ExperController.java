@@ -1,6 +1,8 @@
 package com.recruit.controller;
 
 
+import com.recruit.base.PageBean;
+import com.recruit.bean.ExperScoreBean;
 import com.recruit.bean.ExperUserBean;
 import com.recruit.impl.ExperUserImpl;
 import com.recruit.impl.ExperimentImpl;
@@ -15,6 +17,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.dialect.SybaseAnywhereDialect;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,13 +74,11 @@ public class ExperController {
      * @return
      */
     @RequestMapping(value = "showExper")
-    public String showExperById(Long id,String from,HttpSession session,Model model){
+    public String showExperById(Integer id,HttpSession session,Model model){
         ExperimentImpl eml=ExperimentImpl.getInstance();
         eml.startTransaction();
         Experiment experiment =eml.getById(id);
         model.addAttribute("exper", experiment);
-        System.out.println("from " + from);
-        model.addAttribute("from", from);
         eml.commitTransaction();
      return "/View/experiment/show_experiment";
     }
@@ -93,22 +94,21 @@ public class ExperController {
      * @return
      */
     @RequestMapping(value = "myPublishExperiment")
-    public  String myPublishExperiment(Integer start, Integer size, String order, String by, HttpSession session, Model model){
+    public  String myPublishExperiment(Integer page, HttpSession session, Model model){
+        Integer userId = (Integer)session.getAttribute("userId");
         ExperimentImpl eml =ExperimentImpl.getInstance();
         eml.startTransaction();
-        Long userId = (Long)session.getAttribute("userId");
+        int total=eml.countByPublisher(userId);
+        PageBean pageBean=PageBean.getInstance(page,total,"/exper","/myPublishExperiment");
 
        /* if ("asc".equals(order))
             dc.addOrder(Order.asc(by));
         if ("desc".equals(order))
             dc.addOrder(Order.desc(by));*/
-
-        start = start != null? start : 0;
-        size  = size  != null? size  : 10;
-
-        List<Experiment> list = eml.findByProperty("publishId",userId);
+        List<Experiment> list = eml.getMyPublishExper(userId,pageBean);
         eml.commitTransaction();
         model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/experiment/myPublishExperiment";
     }
 
@@ -123,19 +123,20 @@ public class ExperController {
      * @return
      */
     @RequestMapping("nendAssistant")
-    public String needAssistant(Integer start, Integer size, String order, String by, HttpSession session, Model model){
-       ExperimentImpl eml=ExperimentImpl.getInstance();
+    public String needAssistant(int page, String order, String by, HttpSession session, Model model){
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        eml.startTransaction();
        /* if ("asc".equals(order))
             dc.addOrder(Order.asc(by));
         if ("desc".equals(order))
             dc.addOrder(Order.desc(by));
 */
-        start = start != null? start : 0;
-        size  = size  != null? size  : 8;
-
-        List<Experiment> list = eml.findByProperty("isOk",false);
+        int total=eml.countNeedAssistant();
+        PageBean pageBean=PageBean.getInstance(page,total,"/exper","/nendAssistant");
+        List<Experiment> list = eml.getNeedAssistant(pageBean);
         eml.commitTransaction();
         model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/experiment/experimentNeedAssistant";
     }
 
@@ -145,17 +146,22 @@ public class ExperController {
      * @param out
      */
     @RequestMapping(value = "/addExper")
-    public void newExper(HttpServletRequest request,PrintWriter out){
+    public void newExper(HttpServletRequest request,HttpSession session,PrintWriter out){
         ExperimentImpl eml=ExperimentImpl.getInstance();
+        Integer publisherId = (Integer)session.getAttribute("userId");
+        System.out.println("uid is :"+publisherId);
         UserImpl uml=UserImpl.getInstance();
+        uml.startTransaction();
+        User user= uml.getById(publisherId);
+        uml.commitTransaction();
         Integer experId = -1;
         try{
             JSONObject j = createJson(request);
-            Long publisherId = (Long)request.getSession().getAttribute("userId");
+            System.out.println("the userId is:"+publisherId);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
             eml.startTransaction();
-            User user= uml.getById(publisherId);
             Experiment exper=new Experiment();
+            System.out.println("exe herer");
             exper.setPublisher(user);
             exper.setName(j.getString("name"));
             exper.setInformation(j.getString("content"));
@@ -169,6 +175,7 @@ public class ExperController {
             exper.setEmail(j.getString("email"));
             exper.setNote(j.getString("note"));
             exper.setCount(j.getInt("count"));
+            exper.setIsOutDate(false);
             eml.save(exper);
             experId = exper.getId();
            eml.commitTransaction();
@@ -185,12 +192,13 @@ public class ExperController {
      * @param out
      */
     @RequestMapping("delete")
-    public void delete(Long id,PrintWriter out){
+    public void delete(Integer id,PrintWriter out){
         int result = 0;
         ExperimentImpl eml=ExperimentImpl.getInstance();
         try{
             eml.startTransaction();
             eml.delete(id);
+            eml.commitTransaction();
             result = 1;
         }catch (Exception ex){
             ex.printStackTrace();
@@ -201,15 +209,18 @@ public class ExperController {
 
 
     @RequestMapping("attendList")
-    public String attendList(Long experId,Model model){
+    public String attendList(Integer experId,Model model){
         ExperimentImpl eml=ExperimentImpl.getInstance();
-        ExperUserImpl euml=ExperUserImpl.getInstance();
+        eml.startTransaction();
         Experiment experiment=eml.getById(experId);
-        List<ExperUser>list=euml.findByProperty("experiment",experiment);
-        List<ExperUserBean>list1=ExperUserBean.buildList(list);
-        model.addAttribute("list",list1);
+        eml.commitTransaction();
+        ExperUserImpl euml=ExperUserImpl.getInstance();
+        euml.startTransaction();
+        List<ExperUser>list=euml.findByExper(experId);
+        model.addAttribute("list",list);
         model.addAttribute("experName",experiment.getName());
         model.addAttribute("number",experiment.getCount());
+        euml.commitTransaction();
         return "View/experiment/attendList";
     }
 
@@ -232,11 +243,13 @@ public class ExperController {
 
 
     @RequestMapping("update")
-    public String update(Long id,Model model){
+    public String update(Integer id,Model model){
         ExperimentImpl eml=ExperimentImpl.getInstance();
+        eml.startTransaction();
         Experiment experiment = eml.getById(id);
         model.addAttribute("id",id);
         model.addAttribute("exper",experiment);
+        eml.commitTransaction();
         return "View/experiment/experimentUpdate";
     }
 
@@ -248,7 +261,7 @@ public class ExperController {
             JSONObject j = createJson(request);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy k:m a", Locale.US);
             eml.startTransaction();
-            Experiment exper = eml.getById(j.getLong("experId"));
+            Experiment exper = eml.getById(j.getInt("experId"));
             String pretime=j.getString("pretime");
             String endtime=j.getString("endtime");
             pretime=handleLocale(pretime);
@@ -292,13 +305,18 @@ public class ExperController {
      * @return
      */
     @RequestMapping("scoreExper")
-    public String scoreExperiment(HttpSession session,Model model){
+    public String scoreExperiment(int page,HttpSession session,Model model){
         ExperimentImpl eml=ExperimentImpl.getInstance();
-        UserImpl uml=UserImpl.getInstance();
-        Long userId=(Long)session.getAttribute("userId");
-        User user=uml.getById(userId);
-        List<Experiment>elist=eml.getAllByUser(user);
-        model.addAttribute("list",elist);
+        eml.startTransaction();
+        Integer userId=(Integer)session.getAttribute("userId");
+        int total=eml.countNeedAssistant();
+        PageBean pageBean=PageBean.getInstance(page,total,"/exper","/scoreExper");
+        List<Experiment>elist=eml.getAllByUser(userId,page);
+
+        List<ExperScoreBean>list=eml.buildList(elist);
+        model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
+        eml.commitTransaction();
         return "View/experiment/scoreExper";
     }
 
@@ -310,22 +328,22 @@ public class ExperController {
      */
     @RequestMapping("scoreList")
     public String scoreList(Long experId,Model model){
-        ExperimentImpl eml=ExperimentImpl.getInstance();
+       /* ExperimentImpl eml=ExperimentImpl.getInstance();
         ExperUserImpl euml=ExperUserImpl.getInstance();
         Experiment experiment=eml.getById(experId);
         List<ExperUser>list=euml.findByProperty("experiment",experiment);
         model.addAttribute("list",list);
-        model.addAttribute("experName",experiment.getName());
+        model.addAttribute("experName",experiment.getName());*/
         return "View/experiment/scoreList";
     }
 
     @RequestMapping("myAttend")
     public String attendExperiment(HttpSession session,Model model){
         UserImpl uml=UserImpl.getInstance();
-        Long userId=(Long)session.getAttribute("userId");
+        Integer userId=(Integer)session.getAttribute("userId");
         User user=uml.getById(userId);
         ExperUserImpl euml=ExperUserImpl.getInstance();
-        List<ExperUser>list=euml.findByProperty("user",user);
+
         return "View/experiment/myAttendExper";
     }
 

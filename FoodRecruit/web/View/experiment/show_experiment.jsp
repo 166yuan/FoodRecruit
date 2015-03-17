@@ -100,7 +100,7 @@
 				</div>
 
                <c:choose>
-                   <c:when test="${userId==exper.publishId}"></c:when>
+                   <c:when test="${userId==exper.publisher.id}"></c:when>
                    <c:otherwise>
                        <div class="center">
                            <a  class="btn btn-primary" onclick="joinIn()">加入实验</a>

@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /**
@@ -13,19 +15,31 @@ public class Classes {
 
     private Major major;
 
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
   
     
 
     public Classes() {
 		super();
+		inite();
 	}
 
-	public Classes(String className, Major major, BasicModel basicModel) {
+	public Classes(String className, Major major) {
 		super();
 		this.className = className;
 		this.major = major;
-		this.basicModel = basicModel;
+		
+	}
+	
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public Classes inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
 	}
 
 	public Integer getId() {
@@ -44,13 +58,7 @@ public class Classes {
 		this.major = major;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
-	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
-	}
 
 	public String getClassName() {
         return className;
@@ -59,4 +67,21 @@ public class Classes {
     public void setClassName(String className) {
         this.className = className;
     }
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+    
 }

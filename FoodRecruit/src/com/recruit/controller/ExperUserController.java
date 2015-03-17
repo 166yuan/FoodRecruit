@@ -1,5 +1,13 @@
 package com.recruit.controller;
 
+import com.recruit.impl.ExperUserImpl;
+import com.recruit.impl.ExperimentImpl;
+import com.recruit.impl.NotificationImpl;
+import com.recruit.impl.UserImpl;
+import com.recruit.model.ExperUser;
+import com.recruit.model.Experiment;
+import com.recruit.model.Notification;
+import com.recruit.model.User;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,47 +43,44 @@ public class ExperUserController{
 
 
     @RequestMapping("join")
-    public void join(String experId,HttpServletRequest request,PrintWriter out){
-        UserDao userDao = UserDao.getInstance();
-        ExperUserDao euDao = ExperUserDao.getInstance();
-        ExperimentDao eDao = ExperimentDao.getInstance();
-        NotificationDao nDao  = NotificationDao.getInstance();
-
+    public void join(Integer experId,HttpServletRequest request,PrintWriter out){
+        Integer userId=(Integer)request.getSession().getAttribute("userId");
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        ExperUserImpl euml=ExperUserImpl.getInstance();
+        UserImpl uml=UserImpl.getInstance();
+        uml.startTransaction();
+        User user=uml.getById(userId);
+        uml.commitTransaction();
+        eml.startTransaction();
+        Experiment experiment=eml.getById(experId);
+        eml.commitTransaction();
         int result = 0;
         try {
-            Long EID = Long.parseLong(experId);
-            String account = (String)request.getSession().getAttribute("account");
-            euDao.begin();
-            Long userId = userDao.forAccount(account).getId();
-
-            if(euDao.forExperIdAndUserId(EID,userId)!=null){
+            euml.startTransaction();
+            if(euml.findByExperAndUserId(experId,userId)!=null){
                 result=-2;
             }else{
 
             //-----创建Experiment 与 助手 联系 (Score要在同意后才新建一个）
-            ExperUser eu = euDao.createExperUser();
-            eu.setExperId(EID);
-            eu.setUserId(userId);
-            euDao.commit();
+            ExperUser experUser=euml.create(user,experiment);
+            euml.save(experUser);
+            euml.commitTransaction();
             //-----创建通知notification
 
                 //获取实验发布者的ID
-            Experiment experiment = eDao.get(EID);
-            Long publisherId = experiment.getPublishId();
-
-            nDao.begin();
-            Notification noti = nDao.Create();
-            noti.setReceiverId(publisherId);
+            User publisher=experiment.getPublisher();
+            NotificationImpl nml=NotificationImpl.getInstance();
+            nml.startTransaction();
+            Notification noti = new Notification();
+            noti.setReceiver(publisher);
             noti.setType(0);
             noti.setInfo("你有一个新的助手申请");
-            nDao.commit();
+            nml.save(noti);
+            nml.commitTransaction();
             result = 1;
             }
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            euDao.close();
-            nDao.close();
         }
         out.print(result);
     }

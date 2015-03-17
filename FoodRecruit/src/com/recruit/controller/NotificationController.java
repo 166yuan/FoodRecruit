@@ -1,8 +1,5 @@
 package com.recruit.controller;
 
-import com.recruit.model.BasicModel;
-import com.recruit.notification.dao.NotificationDao;
-import com.recruit.notification.model.Notification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +13,11 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/notification")
-public class NotificationController extends BasicModel {
+public class NotificationController {
     private static final int SUCCESS = 1;
     private static final int FAILURE = -1;
 
-    @RequestMapping("")
+  /*  @RequestMapping("")
     public void m(PrintWriter out){
         NotificationDao notificationDao = NotificationDao.getInstance();
         int result = 0;
@@ -34,14 +31,14 @@ public class NotificationController extends BasicModel {
             notificationDao.close();
         }
         out.print(result);
-    }
+    }*/
 
     /**
      * 设置指定的通知为已读
      * @param notiId
      * @param out
      */
-    @RequestMapping("readed")
+  /*  @RequestMapping("readed")
     public void setReaded(HttpServletRequest req, Long notiId,PrintWriter out){
         NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
@@ -66,7 +63,7 @@ public class NotificationController extends BasicModel {
         }
         out.print(result);
     }
-
+*/
     /**
      * 得到个人所有未读通知
      * @param req
@@ -75,7 +72,7 @@ public class NotificationController extends BasicModel {
      */
     @RequestMapping("myNotification")
     public String myNotification(HttpServletRequest req,Model model){
-        NotificationDao notificationDao = NotificationDao.getInstance();
+      /*  NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
         try {
             notificationDao.begin();
@@ -89,7 +86,7 @@ public class NotificationController extends BasicModel {
             ex.printStackTrace();
         }finally {
             notificationDao.close();
-        }
+        }*/
 
         return "View/notification/unread";
     }
@@ -99,7 +96,7 @@ public class NotificationController extends BasicModel {
      * @param req
      * @param out
      */
-    @RequestMapping("getNew")
+/*    @RequestMapping("getNew")
     public void haveNewNotification(HttpServletRequest req,PrintWriter out){
         NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
@@ -121,7 +118,7 @@ public class NotificationController extends BasicModel {
         }
 
         out.print(result);
-    }
+    }*/
 
     /**
      * 返回个人的所有通知
@@ -131,7 +128,7 @@ public class NotificationController extends BasicModel {
      */
     @RequestMapping("allNotification")
     public String allNotification(HttpServletRequest req,Model model){
-        NotificationDao notificationDao = NotificationDao.getInstance();
+      /*  NotificationDao notificationDao = NotificationDao.getInstance();
         Long uid = (Long)req.getSession().getAttribute("userId");
         try {
             notificationDao.begin();
@@ -149,7 +146,7 @@ public class NotificationController extends BasicModel {
         }finally {
             notificationDao.close();
         }
-
+*/
         return "View/notification/allNotification";
     }
 

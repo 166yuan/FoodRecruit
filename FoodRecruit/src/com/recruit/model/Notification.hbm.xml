@@ -8,30 +8,29 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="creator" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="creator" class="com.recruit.model.User" fetch="join" not-null="true">
             <column name="CREATOR" />
         </many-to-one>
-        <many-to-one name="receiver" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="receiver" class="com.recruit.model.User" fetch="join" >
             <column name="RECEIVER" />
         </many-to-one>
-        <property name="info" type="java.lang.String">
+        <property name="info" type="java.lang.String" not-null="true">
             <column name="INFO" />
         </property>
-        <property name="type" type="java.lang.Integer">
+        <property name="type" type="java.lang.Integer" not-null="true">
             <column name="TYPE" />
         </property>
-        <property name="isNew" type="java.lang.Boolean">
+        <property name="isNew" type="java.lang.Boolean" not-null="true">
             <column name="ISNEW" />
         </property>
-        <property name="refId" type="java.lang.Long">
+        <property name="refId" type="java.lang.Integer">
             <column name="REFID" />
         </property>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /** 发布记录，记录管理员操作
@@ -14,10 +16,13 @@ public class PublishLog {
     //发布的信息
     private String info;
 
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
     
     public PublishLog() {
 		super();
+        inite();
 	}
 
 	public PublishLog(Integer type, String info) {
@@ -26,6 +31,16 @@ public class PublishLog {
 		this.info = info;
 	}
 
+	
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public PublishLog inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
+	}
+	
 	public String getInfo() {
         return info;
     }
@@ -55,13 +70,23 @@ public class PublishLog {
 		this.id = id;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	
 
 
 

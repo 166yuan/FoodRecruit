@@ -17,7 +17,7 @@ public class ExperUserBean {
     private String major;
     private String classes;
     private Date appTime;
-    private int gender;
+    private Boolean gender;
     private double score;
     private Boolean isAgree;
     private Boolean isEvaluate;
@@ -91,11 +91,11 @@ public class ExperUserBean {
         this.appTime = appTime;
     }
 
-    public int getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 

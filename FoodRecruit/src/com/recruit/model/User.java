@@ -1,6 +1,10 @@
 package com.recruit.model;
 
 
+import java.util.Date;
+
+
+
 /** 用户类
  *  @author Yuan
   */
@@ -23,8 +27,8 @@ public class User {
     private String name;
     //头像链接
     private String image_url;
-    //性别 1 为男 0为女 -1为保密
-	private int gender;
+    //性别 1 为男 0为女
+	private Boolean gender;
     //专业
     private Major major;
     //班级
@@ -41,7 +45,9 @@ public class User {
     //是否主动招收
     private Boolean isActive;
 
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
 
     public Boolean getIsActive() {
 		return isActive;
@@ -52,20 +58,20 @@ public class User {
 	}
 
 	public User(){
-
+		inite();
     }
     
     public User(String account, String password) {
 		super();
 		this.account = account;
 		this.password = password;
+		
 	}
     
 	public User(String account, String password, Integer type, Integer status,
-			String name, String image_url, int gender, Major major,
+			String name, String image_url, Boolean gender, Major major,
 			Classes classes, String phone, String email, String qq,
-			String address, String self_info, Boolean isActive,
-			BasicModel basicModel) {
+			String address, String self_info, Boolean isActive) {
 		super();
 		this.account = account;
 		this.password = password;
@@ -82,9 +88,18 @@ public class User {
 		this.address = address;
 		this.self_info = self_info;
 		this.isActive = isActive;
-		this.basicModel = basicModel;
+		
 	}
 
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public User inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
+	}
+	
 	public String getAccount() {
 		return account;
 	}
@@ -127,12 +142,22 @@ public class User {
 		this.id = id;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public String getName() {
@@ -151,17 +176,19 @@ public class User {
 		this.image_url = image_url;
 	}
 	
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
+    
 
     
 
-    public Major getMajor() {
+    public Boolean getGender() {
+		return gender;
+	}
+
+	public void setGender(Boolean gender) {
+		this.gender = gender;
+	}
+
+	public Major getMajor() {
 		return major;
 	}
 
@@ -217,7 +244,10 @@ public class User {
         this.self_info = self_info;
     }
 
-
-
+    public void setCreateAndUpdateTimeNull(){
+    	this.createTime=null;
+    	this.updateTime=null;
+    }
+    
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.recruit.base.DaoSupport;
-import com.recruit.domain.PageBean;
 
 
 /**

@@ -1,7 +1,9 @@
 package com.recruit.model;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /** 竞赛队伍
@@ -27,13 +29,16 @@ public class Team{
     //组队状态
     private Integer type;
     
-    private BasicModel basicModel;
+    public Date createTime;
     
-    private List<CompetAndTeam> participtList = new ArrayList<CompetAndTeam>();
+    public Date updateTime;
+    
+    private Set<CompetAndTeam> participants = new HashSet<CompetAndTeam>();
     
 
 	public Team() {
 		super();
+        inite();
 	}
 
 
@@ -49,6 +54,15 @@ public class Team{
 		this.type = type;
 	}
 
+	
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public Team inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
+	}
 
 	public Integer getId() {
 		return id;
@@ -60,13 +74,26 @@ public class Team{
 	}
 
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 
@@ -140,13 +167,19 @@ public class Team{
 	}
 
 
-	public List<CompetAndTeam> getParticiptList() {
-		return participtList;
+	
+
+
+	
+
+
+	public Set<CompetAndTeam> getParticipants() {
+		return participants;
 	}
 
 
-	public void setParticiptList(List<CompetAndTeam> participtList) {
-		this.participtList = participtList;
+	public void setParticipants(Set<CompetAndTeam> participants) {
+		this.participants = participants;
 	}
 
 

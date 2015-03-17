@@ -1,15 +1,8 @@
 package com.recruit.controller;
 
-import com.recruit.competition.bean.ComTeamBean;
-import com.recruit.competition.bean.TeamBean;
-import com.recruit.competition.dao.ComDao;
-import com.recruit.competition.dao.TeamComDao;
-import com.recruit.competition.dao.TeamDao;
-import com.recruit.competition.model.CompetAndTeam;
-import com.recruit.competition.model.Competition;
-import com.recruit.competition.model.Team;
-import com.recruit.user.Dao.UserDao;
-import com.recruit.user.model.User;
+import com.recruit.base.PageBean;
+import com.recruit.impl.CompetitionImpl;
+import com.recruit.model.Competition;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
@@ -51,10 +44,14 @@ public class ComController {
      * @return
      */
     @RequestMapping("getAll")
-    public String getAllCompet(Model model){
-        ComDao comDao=ComDao.getInstance();
-        List<Competition> list=comDao.getAllCompetition();
+    public String getAllCompet(int page,Model model){
+       CompetitionImpl cml=CompetitionImpl.getInstance();
+        cml.startTransaction();
+        int total=cml.getSize();
+        PageBean pageBean=PageBean.getInstance(page,total,"/compet","/getAll");
+        List<Competition>list=cml.getAllCompetition(pageBean);
         model.addAttribute("list",list);
+        cml.commitTransaction();
         return "View/compet/competList";
     }
 
@@ -65,10 +62,11 @@ public class ComController {
      * @return
      */
     @RequestMapping("getById")
-    public String getCompetitionById(Long id,Model model){
-    ComDao comDao=ComDao.getInstance();
-    Competition competition=comDao.get(id);
-    model.addAttribute("competition",competition);
+    public String getCompetitionById(Integer id,Model model){
+    CompetitionImpl cml=CompetitionImpl.getInstance();
+    cml.startTransaction();
+        Competition competition=cml.getById(id);
+        model.addAttribute("competition",competition);
     return "View/compet/competition";
     }
 
@@ -87,12 +85,12 @@ public class ComController {
             //用户未登录，去登录界面
             result= "View/compet/unlogin";
         }else{
-            ComDao comDao=ComDao.getInstance();
+           /* ComDao comDao=ComDao.getInstance();
             Competition competition=comDao.get(id);
             UserDao userDao=UserDao.getInstance();
             User user = userDao.getUserById(uid);
             model.addAttribute("user",user);
-            model.addAttribute("competition",competition);
+            model.addAttribute("competition",competition);*/
             result= "View/compet/attendance";
         }
         return result;
@@ -110,7 +108,7 @@ public class ComController {
      */
     @RequestMapping("newteam")
     public String newTeam(Long comId,String name,String slogan,String password,int number,HttpSession session){
-        Long idtemp=null;
+       /* Long idtemp=null;
          TeamDao teamDao=TeamDao.getInstance();
          UserDao userDao=UserDao.getInstance();
         Long uid=(Long)session.getAttribute("userId");
@@ -141,7 +139,7 @@ public class ComController {
             e.printStackTrace();
          }finally {
              teamDao.close();
-         }
+         }*/
          return "View/compet/attendSuccess";
     }
 
@@ -150,12 +148,12 @@ public class ComController {
      * @param id
      * @return json到前端
      */
-    @RequestMapping("getTeamNames")
+    /*@RequestMapping("getTeamNames")
     public @ResponseBody List<Team> getTeamName(Long id){
         TeamDao teamDao=TeamDao.getInstance();
         List<Team>list=teamDao.getAllTeamById(id);
         return list;
-    }
+    }*/
 
     /**
      * 加入已存在队伍
@@ -165,7 +163,7 @@ public class ComController {
      * @param out
      * @param session
      */
-    @RequestMapping("joinTeam")
+/*    @RequestMapping("joinTeam")
     public void join(String name,String password,Long comId,PrintWriter out,HttpSession session){
      int result=1;
         TeamDao teamDao=TeamDao.getInstance();
@@ -212,7 +210,7 @@ public class ComController {
             teamDao.close();
         }
         out.print(result);
-    }
+    }*/
 
     /**
      * 获取用户参与的所有竞赛
@@ -222,11 +220,11 @@ public class ComController {
      */
     @RequestMapping("mycompet")
     public String myCompetition(HttpSession session,Model model){
-        Long userId=(Long)session.getAttribute("userId");
+      /*  Long userId=(Long)session.getAttribute("userId");
         TeamComDao teamComDao=TeamComDao.getInstance();
         List<CompetAndTeam> list=teamComDao.getByUser(userId);
         List<ComTeamBean>list1=ComTeamBean.buildList(list);
-        model.addAttribute("list",list1);
+        model.addAttribute("list",list1);*/
         return "View/compet/myCompet";
     }
 
@@ -238,11 +236,11 @@ public class ComController {
      */
     @RequestMapping("nowCompet")
     public String CompetitionOnGoing(HttpSession session,Model model){
-        Long userId=(Long)session.getAttribute("userId");
+        /*Long userId=(Long)session.getAttribute("userId");
         TeamComDao teamComDao=TeamComDao.getInstance();
         List<CompetAndTeam> list=teamComDao.getByUser(userId);
         List<ComTeamBean> list1=ComTeamBean.buildList2(list);
-        model.addAttribute("list",list1);
+        model.addAttribute("list",list1);*/
         return "View/compet/goingCompet";
     }
 
@@ -254,11 +252,11 @@ public class ComController {
      */
     @RequestMapping("passCompet")
     public String pastCompetition(HttpSession session,Model model){
-        Long userId=(Long)session.getAttribute("userId");
+       /* Long userId=(Long)session.getAttribute("userId");
         TeamComDao teamComDao=TeamComDao.getInstance();
         List<CompetAndTeam> list=teamComDao.getByUser(userId);
         List<ComTeamBean>list1=ComTeamBean.buildList1(list);
-        model.addAttribute("list",list1);
+        model.addAttribute("list",list1);*/
         return "View/compet/pastCompet";
     }
 
@@ -271,10 +269,10 @@ public class ComController {
      */
     @RequestMapping("showTeam")
     public String showTeam(Long teamId,Long comId,Model model){
-        TeamComDao teamComDao=TeamComDao.getInstance();
+      /*  TeamComDao teamComDao=TeamComDao.getInstance();
         List<CompetAndTeam>list=teamComDao.getTeamById(teamId, comId);
         TeamBean teamBean=TeamBean.build(comId,teamId,list);
-        model.addAttribute("team", teamBean);
+        model.addAttribute("team", teamBean);*/
         return "View/compet/myTeam";
     }
 
@@ -308,9 +306,9 @@ public class ComController {
         String date[]=daterange.split("-");
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Competition competition=new Competition();
-        ComDao comDao=ComDao.getInstance();
+        CompetitionImpl cml=CompetitionImpl.getInstance();
         try {
-            comDao.begin();
+            cml.startTransaction();
             Date date1=sdf.parse(date[0]);
             Date date2=sdf.parse(date[1]);
             competition.setName(name);
@@ -323,14 +321,11 @@ public class ComController {
                 competition.setImage_url("/images/"+uploadFile.getName());
             }
             model.addAttribute("competition",competition);
-            comDao.save(competition);
-            comDao.commit();
+            cml.save(competition);
+            cml.commitTransaction();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            comDao.close();
         }
-
         return "View/compet/competition";
 
     }
@@ -342,12 +337,11 @@ public class ComController {
      * @return
      */
     @RequestMapping("update")
-    public String updateCompetition(Long id,Model model){
-        ComDao comDao = ComDao.getInstance();
-        Competition competition = comDao.get(id);
-
-        model.addAttribute("compet",competition);
-
+    public String updateCompetition(Integer id,Model model){
+        CompetitionImpl cml=CompetitionImpl.getInstance();
+        cml.startTransaction();
+        Competition competition=cml.getById(id);
+        model.addAttribute("competition",competition);
         return "View/compet/editCompet";
     }
 
@@ -370,6 +364,7 @@ public class ComController {
         File uploadFile = null;
 
         System.out.println("id = " + id);
+/*
 
         ComDao comDao = ComDao.getInstance();
         Competition competition = comDao.get(id);
@@ -421,11 +416,12 @@ public class ComController {
         }finally {
             comDao.close();
         }
+*/
 
         return "/View/compet/competition";
     }
 
-    @RequestMapping("delete")
+    /*@RequestMapping("delete")
     public void delete(Long id,PrintWriter out){
         int result=1;
         ComDao comDao = ComDao.getInstance();
@@ -442,5 +438,5 @@ public class ComController {
         }
         out.print(result);
     }
-
+*/
 }

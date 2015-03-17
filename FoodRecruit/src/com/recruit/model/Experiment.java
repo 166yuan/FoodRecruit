@@ -2,7 +2,9 @@ package com.recruit.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2014/11/30.
@@ -28,7 +30,7 @@ public class Experiment{
     //QQ
     private String QQ;
     //所需实验人数
-    private int count;
+    private Integer count;
    //发布者id
     private User publisher;
     //备注
@@ -38,16 +40,18 @@ public class Experiment{
     //结束时间
     private Date endTime;
     //是否已经招够助手
-    private boolean isOk;
+    private Boolean isOk;
     
-    private BasicModel basicModel;
+    public Date createTime;
     
-    List<ExperUser> experUsers = new ArrayList<ExperUser>();
+    public Date updateTime;
+    
+    Set<ExperUser> experUsers = new HashSet<ExperUser>();
 
     
 
 	public Experiment() {
-		isOk=false;
+		inite();
 	}
 
 	public Experiment(String name, String information, String requirement,
@@ -71,6 +75,16 @@ public class Experiment{
 		this.isOk = isOk;
 		this.isOutDate = isOutDate;
 	}
+	
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime isOk=false
+	 * 
+	 */
+	public Experiment inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        isOk=false;
+        return this;
+	}
 
 	public Integer getId() {
 		return id;
@@ -80,19 +94,28 @@ public class Experiment{
 		this.id = id;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public int getCount() {
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
@@ -213,13 +236,25 @@ public class Experiment{
         this.contact = contact;
     }
 
-    public List<ExperUser> getExperUsers() {
-		return experUsers;
+    
+	public Boolean getIsOk() {
+		return isOk;
 	}
 
-	public void setExperUsers(List<ExperUser> experUsers) {
+	public void setIsOk(Boolean isOk) {
+		this.isOk = isOk;
+	}
+
+	public Set<ExperUser> getExperUsers() {
+		return experUsers;
+	}
+    public List<ExperUser>getExperUser(){
+        return new ArrayList<ExperUser>(experUsers);
+    }
+	public void setExperUsers(Set<ExperUser> experUsers) {
 		this.experUsers = experUsers;
 	}
+
 	@Override
 	public String toString() {
 		return "Experiment [name=" + name + ", information=" + information
@@ -231,5 +266,9 @@ public class Experiment{
 				+ isOutDate + "]";
 	}
     
+	public void setCreateAndUpdateTimeNull(){
+    	this.createTime=null;
+    	this.updateTime=null;
+    }
     
 }

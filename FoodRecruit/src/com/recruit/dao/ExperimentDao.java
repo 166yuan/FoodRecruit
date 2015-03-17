@@ -7,6 +7,5 @@ import com.recruit.model.User;
 import java.util.List;
 
 public interface ExperimentDao extends DaoSupport<Experiment>{
-public List<Experiment> getAllByUser(User user
-);
+public List<Experiment> getAllByUser(Integer userId,int page);
 }

@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /**
@@ -21,19 +23,18 @@ public class ExperUser  {
     //是否同意成为助手
     private Boolean isAgree;
 
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
     
     public ExperUser(){
-        isPassed=false;
-        isEvaluate=false;
-        isAgree = false;
+    	inite();
     }
 
     
 
     public ExperUser(Experiment experiment, User user, Score score,
-			Boolean isPassed, Boolean isEvaluate, Boolean isAgree,
-			BasicModel basicModel) {
+			Boolean isPassed, Boolean isEvaluate, Boolean isAgree) {
 		super();
 		this.experiment = experiment;
 		this.user = user;
@@ -41,10 +42,20 @@ public class ExperUser  {
 		this.isPassed = isPassed;
 		this.isEvaluate = isEvaluate;
 		this.isAgree = isAgree;
-		this.basicModel = basicModel;
+		
 	}
 
-
+    /**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * isPassed = false;isEvaluate=false;isAgree=false;
+	 */
+	public ExperUser inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        isPassed=false;
+        isEvaluate=false;
+        isAgree = false;
+        return this;
+	}
 
 	public Integer getId() {
 		return id;
@@ -58,14 +69,30 @@ public class ExperUser  {
 
 
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
 
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 

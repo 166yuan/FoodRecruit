@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>已发布实验</title>
+	<title>我发布的实验</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/all.css" >
 
@@ -28,7 +28,7 @@
 			<a href="/View/user/myspace.jsp">主页</a>
 		</li>
 		<li class="active">
-			已发布实验
+			我发布的实验
 		</li>
 	</ul><!-- /.breadcrumb -->
 
@@ -38,7 +38,7 @@
 <div class="page-content">
 	<div class="page-header">
 		<h1>
-			已发布实验
+			我发布的实验
 		</h1>
 	</div>
 
@@ -60,7 +60,7 @@
 								<h4 class="lighter no-margin-bottom">
 									<a href="/exper/update?id=${exper.id}"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp;
 									<a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
-									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
+									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.createTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
                                     <c:set var="now" value="<%=System.currentTimeMillis()%>"/>
                                     <c:if test="${(now-exper.createTime.time)<1209600000}">
                                         <img src="/images/new.gif" alt="">
@@ -77,14 +77,23 @@
 							</li>
 							</c:forEach>
 						</ul>
+                        <div class="dataTables_paginate paging_bootstrap">
+                            <c:import url="/View/common/page.jsp"/>
+                        </div>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-1"></div>
+
 		</div>
 	</div>
+
+    <br>
 	<!-- main content end-->
 </div>
+<br>
+<br>
+<br>
 <script type="text/javascript">
 	function isSure(id){
 		if(confirm("你确定要删除吗？"))
@@ -97,7 +106,7 @@
 				success:function(data){
 					var result = parseInt(data);
 					if(result == 1){
-						alert("delete success");
+						alert("删除成功");
 						window.location.href = "/exper/myPublishExperiment";
 					}else{
 						alert("未知错误");
@@ -108,7 +117,7 @@
 		else
 		{
 			//否则说明下了，赫赫
-			alert("你按了取消，那就是返回false");
+			alert("取消删除了");
 		}
 	}
 </script>

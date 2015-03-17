@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 /** 实验评价
@@ -58,10 +60,13 @@ public class Score {
     private Integer secscore;
     private Double total;
 
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
     
     public Score() {
 		super();
+        inite();
 	}
 
 
@@ -97,6 +102,14 @@ public class Score {
 		this.total = total;
 	}
 
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public Score inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
+	}
 
     public Integer getId() {
 		return id;
@@ -108,13 +121,26 @@ public class Score {
 	}
 
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	
+
+
+	public Date getCreateTime() {
+		return createTime;
 	}
 
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 

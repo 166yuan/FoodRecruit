@@ -1,5 +1,7 @@
 package com.recruit.model;
 
+import java.util.Date;
+
 
 
 
@@ -17,7 +19,9 @@ public class CompetAndTeam  {
 
     private Team team;
     
-    private BasicModel basicModel;
+    public Date createTime;
+    
+    public Date updateTime;
   
 
 	public CompetAndTeam(User user, Team team) {
@@ -29,6 +33,16 @@ public class CompetAndTeam  {
 
 	public CompetAndTeam() {
 		super();
+        inite();
+	}
+	
+	/**初始化类，如所当前时间赋值给createTime 和 updateTime
+	 * 
+	 */
+	public CompetAndTeam inite(){
+		this.createTime=new Date();
+        this.updateTime=new Date();
+        return this;
 	}
 
 	public User getUser() {
@@ -55,23 +69,22 @@ public class CompetAndTeam  {
 		this.id = id;
 	}
 
-	public BasicModel getBasicModel() {
-		return basicModel;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setBasicModel(BasicModel basicModel) {
-		this.basicModel = basicModel;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	@Override
-	public String toString() {
-		return "CompetAndTeam [id=" + id + ", user=" + user + ", team=" + team
-				+ ", basicModel=" + basicModel + "]";
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-
-	
 
    
 }

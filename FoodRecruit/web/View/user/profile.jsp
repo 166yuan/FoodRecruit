@@ -148,7 +148,7 @@
                 <div class="profile-info-name"> 姓名 </div>
 
                 <div class="profile-info-value">
-                    ${user.name}
+                   ${user.name}
                 </div>
             </div>
 
@@ -172,7 +172,7 @@
 
                 <div class="profile-info-value">
                     <i class="fa fa-map-marker light-orange bigger-110"></i>
-                    ${user.major.majorName}${user.classes.className}
+                    ${user.major.majorName} • ${user.classes.className}
                 </div>
             </div>
 
@@ -282,8 +282,8 @@
                                         <label class="col-sm-4 control-label no-padding-right" >专业，年级</label>
 
                                         <div class="col-sm-8">
-                                            <input class="input-small" type="text" name="major" value="${user.major}" id="form-field-major" placeholder="专业">
-                                            <input class="input-small" type="text" name="classes" value="${user.classes}" id="form-field-classes" placeholder="年级">
+                                            <input class="input-small" type="text" name="major" value="aa" id="form-field-major" placeholder="专业">
+                                            <input class="input-small" type="text" name="classes" value="..." id="form-field-classes" placeholder="年级">
                                         </div>
                                     </div>
                                 </div>

@@ -57,7 +57,7 @@
             点击进入主页
             <a href="/user/login">主页</a>
             <br>
-            <a href="/mana/index">进入后台管理</a>
+            <a href="/mana/index?page=1">进入后台管理</a>
         </div>
     </div><!-- /.navbar-container -->
 </div>

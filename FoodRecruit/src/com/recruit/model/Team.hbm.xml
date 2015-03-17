@@ -8,40 +8,38 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <property name="name" type="java.lang.String">
+        <property name="name" type="java.lang.String" unique="true" not-null="true">
             <column name="NAME"  length="20"/>
         </property>
-        <property name="maxSize" type="java.lang.Integer">
+        <property name="maxSize" type="java.lang.Integer" not-null="true">
             <column name="MAXSIZE" />
         </property>
-        <property name="slogan" type="java.lang.String">
+        <property name="slogan" type="java.lang.String" not-null="false">
             <column name="SLOGAN"  length="50"/>
         </property>
-        <many-to-one name="leader" class="com.recruit.model.User" fetch="join">
+        <many-to-one name="leader" class="com.recruit.model.User" fetch="join" not-null="true" unique="true">
             <column name="LEADER" />
         </many-to-one>
-        <property name="password" type="java.lang.String">
+        <property name="password" type="java.lang.String" not-null="true">
             <column name="PASSWORD"  length="20"/>
         </property>
-        <many-to-one name="competition" class="com.recruit.model.Competition" fetch="join">
+        <many-to-one name="competition" class="com.recruit.model.Competition" fetch="join" not-null="true">
             <column name="COMPETITION" />
         </many-to-one>
-        <property name="type" type="java.lang.Integer">
+        <property name="type" type="java.lang.Integer" not-null="true">
             <column name="TYPE" />
         </property>
-        <!-- 映射组成关系 -->
-        <component name="basicModel" class="com.recruit.model.BasicModel">
-
-        	<!-- 指定组成关系的组件的属性 -->
-        	<property name="createTime" type="timestamp" column="createTime"></property>
-        	<property name="updateTime"  type="timestamp" column="updateTime"></property>
-        </component>
-        <list name="participtList" inverse="false" table="COMPETANDTEAM" lazy="true">
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATETIME" />
+        </property>
+        <set name="participants" table="COMPETANDTEAM" inverse="true" lazy="true">
             <key>
-                <column name="ID" />
+                <column name="TEAM" />
             </key>
-            <list-index></list-index>
             <one-to-many class="com.recruit.model.CompetAndTeam" />
-        </list>
+        </set>
     </class>
 </hibernate-mapping>
