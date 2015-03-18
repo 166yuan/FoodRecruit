@@ -54,10 +54,12 @@
         </div>
         <!-- #section:basics/navbar.dropdown -->
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
-            点击进入主页
-            <a href="/user/login">主页</a>
-            <br>
-            <a href="/mana/index?page=1">进入后台管理</a>
+          <ul class="nav ace-nav">
+            <li class="green">
+            <a href="/user/login">注册/登录</a></li>
+           <li class="green">
+            <a href="/mana/index?page=1">进入后台管理</a></li>
+            </ul>
         </div>
     </div><!-- /.navbar-container -->
 </div>
@@ -65,7 +67,7 @@
 <div class="main" >
     <div class="mainContent">
         <!-- 图片区 -->
-        <div class="broadcastImage"></div>
+        <div class="broadcastImage"><img height="300" width="1309" src="/images/banner.jpg"/></div>
 
         <!-- 最新实验项目 -->
         <div class="project">

@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Administrator on 2015/2/13.
  */
 
-public class Classes {
+public class Classes  implements InstanceInterface{
 	
 	private Integer id;
     private String className;
@@ -82,6 +82,21 @@ public class Classes {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	@Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
 	}
     
 }

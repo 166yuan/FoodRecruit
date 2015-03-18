@@ -132,7 +132,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
               <li class="hover">
-                <a href="/compet/getAll">
+                <a href="/compet/getAll?page=1">
                   <i class="menu-icon fa fa-caret-right"></i>
                   查看竞赛列表
                 </a>

@@ -5,4 +5,5 @@ import com.recruit.model.Team;
 
 public interface TeamDao extends DaoSupport<Team>{
 
+
 }

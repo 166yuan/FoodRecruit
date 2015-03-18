@@ -7,6 +7,7 @@ import com.recruit.model.User;
 import org.hibernate.Query;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,14 @@ public class UserImpl extends DaoSupportImpl<User> implements UserDao{
     public List<User>findAll(PageBean pageBean){
         String hql="from User u";
         return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
+    }
+
+    public void Instance(List<User>list){
+        Iterator<User>iterator=list.iterator();
+        while (iterator.hasNext()){
+            User user=iterator.next();
+            user.getClasses().getClassName();
+            user.getMajor().getMajorName();
+        }
     }
 }

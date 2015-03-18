@@ -11,7 +11,7 @@
         <property name="className" type="java.lang.String" not-null="true">
             <column name="CLASSNAME" not-null="true"/>
         </property>
-        <many-to-one name="major" class="com.recruit.model.Major" fetch="join" not-null="true">
+        <many-to-one name="major" class="com.recruit.model.Major" fetch="select" not-null="true">
             <column name="MAJOR" />
         </many-to-one>
         <property name="createTime" type="java.util.Date">

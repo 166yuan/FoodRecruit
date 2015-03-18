@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by Administrator on 2014/11/30.
  */
-public class Experiment{
+public class Experiment  implements InstanceInterface{
 
 	private Integer id;
 	
@@ -153,7 +153,9 @@ public class Experiment{
         this.isOk = isOk;
     }
 
-  
+    public ArrayList<ExperUser>getExperUser(){
+        return new ArrayList<ExperUser>(experUsers);
+    }
 
     public User getPublisher() {
 		return publisher;
@@ -248,27 +250,25 @@ public class Experiment{
 	public Set<ExperUser> getExperUsers() {
 		return experUsers;
 	}
-    public List<ExperUser>getExperUser(){
-        return new ArrayList<ExperUser>(experUsers);
-    }
+
 	public void setExperUsers(Set<ExperUser> experUsers) {
 		this.experUsers = experUsers;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Experiment [name=" + name + ", information=" + information
-				+ ", requirement=" + requirement + ", type=" + type
-				+ ", contact=" + contact + ", phone=" + phone + ", email="
-				+ email + ", QQ=" + QQ + ", count=" + count + ", publisher="
-				+ publisher + ", note=" + note + ", beginTime=" + beginTime
-				+ ", endTime=" + endTime + ", isOk=" + isOk + ", isOutDate="
-				+ isOutDate + "]";
+		return "[createTime=" + createTime + "]";
 	}
-    
-	public void setCreateAndUpdateTimeNull(){
-    	this.createTime=null;
-    	this.updateTime=null;
-    }
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
     
 }

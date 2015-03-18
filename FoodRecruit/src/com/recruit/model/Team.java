@@ -10,7 +10,7 @@ import java.util.Set;
  *  @author Yuan
  */
 
-public class Team{
+public class Team implements InstanceInterface{
 	
 	private Integer id;
 	
@@ -185,9 +185,17 @@ public class Team{
 
 	@Override
 	public String toString() {
-		return "Team [name=" + name + ", maxSize=" + maxSize + ", slogan="
-				+ slogan + ", leader=" + leader + ", password=" + password
-				+ ", competition=" + competition + ", type=" + type + "]";
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
 	}
 
 

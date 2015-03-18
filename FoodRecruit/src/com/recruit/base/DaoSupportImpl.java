@@ -144,6 +144,8 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 		return query.list();
 	}
 
+
+
 	@Override
 	public List<T> findByHql(String hql, int page, int pageSize,
 			String property, boolean isAsc) {

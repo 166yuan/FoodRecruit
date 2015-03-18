@@ -6,6 +6,13 @@ import com.recruit.model.CompetAndTeam;
 
 
 public class CompetAndTeamImpl extends DaoSupportImpl<CompetAndTeam> implements CompetAndTeamDao {
-	
+    private static CompetAndTeamImpl instance=null;
+
+    public static  CompetAndTeamImpl getInstance(){
+        if(instance==null){
+            return new CompetAndTeamImpl();
+        }
+        return instance;
+    }
 
 }

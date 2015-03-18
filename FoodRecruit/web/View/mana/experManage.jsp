@@ -38,7 +38,7 @@
             <div class="row">
 
                 <div class="col-xs-6">
-                    <div class="ui-pg-div"><span class="label label-lg label-success arrowed-right">新增实验</span><a href="/compet/publish" target="_blank"><span
+                    <div class="ui-pg-div"><span class="label label-lg label-success arrowed-right">新增实验</span><a href="/exper/publish" target="_blank"><span
                             class="ui-icon ace-icon fa fa-plus-circle purple" id="addclass"></span></a></div>
                 </div>
             </div>

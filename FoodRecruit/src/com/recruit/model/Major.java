@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Administrator on 2015/2/13.
  */
 
-public class Major {
+public class Major  implements InstanceInterface{
 	
 	private Integer id;
 	
@@ -83,4 +83,19 @@ public class Major {
     public void setMajorName(String majorName) {
         this.majorName = majorName;
     }
+    
+    @Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
 }

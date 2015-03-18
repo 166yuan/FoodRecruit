@@ -35,7 +35,7 @@
         <property name="count" type="java.lang.Integer" not-null="true">
             <column name="COUNT" />
         </property>
-        <many-to-one name="publisher" class="com.recruit.model.User" fetch="join" not-null="true">
+        <many-to-one name="publisher" class="com.recruit.model.User" fetch="select" not-null="true">
             <column name="PUBLISHER" />
         </many-to-one>
         <property name="note" type="java.lang.String">

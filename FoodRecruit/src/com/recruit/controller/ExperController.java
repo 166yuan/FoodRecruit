@@ -147,13 +147,12 @@ public class ExperController {
      */
     @RequestMapping(value = "/addExper")
     public void newExper(HttpServletRequest request,HttpSession session,PrintWriter out){
-        ExperimentImpl eml=ExperimentImpl.getInstance();
         Integer publisherId = (Integer)session.getAttribute("userId");
-        System.out.println("uid is :"+publisherId);
         UserImpl uml=UserImpl.getInstance();
         uml.startTransaction();
         User user= uml.getById(publisherId);
         uml.commitTransaction();
+        ExperimentImpl eml=ExperimentImpl.getInstance();
         Integer experId = -1;
         try{
             JSONObject j = createJson(request);

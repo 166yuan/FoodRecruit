@@ -9,7 +9,7 @@ import java.util.Date;
  *  @author Yuan
   */
 
-public class User {
+public class User implements InstanceInterface{
     
 	
 	private Integer id;
@@ -248,6 +248,23 @@ public class User {
     	this.createTime=null;
     	this.updateTime=null;
     }
+
+	@Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
+    
+    
     
 
 }

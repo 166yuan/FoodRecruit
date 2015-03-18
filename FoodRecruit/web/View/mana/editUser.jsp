@@ -91,74 +91,68 @@
         <div class="form-group">
           <label  class="col-sm-3 control-label no-padding-right" for="form-field-2"> 账号状态 </label>
           <div class="col-sm-9">
-          <%--  <c:choose>
+            <c:choose>
               <c:when test="${user.status==1}" >
           <input name="status" type="radio" checked="true" class="ace" value="1"/>
+                  <span class="lbl">激活</span>
+                  <input name="status" type="radio" class="ace" value="-1"/>
+                  <span class="lbl">未激活</span>
+                  <input name="status" type="radio" class="ace" value="-2"/>
+                  <span class="lbl">冻结</span>
               </c:when>
+                <c:when test="${user.status==-1}">
+                    <input name="status" type="radio" class="ace" value="1"/>
+                    <span class="lbl">激活</span>
+                    <input name="status" type="radio" checked="true" class="ace" value="-1"/>
+                    <span class="lbl">未激活</span>
+                    <input name="status" type="radio" class="ace" value="-2"/>
+                    <span class="lbl">冻结</span>
+                </c:when>
               <c:otherwise>
-                <input name="status" type="radio" class="ace" value="1"/>
+                  <input name="status" type="radio" class="ace" value="1"/>
+                  <span class="lbl">激活</span>
+                  <input name="status" type="radio"  class="ace" value="-1"/>
+                  <span class="lbl">未激活</span>
+                  <input name="status" type="radio" checked="true" class="ace" value="-2"/>
+                  <span class="lbl">冻结</span>
               </c:otherwise>
-            </c:choose>--%>
-          <span class="lbl">激活</span>
-
-          <%--  <c:choose>
-              <c:when test="${user.status==-1}" >
-                <input name="status" type="radio" checked="true" class="ace" value="-1"/>
-              </c:when>
-              <c:otherwise>
-                <input name="status" type="radio" class="ace" value="-1"/>
-              </c:otherwise>
-            </c:choose>--%>
-            <span class="lbl">未激活</span>
-
-          <%--  <c:choose>
-              <c:when test="${user.status==-2}" >
-                <input name="status" type="radio" checked="true" class="ace" value="-2"/>
-              </c:when>
-              <c:otherwise>
-                <input name="status" type="radio" class="ace" value="-2"/>
-              </c:otherwise>
-            </c:choose>--%>
-            <span class="lbl">冻结</span>
-
+            </c:choose>
           </div>
         </div>
 
-        <div class="space-4"></div>
-        <div class="form-group">
 
+        <div class="form-group">
 
           <label  class="col-sm-3 control-label no-padding-right" for="form-field-2"> 用户等级</label>
           <div class="col-sm-9">
-            <%--<c:choose>
+            <c:choose>
               <c:when test="${user.type==1}" >
                 <input name="type" type="radio" checked="true" class="ace" value="1"/>
+                  <span class="lbl">学生</span>
+                  <input name="type" type="radio" class="ace" value="2"/>
+                  <span class="lbl">管理员</span>
+                  <input name="type" type="radio" class="ace" value="3"/>
+                  <span class="lbl">超级管理员</span>
               </c:when>
+                <c:when test="${user.type==2}">
+                    <input name="type" type="radio"  class="ace" value="1"/>
+                    <span class="lbl">学生</span>
+                    <input name="type" type="radio" checked="true" class="ace" value="2"/>
+                    <span class="lbl">管理员</span>
+                    <input name="type" type="radio" class="ace" value="3"/>
+                    <span class="lbl">超级管理员</span>
+                </c:when>
               <c:otherwise>
-                <input name="type" type="radio" class="ace" value="1"/>
+                  <input name="type" type="radio"  class="ace" value="1"/>
+                  <span class="lbl">学生</span>
+                  <input name="type" type="radio"  class="ace" value="2"/>
+                  <span class="lbl">管理员</span>
+                  <input name="type" type="radio" checked="true" class="ace" value="3"/>
+                  <span class="lbl">超级管理员</span>
               </c:otherwise>
             </c:choose>
-            <span class="lbl">学生</span>
 
-            <c:choose>
-              <c:when test="${user.type==2}" >
-                <input name="type" type="radio" checked="true" class="ace" value="2"/>
-              </c:when>
-              <c:otherwise>
-                <input name="type" type="radio" class="ace" value="2"/>
-              </c:otherwise>
-            </c:choose>
-            <span class="lbl">管理员</span>
 
-            <c:choose>
-              <c:when test="${user.type==3}" >
-                <input name="type" type="radio" checked="true" class="ace" value="3"/>
-              </c:when>
-              <c:otherwise>
-                <input name="type" type="radio" class="ace" value="3"/>
-              </c:otherwise>
-            </c:choose>
-            <span class="lbl">超级管理员</span>--%>
           </div>
         </div>
 
@@ -166,24 +160,33 @@
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 性别 </label>
           <div class="col-sm-9">
             <c:choose>
-              <c:when test="${user.gender==1}">
-                <input name="gender" type="radio" checked="true" class="ace" value="1"/>
+              <c:when test="${user.gender==true}">
+                <input name="gender" type="radio" checked="true" class="ace" value="true"/>
+                  <span class="lbl">男</span>
+                  <input name="gender" type="radio"  class="ace" value="false"/>
+                  <span class="lbl">女</span>
+                  <input name="gender" type="radio"  class="ace" value=""/>
+                  <span class="lbl">未选定</span>
               </c:when>
+               <c:when test="${user.gender==false}">
+                   <input name="gender" type="radio"  class="ace" value="true"/>
+                   <span class="lbl">男</span>
+                   <input name="gender" type="radio" checked="true" class="ace" value="false"/>
+                   <span class="lbl">女</span>
+                   <input name="gender" type="radio"  class="ace" value=""/>
+                   <span class="lbl">未选定</span>
+               </c:when>
               <c:otherwise>
-                <input name="gender" type="radio"  class="ace" value="1"/>
+                  <input name="gender" type="radio"  class="ace" value="true"/>
+                  <span class="lbl">男</span>
+                  <input name="gender" type="radio" class="ace" value="false"/>
+                  <span class="lbl">女</span>
+                  <input name="gender" type="radio"  checked="true" class="ace" value=""/>
+                  <span class="lbl">未选定</span>
               </c:otherwise>
             </c:choose>
-            <span class="lbl">男</span>
 
-            <c:choose>
-              <c:when test="${user.gender==0}">
-                <input name="gender" type="radio" checked="true" class="ace" value="0"/>
-              </c:when>
-              <c:otherwise>
-                <input name="gender" type="radio"  class="ace" value="0"/>
-              </c:otherwise>
-            </c:choose>
-            <span class="lbl">女</span>
+
           </div>
         </div>
 
@@ -193,10 +196,7 @@
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 专业 </label>
           <div class="col-sm-3">
             <select class="form-control" name="major" id="form-field-select-1">
-              <option value="${user.major}">${user.major}</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
+              <option value="${user.major.id}">${user.major.majorName}</option>
             </select>
           </div>
         </div>
@@ -207,10 +207,7 @@
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 班级 </label>
           <div class="col-sm-3">
             <select class="form-control" name="classes" id="form-field-select-2">
-              <option value="${user.classes}">${user.classes}</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
+              <option value="${user.classes.id}">${user.classes.className}</option>
             </select>
           </div>
         </div>
@@ -266,24 +263,21 @@
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 是否主动招收 </label>
           <div class="col-sm-9">
             <c:choose>
-              <c:when test="${user.isActive==1}">
-                <input name="isActive" type="radio" checked="true"  class="ace" value="1"/>
+              <c:when test="${user.isActive==true}">
+                <input name="isActive" type="radio" checked="true"  class="ace" value="true"/>
+                  <span class="lbl">是</span>
+                  <input name="isActive" type="radio"  class="ace" value="false"/>
+                  <span class="lbl">否</span>
               </c:when>
               <c:otherwise>
-                <input name="isActive" type="radio"  class="ace" value="1"/>
+                  <input name="isActive" type="radio"  class="ace" value="true"/>
+                  <span class="lbl">是</span>
+                  <input name="isActive" type="radio" checked="true"  class="ace" value="false"/>
+                  <span class="lbl">否</span>
               </c:otherwise>
             </c:choose>
-            <span class="lbl">是</span>
 
-            <c:choose>
-              <c:when test="${user.isActive==0}">
-                <input name="isActive" type="radio"  checked="true" class="ace" value="0"/>
-              </c:when>
-              <c:otherwise>
-                <input name="isActive" type="radio"  class="ace" value="0"/>
-              </c:otherwise>
-            </c:choose>
-            <span class="lbl">否</span>
+
           </div>
         </div>
 

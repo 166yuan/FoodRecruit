@@ -29,10 +29,10 @@
         <property name="gender" type="java.lang.Boolean" not-null="false">
             <column name="GENDER" />
         </property>
-        <many-to-one name="major" class="com.recruit.model.Major" fetch="join" not-null="false">
+        <many-to-one name="major" class="com.recruit.model.Major" fetch="select" not-null="false">
             <column name="MAJOR" />
         </many-to-one>
-        <many-to-one name="classes" class="com.recruit.model.Classes" fetch="join" not-null="false">
+        <many-to-one name="classes" class="com.recruit.model.Classes" fetch="select" not-null="false">
             <column name="CLASSES" />
         </many-to-one>
         <property name="phone" type="java.lang.String">

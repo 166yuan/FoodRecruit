@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Administrator on 2014/11/30.
  */
 
-public class Notification {
+public class Notification  implements InstanceInterface{
 	
 	private Integer id;
 	
@@ -142,12 +142,19 @@ public class Notification {
     }
     
     
+    @Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
 
 	@Override
-	public String toString() {
-		return "Notification [creator=" + creator + ", receiver=" + receiver
-				+ ", info=" + info + ", type=" + type + ", isNew=" + isNew
-				+ ", refId=" + refId + "]";
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
 	}
     
     

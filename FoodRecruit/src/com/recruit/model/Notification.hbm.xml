@@ -8,10 +8,10 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="creator" class="com.recruit.model.User" fetch="join" not-null="true">
+        <many-to-one name="creator" class="com.recruit.model.User" fetch="select" not-null="true">
             <column name="CREATOR" />
         </many-to-one>
-        <many-to-one name="receiver" class="com.recruit.model.User" fetch="join" >
+        <many-to-one name="receiver" class="com.recruit.model.User" fetch="select" >
             <column name="RECEIVER" />
         </many-to-one>
         <property name="info" type="java.lang.String" not-null="true">

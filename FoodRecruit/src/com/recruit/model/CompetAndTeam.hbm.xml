@@ -8,10 +8,10 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="user" class="com.recruit.model.User" fetch="join" not-null="true">
+        <many-to-one name="user" class="com.recruit.model.User" fetch="select" not-null="true">
             <column name="USER" />
         </many-to-one>
-        <many-to-one name="team" class="com.recruit.model.Team" fetch="join" not-null="true">
+        <many-to-one name="team" class="com.recruit.model.Team" fetch="select" not-null="true">
             <column name="TEAM" />
         </many-to-one>
         <property name="createTime" type="java.util.Date">

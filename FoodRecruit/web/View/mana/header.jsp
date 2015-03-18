@@ -54,7 +54,7 @@
       </li>
 
       <li class="hover" id="userpage">
-        <a href="/mana/index">
+        <a href="/mana/index?page=1">
           <i class="menu-icon fa fa-users"></i>
           <span class="menu-text"> 用户管理 </span>
         </a>
@@ -64,7 +64,7 @@
       </li>
 
       <li class="hover hsub" id="experpage">
-        <a href="/mana/experManage" class="dropdown-toggle">
+        <a href="/mana/experManage?page=1" class="dropdown-toggle">
           <i class="menu-icon fa fa-flask"></i>
           <span class="menu-text"> 实验管理 </span>
 

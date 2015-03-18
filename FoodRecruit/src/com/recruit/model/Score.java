@@ -7,7 +7,7 @@ import java.util.Date;
 /** 实验评价
  * @author Yuan
  */
-public class Score {
+public class Score  implements InstanceInterface{
 	
 	private Integer id;
 
@@ -347,16 +347,17 @@ public class Score {
 
 	@Override
 	public String toString() {
-		return "Score [experiment=" + experiment + ", student=" + student
-				+ ", teacher=" + teacher + ", duty=" + duty + ", discipline="
-				+ discipline + ", tidy=" + tidy + ", care=" + care
-				+ ", operation=" + operation + ", fault=" + fault
-				+ ", efficiency=" + efficiency + ", advise=" + advise
-				+ ", scoreA=" + scoreA + ", scoreB=" + scoreB + ", Ttidy="
-				+ Ttidy + ", Tcare=" + Tcare + ", Toperation=" + Toperation
-				+ ", Tconnect=" + Tconnect + ", member=" + member
-				+ ", recorded=" + recorded + ", append=" + append
-				+ ", secscore=" + secscore + ", total=" + total + "]";
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
 	}
 	
 }

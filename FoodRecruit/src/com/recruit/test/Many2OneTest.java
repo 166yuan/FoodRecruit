@@ -8,6 +8,7 @@ import java.util.*;
 import com.recruit.base.PageBean;
 import com.recruit.bean.ExperScoreBean;
 import com.recruit.impl.ExperUserImpl;
+import com.recruit.impl.TeamImpl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -90,14 +91,11 @@ public class Many2OneTest {
 
     @Test
 	public void testgetUser(){
-        UserImpl uml= UserImpl.getInstance();
-        uml.startTransaction();
-        //取得所有用户信息
-        int total=uml.getSize();
-        System.out.println(total);
-        PageBean pageBean=PageBean.getInstance(1,total,"/mana","/index");
-        List<User> list=uml.findAll(pageBean);
-        System.out.println("all user+"+list.size());
+        TeamImpl tml=TeamImpl.getInstance();
+        tml.startTransaction();
+        List<Team>list=tml.findByComId(1);
+        tml.commitTransaction();
+        list.get(0);
     }
 
     @Test

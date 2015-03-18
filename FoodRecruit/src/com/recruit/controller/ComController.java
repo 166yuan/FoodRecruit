@@ -1,8 +1,15 @@
 package com.recruit.controller;
 
 import com.recruit.base.PageBean;
+import com.recruit.bean.TeamBean;
+import com.recruit.impl.CompetAndTeamImpl;
 import com.recruit.impl.CompetitionImpl;
+import com.recruit.impl.TeamImpl;
+import com.recruit.impl.UserImpl;
+import com.recruit.model.CompetAndTeam;
 import com.recruit.model.Competition;
+import com.recruit.model.Team;
+import com.recruit.model.User;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +53,7 @@ public class ComController {
      */
     @RequestMapping("getAll")
     public String getAllCompet(int page,Model model){
-       CompetitionImpl cml=CompetitionImpl.getInstance();
+        CompetitionImpl cml=CompetitionImpl.getInstance();
         cml.startTransaction();
         int total=cml.getSize();
         PageBean pageBean=PageBean.getInstance(page,total,"/compet","/getAll");
@@ -63,10 +71,11 @@ public class ComController {
      */
     @RequestMapping("getById")
     public String getCompetitionById(Integer id,Model model){
-    CompetitionImpl cml=CompetitionImpl.getInstance();
-    cml.startTransaction();
+        CompetitionImpl cml=CompetitionImpl.getInstance();
+        cml.startTransaction();
         Competition competition=cml.getById(id);
         model.addAttribute("competition",competition);
+        cml.commitTransaction();
     return "View/compet/competition";
     }
 
@@ -78,22 +87,31 @@ public class ComController {
      * @return 报名页面
      */
     @RequestMapping("attend")
-    public String attendCompetition(HttpSession session,Model model,Long id){
-        Long uid=(Long)session.getAttribute("userId");
+    public String attendCompetition(HttpSession session,Model model,Integer id){
+        Integer uid=(Integer)session.getAttribute("userId");
         String result;
         if(uid==null){
             //用户未登录，去登录界面
-            result= "View/compet/unlogin";
+            return  "View/compet/unlogin";
         }else{
-           /* ComDao comDao=ComDao.getInstance();
-            Competition competition=comDao.get(id);
-            UserDao userDao=UserDao.getInstance();
-            User user = userDao.getUserById(uid);
+            UserImpl uml=UserImpl.getInstance();
+            uml.startTransaction();
+            User user=uml.getById(uid);
+            uml.commitTransaction();
             model.addAttribute("user",user);
-            model.addAttribute("competition",competition);*/
-            result= "View/compet/attendance";
+
+            CompetitionImpl cml=CompetitionImpl.getInstance();
+            cml.startTransaction();
+            Competition competition=cml.getById(id);
+            cml.commitTransaction();
+            model.addAttribute("competition",competition);
+            TeamImpl tml=TeamImpl.getInstance();
+            tml.startTransaction();
+            List<Team>list=tml.findByComId(1);
+            tml.commitTransaction();
+            model.addAttribute("teamList",list);
+           return "View/compet/attendance";
         }
-        return result;
     }
 
     /**
@@ -106,41 +124,49 @@ public class ComController {
      * @param session
      * @return
      */
-    @RequestMapping("newteam")
-    public String newTeam(Long comId,String name,String slogan,String password,int number,HttpSession session){
-       /* Long idtemp=null;
-         TeamDao teamDao=TeamDao.getInstance();
-         UserDao userDao=UserDao.getInstance();
-        Long uid=(Long)session.getAttribute("userId");
+
+    @RequestMapping(value = "newteam")
+    public void newTeam(Integer comId,String name,String slogan,String password,int number,HttpSession session,PrintWriter out){
+        System.out.println("name:"+name);
+        Integer idtemp=null;
+        TeamImpl tml=TeamImpl.getInstance();
+        UserImpl uml=UserImpl.getInstance();
+        Integer uid=(Integer)session.getAttribute("userId");
+        uml.startTransaction();
+        User user=uml.getById(uid);
+        uml.commitTransaction();
+        CompetAndTeam competAndTeam=new CompetAndTeam();
          try{
-             teamDao.begin();
              Team team=new Team();
              team.setName(name);
-             team.setCurrentNum(1);
-             team.setSize(number);
+             team.setLeader(user);
              team.setSlogan(slogan);
              team.setPassword(password);
+             team.setMaxSize(number);
              if (number==1){
                  team.setType(1);
              }else {
                  team.setType(0);
              }
-             team.setLeader_id(uid);
-             team.setCompetition_id(comId);
-             teamDao.save(team);
+             CompetitionImpl cml=CompetitionImpl.getInstance();
+             cml.startTransaction();
+             Competition competition=cml.getById(comId);
+             cml.commitTransaction();
+             team.setCompetition(competition);
+             tml.startTransaction();
+             tml.save(team);
+             tml.commitTransaction();
              idtemp=team.getId();
-             CompetAndTeam competAndTeam=new CompetAndTeam();
-             competAndTeam.setTeam_id(idtemp);
-             competAndTeam.setCompet_id(comId);
-             competAndTeam.setUser_id(uid);
-             teamDao.save(competAndTeam);
-             teamDao.commit();
+             competAndTeam.setTeam(team);
+             competAndTeam.setUser(user);
+             CompetAndTeamImpl ctml=CompetAndTeamImpl.getInstance();
+             ctml.startTransaction();
+             ctml.save(competAndTeam);
+             ctml.commitTransaction();
          }catch (Exception e){
             e.printStackTrace();
-         }finally {
-             teamDao.close();
-         }*/
-         return "View/compet/attendSuccess";
+         }
+        out.print(1);
     }
 
     /**
@@ -148,12 +174,14 @@ public class ComController {
      * @param id
      * @return json到前端
      */
-    /*@RequestMapping("getTeamNames")
-    public @ResponseBody List<Team> getTeamName(Long id){
-        TeamDao teamDao=TeamDao.getInstance();
-        List<Team>list=teamDao.getAllTeamById(id);
+    @RequestMapping("getTeamNames")
+    public @ResponseBody List<Team> getTeamName(Integer id){
+        TeamImpl tml=TeamImpl.getInstance();
+        tml.startTransaction();
+        List<Team>list=tml.findByComId(id);
+        tml.commitTransaction();
         return list;
-    }*/
+    }
 
     /**
      * 加入已存在队伍
@@ -163,15 +191,18 @@ public class ComController {
      * @param out
      * @param session
      */
-/*    @RequestMapping("joinTeam")
-    public void join(String name,String password,Long comId,PrintWriter out,HttpSession session){
+    @RequestMapping("joinTeam")
+    public void join(Integer teamId,String password,PrintWriter out,HttpSession session){
      int result=1;
-        TeamDao teamDao=TeamDao.getInstance();
-        TeamComDao teamComDao=TeamComDao.getInstance();
-        Long uid=(Long)session.getAttribute("userId");
+        TeamImpl tml=TeamImpl.getInstance();
+        UserImpl uml= UserImpl.getInstance();
+        Integer uid=(Integer)session.getAttribute("userId");
+        uml.startTransaction();
+        User user=uml.getById(uid);
+        uml.commitTransaction();
         try {
-            teamDao.begin();
-            Team team = teamDao.getByName(name);
+            tml.startTransaction();
+            Team team = tml.getById(teamId);
             if (team == null) {
                 //找不到队伍
                 result = -1;
@@ -180,7 +211,7 @@ public class ComController {
                     //密码不正确
                     result = -2;
                 } else {
-                    if(teamComDao.existMember(team.getId(),uid,comId)){
+                    if(tml.exitMember(uid,team)){
                         //您已经报过名了
                         result=-4;
                     }else
@@ -188,29 +219,27 @@ public class ComController {
                         //队伍已满
                         result = -3;
                     } else {
-                        int temp=team.getCurrentNum();
-                        temp++;
-                        team.setCurrentNum(temp);
-                        if(temp==team.getSize())
+                        if(team.getParticipants().size()+1==team.getMaxSize()) {
                             team.setType(1);
-                        teamDao.save(team);
+                            tml.update(team);
+                        }
+                        tml.commitTransaction();
                         CompetAndTeam competAndTeam=new CompetAndTeam();
-                        competAndTeam.setCompet_id(comId);
-                        competAndTeam.setUser_id(uid);
-                        competAndTeam.setTeam_id(team.getId());
-                        teamDao.save(competAndTeam);
-                        teamDao.commit();
+                        competAndTeam.setUser(user);
+                        competAndTeam.setTeam(team);
+                        CompetAndTeamImpl catl=CompetAndTeamImpl.getInstance();
+                        catl.startTransaction();
+                        catl.save(competAndTeam);
+                        catl.commitTransaction();
                     }
                 }
             }
 
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            teamDao.close();
         }
         out.print(result);
-    }*/
+    }
 
     /**
      * 获取用户参与的所有竞赛
@@ -439,4 +468,12 @@ public class ComController {
         out.print(result);
     }
 */
+    @RequestMapping("getTeamById")
+    public @ResponseBody TeamBean getTeamById(Integer teamId){
+        TeamImpl tml=TeamImpl.getInstance();
+        tml.startTransaction();
+        TeamBean teamBean=tml.build(tml.getById(teamId));
+        tml.commitTransaction();
+        return teamBean;
+    }
 }

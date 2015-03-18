@@ -17,13 +17,13 @@
         <property name="slogan" type="java.lang.String" not-null="false">
             <column name="SLOGAN"  length="50"/>
         </property>
-        <many-to-one name="leader" class="com.recruit.model.User" fetch="join" not-null="true" unique="true">
+        <many-to-one name="leader" class="com.recruit.model.User" fetch="select" not-null="true" unique="true">
             <column name="LEADER" />
         </many-to-one>
         <property name="password" type="java.lang.String" not-null="true">
             <column name="PASSWORD"  length="20"/>
         </property>
-        <many-to-one name="competition" class="com.recruit.model.Competition" fetch="join" not-null="true">
+        <many-to-one name="competition" class="com.recruit.model.Competition" fetch="select" not-null="true">
             <column name="COMPETITION" />
         </many-to-one>
         <property name="type" type="java.lang.Integer" not-null="true">

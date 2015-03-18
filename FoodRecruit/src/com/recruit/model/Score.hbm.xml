@@ -8,13 +8,13 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="join" not-null="true">
+        <many-to-one name="experiment" class="com.recruit.model.Experiment" fetch="select" not-null="true">
             <column name="EXPERIMENT" />
         </many-to-one>
-        <many-to-one name="student" class="com.recruit.model.User" fetch="join" not-null="true">
+        <many-to-one name="student" class="com.recruit.model.User" fetch="select" not-null="true">
             <column name="STUDENT" />
         </many-to-one>
-        <many-to-one name="teacher" class="com.recruit.model.User" fetch="join" not-null="true">
+        <many-to-one name="teacher" class="com.recruit.model.User" fetch="select" not-null="true">
             <column name="TEACHER" />
         </many-to-one>
         <property name="duty" type="java.lang.Integer">

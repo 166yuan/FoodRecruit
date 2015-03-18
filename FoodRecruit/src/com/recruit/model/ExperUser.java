@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2014/11/30.
  */
-public class ExperUser  {
+public class ExperUser  implements InstanceInterface {
 	
 	private Integer id;
     //实验id
@@ -159,11 +159,19 @@ public class ExperUser  {
 
 
 
-	@Override
+    @Override
 	public String toString() {
-		return "ExperUser [experiment=" + experiment + ", user=" + user
-				+ ", score=" + score + ", isPassed=" + isPassed
-				+ ", isEvaluate=" + isEvaluate + ", isAgree=" + isAgree + "]";
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
 	}
     
     

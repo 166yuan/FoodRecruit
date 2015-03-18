@@ -87,9 +87,11 @@ public class UserController {
             }else {
                 result = FAILURE;
             }
-           uml.commitTransaction();
+
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            uml.commitTransaction();
         }
         out.print(result);
     }
@@ -266,6 +268,8 @@ public class UserController {
             User user = uml.forAccount(account);
             if(user!=null){
                 user.setImage_url("/images/"+uploadFile.getName());
+                user.getMajor().getMajorName();
+                user.getClasses().getClassName();
                 model.addAttribute("user",user);
                 request.getSession().setAttribute("imageUrl",user.getImage_url());
             }

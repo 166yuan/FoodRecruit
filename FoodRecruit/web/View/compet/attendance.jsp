@@ -12,9 +12,11 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css" >
   <link rel="stylesheet" type="text/css" href="/css/jingmain.css" >
   <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
   <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
 </head>
 <body>
 <div id="container">
@@ -94,24 +96,16 @@
                 <button type="submit" class="btn btn-primary">下一步</button>
               </div>
             </form>
-           <form id="join" class="form-horizontal">
-             <div class="form-group">
-               <label class="col-sm-4 control-label">请输入队伍名称</label>
-               <div class="col-sm-4">
-                 <input id="search" type="text" class="form-control ui-autocomplete-input" placeholder="队伍名称" autocomplete="off">
-               </div>
-             </div>
-             <div class="form-group">
-               <label class="col-sm-4 control-label">请输入密码（由队长决定）</label>
-               <div class="col-sm-4">
-                 <input type="text" class="form-control" id="enpassword" name="password"  placeholder="入队密码">
-               </div>
-             </div>
-             <div class="form-group">
-               <div class="col-sm-6"></div>
-               <button type="button" id="joinTeam" class="btn btn-primary">下一步</button>
-             </div>
-           </form>
+
+              <div class="row" id="join">
+                  <div class="center"><h5>以下是参与竞赛队伍列表(点击队名查看)</h3></div>
+               <c:forEach items="${teamList}" var="team" varStatus="num">
+                <div class="col-sm-4">
+                    <i class="ace-icon fa fa-users bigger"></i>&nbsp;
+                ${num.count} . <a href="#" onclick="showMessage(${team.id})">${team.name}</a>
+                </div>
+                  </c:forEach>
+          </div>
           </div>
         </div>
         <div class="col-lg-1">
@@ -142,18 +136,7 @@
         $("#new").show();
         $("#join").hide();
     });
-      var comid=document.getElementById('comid').value;
-      var ava=new Array();
-      $.get("/compet/getTeamNames?id="+parseInt(comid),function(data){
-          var arr=eval(data);
-          for(var i=0;i<arr.length;i++)
-          {
-              ava.push(arr[i].name);
-          }
-      });
-    $( "#search" ).autocomplete({
-      source: ava
-    });
+
      $('#joinTeam').click(function(){
             var comId=document.getElementById('comid').value;
             var teamName=document.getElementById('search').value;
@@ -175,4 +158,50 @@
              }
      );
   });
+    function showMessage(teamId){
+        $.get("/compet/getTeamById?teamId="+teamId,function(data){
+            var arr=eval(data);
+            bootbox.confirm({
+                        message: "<div class='center'>队名："+arr.teamName+"</div>"+"<div class='center'>口号："+arr.slogan+"</div><div class='center'>队长："+arr.leader
+                        +"</div>"+"<div class='center'>队长联系电话："+arr.link+"</div><div class='center'>队长邮箱："+arr.email+"</div>",
+                        buttons: {
+                            confirm: {
+                                label: "参与该队",
+                                className: "btn-primary btn-sm",
+                            },
+                            cancel: {
+                                label: "返回",
+                                className: "btn-sm",
+                            }
+                        },
+                        callback: function(result) {
+                            if(result) {
+                                bootbox.prompt("请输入入队密码", function(result) {
+                                    if (result === null) {
+
+                                    } else {
+
+                                        $.get("/compet/joinTeam?teamId="+teamId+"&password="+result,function(data){
+                                            if(data==1){
+                                                alert("报名成功！");
+                                                window.location.href="../View/compet/attendSuccess.jsp";
+                                            }else if(data==-1){
+                                                alert("队伍不存在，请检查拼写")
+                                            }else if(data==-2){
+                                                alert("入队密码不正确");
+                                            }else if(data==-3){
+                                                alert("该队人数已满");
+                                            }else if(data==-4){
+                                                alert("您已经报名了，请勿重复报名");
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+            );
+        });
+    }
 </script>

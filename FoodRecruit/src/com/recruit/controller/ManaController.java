@@ -1,8 +1,12 @@
 package com.recruit.controller;
 
 import com.recruit.base.PageBean;
+import com.recruit.impl.ClassesImpl;
+import com.recruit.impl.ExperimentImpl;
 import com.recruit.impl.MajorImpl;
 import com.recruit.impl.UserImpl;
+import com.recruit.model.Classes;
+import com.recruit.model.Experiment;
 import com.recruit.model.Major;
 import com.recruit.model.User;
 import org.springframework.stereotype.Controller;
@@ -35,7 +39,7 @@ public class ManaController {
         int total=uml.getSize();
         PageBean pageBean=PageBean.getInstance(page,total,"/mana","/index");
         List<User> list=uml.findAll(pageBean);
-        list.size();
+        uml.Instance(list);
         model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
         uml.commitTransaction();
@@ -53,6 +57,8 @@ public class ManaController {
         UserImpl uml=UserImpl.getInstance();
         uml.startTransaction();
         User user=uml.getById(id);
+        user.getMajor().getMajorName();
+        user.getClasses().getClassName();
         System.out.println("type:"+user.getType());
         model.addAttribute("user", user);
         uml.commitTransaction();
@@ -169,38 +175,46 @@ public class ManaController {
      * @return
      */
     @RequestMapping("edituser")
-    public String edituser(Long id,String password,int type,int status,String name,int gender,String major,String classes
-            ,String phone,String email,String qq,String address,String self_info,String isActive,Model model)
+    public String edituser(Integer id,String password,int type,int status,String name,Boolean gender,Integer major,Integer classes
+            ,String phone,String email,String qq,String address,String self_info,Boolean isActive,Model model)
     {
-     /*   System.out.println("the gender is:" + gender);
-        UserDao userDao=UserDao.getInstance();
-        User user=userDao.getUserById(id);
-        System.out.println("user is:" + user.getName());
+        ClassesImpl cml=ClassesImpl.getInstance();
+        cml.startTransaction();
+        Classes cla=cml.getById(classes);
+        cml.commitTransaction();
+        MajorImpl mml=MajorImpl.getInstance();
+        mml.startTransaction();
+        Major major1=mml.getById(major);
+        mml.commitTransaction();
+        UserImpl uml=UserImpl.getInstance();
+        uml.startTransaction();
+        User user=uml.getById(id);
+        uml.commitTransaction();
         if(user!=null){
             try {
-                userDao.begin();
                 user.setPassword(password);
                 user.setType(type);
                 user.setStatus(status);
                 user.setName(name);
                 user.setGender(gender);
-                user.setMajor(major);
-                user.setClasses(classes);
+                user.setMajor(major1);
+                user.setClasses(cla);
                 user.setPhone(phone);
                 user.setEmail(email);
                 user.setQq(qq);
                 user.setAddress(address);
                 user.setSelf_info(self_info);
                 user.setIsActive(isActive);
-                userDao.update(user);
+                uml.startTransaction();
+                uml.update(user);
+                user.getClasses().getClassName();
+                user.getMajor().getMajorName();
                 model.addAttribute("user",user);
-                userDao.commit();
+                uml.commitTransaction();
             }catch (Exception e){
                 e.printStackTrace();
-            }finally {
-                userDao.close();
             }
-        }*/
+        }
         return "View/mana/editUser";
     }
 
@@ -314,10 +328,14 @@ public class ManaController {
     }
 
     @RequestMapping("experManage")
-    public String experManage(Model model){
-     /*   ExperimentDao experimentDao=ExperimentDao.getInstance();
-        List<Experiment>list=experimentDao.getAllExperiment();
-        model.addAttribute("list",list);*/
+    public String experManage(Model model,int page){
+        ExperimentImpl eml=ExperimentImpl.getInstance();
+        eml.startTransaction();
+        int total=eml.getSize();
+        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/experManage");
+        List<Experiment>list=eml.findByPage(pageBean.getCurPage(),pageBean.getPerPage());
+        model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/mana/experManage";
     }
 

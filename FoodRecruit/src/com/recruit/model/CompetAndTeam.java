@@ -9,7 +9,7 @@ import java.util.Date;
  *  @author Yuan
  */
 
-public class CompetAndTeam  {
+public class CompetAndTeam   implements InstanceInterface{
 	
 	private Integer id;
     //用户
@@ -28,7 +28,7 @@ public class CompetAndTeam  {
 		super();
 		this.user = user;
 		this.team = team;
-		
+		inite();
 	}
 
 	public CompetAndTeam() {
@@ -85,6 +85,19 @@ public class CompetAndTeam  {
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
 
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
    
 }

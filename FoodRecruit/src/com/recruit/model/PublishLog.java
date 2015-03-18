@@ -7,7 +7,7 @@ import java.util.Date;
 /** 发布记录，记录管理员操作
  * @author Yuan
  */
-public class PublishLog {
+public class PublishLog  implements InstanceInterface{
 
 	private Integer id;
 	
@@ -57,10 +57,7 @@ public class PublishLog {
         this.type = type;
     }
 
-	@Override
-	public String toString() {
-		return "PublishLog [type=" + type + ", info=" + info + "]";
-	}
+
 
 	public Integer getId() {
 		return id;
@@ -87,7 +84,20 @@ public class PublishLog {
 	}
 
 	
+	@Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
 
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
 
 
 

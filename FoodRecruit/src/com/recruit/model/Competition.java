@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Yuan
  */
 
-public class Competition {
+public class Competition implements InstanceInterface{
 	private Integer id;
     //竞赛介绍的图片链接
     private String image_url;
@@ -138,15 +138,7 @@ public class Competition {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-	@Override
-	public String toString() {
-		return "Competition [image_url=" + image_url + ", link=" + link
-				+ ", name=" + name + ", information=" + information
-				+ ", minNumber=" + minNumber + ", maxNumber=" + maxNumber
-				+ ", beginTime=" + beginTime + ", endTime=" + endTime + "]";
-	}
-
-
+	
 
 	public Date getCreateTime() {
 		return createTime;
@@ -169,6 +161,26 @@ public class Competition {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-    
+
+
+
+
+
+
+	
+	@Override
+	public String toString() {
+		return "[createTime=" + createTime + "]";
+	}
+
+	@Override
+	public InstanceInterface toInstanceModel(InstanceInterface... iis) {
+
+		for(InstanceInterface ii:iis){
+			System.out.println(ii.toString());
+		}
+		
+		return this;
+	}
     
 }
