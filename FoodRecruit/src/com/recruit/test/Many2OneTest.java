@@ -2,7 +2,9 @@ package com.recruit.test;
 
 import static org.junit.Assert.*;
 
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 
 import com.recruit.base.PageBean;
@@ -89,14 +91,19 @@ public class Many2OneTest {
 		
 	}
 
-    @Test
-	public void testgetUser(){
-        TeamImpl tml=TeamImpl.getInstance();
-        tml.startTransaction();
-        List<Team>list=tml.findByComId(1);
-        tml.commitTransaction();
-        list.get(0);
-    }
+   @Test
+   public void testHql(){
+       String hql="from CompetAndTeam cat where cat.user.id=2";
+       TeamImpl tml=new TeamImpl();
+       tml.startTransaction();
+       Query query=tml.createQuery(hql);
+       List<CompetAndTeam>list=query.list();
+       Iterator<CompetAndTeam>iterator=list.iterator();
+       while (iterator.hasNext()){
+           System.out.println(iterator.next().getId());
+       }
+       tml.commitTransaction();
+   }
 
     @Test
     public void testPageBean(){

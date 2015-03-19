@@ -1,6 +1,7 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
+import com.recruit.bean.MyTeamBean;
 import com.recruit.bean.TeamBean;
 import com.recruit.dao.TeamDao;
 import com.recruit.model.CompetAndTeam;
@@ -47,5 +48,24 @@ public class TeamImpl extends DaoSupportImpl<Team> implements TeamDao {
             }
         }
         return isExist;
+    }
+
+    public MyTeamBean buildMyTeam(Team team){
+        MyTeamBean myTeamBean=new MyTeamBean();
+        myTeamBean.setLeader(team.getLeader().getName());
+        myTeamBean.setComName(team.getCompetition().getName());
+        List<String>list=new ArrayList<String>();
+        List<CompetAndTeam>list1=new ArrayList<CompetAndTeam>(team.getParticipants());
+        if (team.getMaxSize()==list.size()){
+            myTeamBean.setTeamType(true);
+        }else {
+            myTeamBean.setTeamType(false);
+        }
+        Iterator<CompetAndTeam>iterator=list1.iterator();
+        while (iterator.hasNext()){
+            list.add(iterator.next().getUser().getName());
+        }
+        myTeamBean.setNameList(list);
+        return myTeamBean;
     }
 }
