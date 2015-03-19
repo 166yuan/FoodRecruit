@@ -96,17 +96,27 @@ public class ExperController {
     @RequestMapping(value = "myPublishExperiment")
     public  String myPublishExperiment(Integer page, HttpSession session, Model model){
         Integer userId = (Integer)session.getAttribute("userId");
-        ExperimentImpl eml =ExperimentImpl.getInstance();
-        eml.startTransaction();
-        int total=eml.countByPublisher(userId);
-        PageBean pageBean=PageBean.getInstance(page,total,"/exper","/myPublishExperiment");
-
-       /* if ("asc".equals(order))
+        ExperimentImpl eml =ExperimentImpl.getInstance();;
+        PageBean pageBean=PageBean.getInstance(1,0,"/exper","/myPublishExperiment");
+        List<Experiment> list=new ArrayList<Experiment>();
+        if(page==null){
+            page=1;
+        }
+        try{
+            eml.startTransaction();
+            int total=eml.countByPublisher(userId);
+            pageBean=PageBean.getInstance(page,total,"/exper","/myPublishExperiment");
+            /* if ("asc".equals(order))
             dc.addOrder(Order.asc(by));
         if ("desc".equals(order))
             dc.addOrder(Order.desc(by));*/
-        List<Experiment> list = eml.getMyPublishExper(userId,pageBean);
-        eml.commitTransaction();
+            list= eml.getMyPublishExper(userId,pageBean);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            eml.commitTransaction();
+        }
         model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
         return "View/experiment/myPublishExperiment";

@@ -16,7 +16,7 @@ public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUse
 
     public static  ExperUserImpl getInstance(){
         if(instance==null){
-            return new ExperUserImpl();
+            instance= new ExperUserImpl();
         }
         return instance;
     }

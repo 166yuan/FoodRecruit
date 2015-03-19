@@ -10,7 +10,7 @@ public class CompetAndTeamImpl extends DaoSupportImpl<CompetAndTeam> implements 
 
     public static  CompetAndTeamImpl getInstance(){
         if(instance==null){
-            return new CompetAndTeamImpl();
+            instance= new CompetAndTeamImpl();
         }
         return instance;
     }

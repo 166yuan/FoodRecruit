@@ -1,14 +1,9 @@
 package com.recruit.controller;
 
+import com.recruit.base.NotiUserBean;
 import com.recruit.base.PageBean;
-import com.recruit.impl.ClassesImpl;
-import com.recruit.impl.ExperimentImpl;
-import com.recruit.impl.MajorImpl;
-import com.recruit.impl.UserImpl;
-import com.recruit.model.Classes;
-import com.recruit.model.Experiment;
-import com.recruit.model.Major;
-import com.recruit.model.User;
+import com.recruit.impl.*;
+import com.recruit.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import javax.swing.*;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /** 后台管理
@@ -32,17 +28,27 @@ public class ManaController {
      * @return 用户管理（后台主页）
      */
     @RequestMapping("index")
-    public String index(Model model,int page){
+    public String index(Model model,Integer page){
         UserImpl uml= UserImpl.getInstance();
-        uml.startTransaction();
-        //取得所有用户信息
-        int total=uml.getSize();
-        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/index");
-        List<User> list=uml.findAll(pageBean);
-        uml.Instance(list);
+        PageBean pageBean=PageBean.getInstance(1,0,"/mana","/index");
+        int total=0;
+        List<User> list=new ArrayList<User>();
+        if(page==null){
+            page=1;
+        }
+        try{
+            uml.startTransaction();
+            total=uml.getSize();
+            pageBean=PageBean.getInstance(page,total,"/mana","/index");
+            list=uml.findAll(pageBean);
+            uml.Instance(list);
+        }catch (Exception e){
+        e.printStackTrace();
+        }finally {
+            uml.commitTransaction();
+        }
         model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
-        uml.commitTransaction();
         return "View/mana/userManager";
     }
 
@@ -55,13 +61,17 @@ public class ManaController {
     @RequestMapping("showuserbyid")
     public String showUserById(Integer id,Model model){
         UserImpl uml=UserImpl.getInstance();
-        uml.startTransaction();
-        User user=uml.getById(id);
-        user.getMajor().getMajorName();
-        user.getClasses().getClassName();
-        System.out.println("type:"+user.getType());
+        User user=null;
+        try {
+            uml.startTransaction();
+            user=uml.getById(id);
+            uml.Instance(user);
+        }catch (Exception e){
+        e.printStackTrace();
+        }finally {
+            uml.commitTransaction();
+        }
         model.addAttribute("user", user);
-        uml.commitTransaction();
         return "View/mana/editUser";
     }
 
@@ -72,12 +82,26 @@ public class ManaController {
      * @return 反馈列表页面
      */
     @RequestMapping("showfeedback")
-    public String showFeedBack(Model model,int type){
-       /* NotificationDao notificationDao = NotificationDao.getInstance();
-        List<Notification>list=notificationDao.getAllFeedback(type);
-        List<NotiUserBean>nlist=NotiUserBean.buildList(list);
+    public String showFeedBack(int page,Model model,int type){
+        if(type==0){
+            type=1;
+        }
+        NotificationImpl nml=NotificationImpl.getInstance();
+        List<NotiUserBean>nlist= null;
+        PageBean pageBean=PageBean.getInstance(1,0,"/mana","/showfeedback");
+        try {
+            nml.startTransaction();
+            int total=nml.getSizeByType(type);
+            pageBean=PageBean.getInstance(page,total,"/mana","/showfeedback");
+            List<Notification>list=nml.getAllByType(type,pageBean);
+            nlist = nml.buildList(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            nml.commitTransaction();
+        }
         model.addAttribute("list",nlist);
-        model.addAttribute("type",type);*/
+        model.addAttribute("type",type);
         return "View/mana/feedback";
     }
 
@@ -89,21 +113,21 @@ public class ManaController {
      * @return 反馈页面
      */
     @RequestMapping("showNotiById")
-    public String showNotiById(Long id,String name,Model model){
-      /*  NotificationDao notificationDao=NotificationDao.getInstance();
-        Notification notification=notificationDao.get(id);
+    public String showNotiById(Integer id,String name,Model model){
+        NotificationImpl nml=NotificationImpl.getInstance();
+        Notification notification=new Notification();
         try {
-            notificationDao.begin();
+            nml.startTransaction();
+            notification=nml.getById(id);
             notification.setIsNew(false);
-            notificationDao.save(notification);
-            notificationDao.commit();
+            nml.update(notification);
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            notificationDao.close();
+            nml.commitTransaction();
         }
         model.addAttribute("notification",notification);
-        model.addAttribute("name",name);*/
+        model.addAttribute("name",name);
         return "View/mana/showNotiById";
     }
 
@@ -115,15 +139,26 @@ public class ManaController {
      */
     @RequestMapping("majormanager")
     public String majorManager(Model model,int page){
+        if (page==0){
+            page=1;
+        }
         MajorImpl mml=MajorImpl.getInstance();
-        //分页时要统计所有的元素个数
-        int total=mml.getSize();
-        //构造pagebean其中mana和majormanager是spring mvc的映射名。
-        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/majormanager");
-        List<Major>list=mml.getAllMajor(pageBean);
+        PageBean pageBean= PageBean.getInstance(1, 0, "/mana", "/majormanager");
+        List<Major>list= new ArrayList<Major>();
+        try {
+            mml.startTransaction();
+            //分页时要统计所有的元素个数
+            int total=mml.getSize();
+            //构造pagebean其中mana和majormanager是spring mvc的映射名。
+            pageBean = PageBean.getInstance(page, total, "/mana", "/majormanager");
+            list = mml.getAllMajor(pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            mml.commitTransaction();
+        }
         model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
-        mml.commitTransaction();
         return  "View/mana/majorManage";
     }
 
@@ -136,20 +171,44 @@ public class ManaController {
      */
     @RequestMapping("classmanager")
     public String classManager(Model model,int page,HttpSession session){
-       /*int year=0;
-        ClassDao classDao=ClassDao.getInstance();
-        //分页时要统计所有的元素个数
-        int total=classDao.countAllClass();
-            List<Integer> yearList = classDao.getAllYear();
-            if(yearList.size()!=0){ year=yearList.get(0);}
-            List<Major>majorList=MajorDao.getInstance().getAllMajorByYear(year);
-            model.addAttribute("majorList",majorList);
-            model.addAttribute("yearList", yearList);
-        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/classmanager");
-        List<ClaMajBean>list=ClaMajBean.buildList(classDao.getAllClass(pageBean));
-        model.addAttribute("list", list);
+        if (page==0){
+            page=1;
+        }
+        int year=0;
+        ClassesImpl cml=ClassesImpl.getInstance();
+        MajorImpl mml=MajorImpl.getInstance();
+        PageBean pageBean=PageBean.getInstance(1,0,"/mana","/classmanager");
+        List<Major>majorList=new ArrayList<Major>();
+        List<Integer>yearList=new ArrayList<Integer>();
+        List<Classes>classesList=new ArrayList<Classes>();
+        try{
+            mml.startTransaction();
+            yearList = mml.getAllYear();
+            if(yearList.size()!=0){
+                year=yearList.get(0);
+                majorList=mml.getMajorByYear(year);
+            }
+        }catch (Exception e){
+        e.printStackTrace();
+        }finally {
+           mml.commitTransaction();
+        }
+
+        try {
+            cml.startTransaction();
+            int total=cml.getSize();
+            pageBean = PageBean.getInstance(page, total, "/mana", "/classmanager");
+            classesList=cml.findByPage(pageBean.getCurPage(), pageBean.getPerPage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cml.commitTransaction();
+        }
+        model.addAttribute("majorList",majorList);
+        model.addAttribute("yearList", yearList);
+        model.addAttribute("list", classesList);
         model.addAttribute("pageBean",pageBean);
-        model.addAttribute("classpage","active");*/
+        model.addAttribute("classpage","active");
         return "View/mana/classManage";
     }
 
@@ -178,18 +237,36 @@ public class ManaController {
     public String edituser(Integer id,String password,int type,int status,String name,Boolean gender,Integer major,Integer classes
             ,String phone,String email,String qq,String address,String self_info,Boolean isActive,Model model)
     {
+        Classes cla= null;
         ClassesImpl cml=ClassesImpl.getInstance();
-        cml.startTransaction();
-        Classes cla=cml.getById(classes);
-        cml.commitTransaction();
+        try {
+            cml.startTransaction();
+            cla = cml.getById(classes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            cml.commitTransaction();
+        }
         MajorImpl mml=MajorImpl.getInstance();
-        mml.startTransaction();
-        Major major1=mml.getById(major);
-        mml.commitTransaction();
+        Major major1= null;
+        try {
+            mml.startTransaction();
+            major1 = mml.getById(major);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            mml.commitTransaction();
+        }
         UserImpl uml=UserImpl.getInstance();
-        uml.startTransaction();
-        User user=uml.getById(id);
-        uml.commitTransaction();
+        User user= null;
+        try {
+            uml.startTransaction();
+            user = uml.getById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            uml.commitTransaction();
+        }
         if(user!=null){
             try {
                 user.setPassword(password);
@@ -207,14 +284,13 @@ public class ManaController {
                 user.setIsActive(isActive);
                 uml.startTransaction();
                 uml.update(user);
-                user.getClasses().getClassName();
-                user.getMajor().getMajorName();
-                model.addAttribute("user",user);
+                uml.Instance(user);
                 uml.commitTransaction();
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
+        model.addAttribute("user",user);
         return "View/mana/editUser";
     }
 
@@ -224,24 +300,36 @@ public class ManaController {
      * @param content 回复内容
      */
     @RequestMapping("reply")
-    public void reply(Long id,String content){
-     /*   NotificationDao notificationDao=NotificationDao.getInstance();
-        Notification notification=new Notification();
+    public void reply(Integer id,HttpSession session,String content){
+        NotificationImpl nml=NotificationImpl.getInstance();
+        UserImpl uml=UserImpl.getInstance();
+        User recervier=new User();
+        User creater=new User();
         try {
-        notificationDao.begin();
-        notification.setReceiverId(id);
-        notification.setInfo(content);
-        notification.setType(4);
-        notification.setIsNew(true);
-        notificationDao.save(notification);
-        notificationDao.commit();
+            uml.startTransaction();
+            recervier=uml.getById(id);
+            Integer cid=(Integer)session.getAttribute("userId");
+            creater=uml.getById(cid);
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-        notificationDao.close();
-        }*/
-
-    }
+            uml.commitTransaction();
+        }
+        Notification notification=new Notification();
+        try {
+        notification.setReceiver(recervier);
+        notification.setInfo(content);
+        notification.setType(4);
+        notification.setIsNew(true);
+        notification.setCreator(creater);
+            nml.startTransaction();
+            nml.save(notification);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            nml.commitTransaction();
+        }
+        }
 
     /**
      * 新增专业
@@ -249,31 +337,28 @@ public class ManaController {
      * @param year 年级
      * @param out json输出
      */
-  /*  @RequestMapping("addmajor")
+    @RequestMapping("addmajor")
     public void addMajor(String name,int year,PrintWriter out){
-        MajorDao majorDao=MajorDao.getInstance();
+        MajorImpl mml=MajorImpl.getInstance();
         int result=1;
+        Major major=new Major();
         try{
-
-            Major major=majorDao.getByNameAndYear(name,year);
             if(major!=null){
                 result=-2;
             }else {
-                majorDao.begin();
-                major=new Major();
+                mml.startTransaction();
                 major.setMajorName(name);
                 major.setYear(year);
-                majorDao.save(major);
-                majorDao.commit();
+                mml.save(major);
             }
         }catch (Exception e){
         e.printStackTrace();
             result=-1;
         }finally {
-        majorDao.close();
+        mml.commitTransaction();
         }
         out.print(result);
-    }*/
+    }
 
     /**
      * 新增班级
@@ -281,49 +366,80 @@ public class ManaController {
      * @param majorId 所属专业id
      * @param out
      */
-   /* @RequestMapping("addclass")
-    public void addClass(String name,long majorId,PrintWriter out){
-        ClassDao classDao=ClassDao.getInstance();
+    @RequestMapping("addclass")
+    public void addClass(String name,Integer majorId,PrintWriter out){
+        ClassesImpl cml=ClassesImpl.getInstance();
         Classes classes=new Classes();
+        Major major=new Major();
+        MajorImpl mml=MajorImpl.getInstance();
+        try {
+            mml.startTransaction();
+            major=mml.getById(majorId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mml.commitTransaction();
+        }
+
         int result=1;
         try{
-            classDao.begin();
+           cml.startTransaction();
             classes.setClassName(name);
-            classes.setMajorId(majorId);
-            classDao.save(classes);
-            classDao.commit();
+            classes.setMajor(major);
+            cml.save(classes);
             out.print(result);
         }catch (Exception e){
         e.printStackTrace();
             result=-1;
             out.print(result);
         }finally {
-            classDao.close();
+            cml.commitTransaction();
         }
 
     }
-*/
     /**
      * 根据年级获取所有的班级
      * @param year 对应年级
      * @return
      */
-/*    @RequestMapping("getmajor")
+    @RequestMapping("getmajor")
     public @ResponseBody List<Major> getMajor(int year){
-        MajorDao majorDao=MajorDao.getInstance();
-        List<Major> list=majorDao.getAllMajorByYear(year);
+        MajorImpl mml=MajorImpl.getInstance();
+        List<Major> list=new ArrayList<Major>();
+        try {
+            mml.startTransaction();
+            list=mml.getMajorByYear(year);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mml.commitTransaction();
+        }
         return list;
-    }*/
+    }
 
     /**
      * 取得所有的竞赛
      * @return 竞赛管理页面
      */
     @RequestMapping("competManage")
-    public String competManage(Model model){
-      /*  ComDao comDao=ComDao.getInstance();
-        List<Competition>list= comDao.getAllCompetition();
-        model.addAttribute("list",list);*/
+    public String competManage(Model model,int page){
+        if(page==0){
+            page=1;
+        }
+        CompetitionImpl cml=CompetitionImpl.getInstance();
+        PageBean pageBean=PageBean.getInstance(1,0,"/mana","/competManage");
+        List<Competition>list=new ArrayList<Competition>();
+        try {
+        cml.startTransaction();
+            int total=cml.getSize();
+            pageBean=PageBean.getInstance(page,total,"/mana","/competManage");
+            list=cml.findByPage(pageBean.getCurPage(),pageBean.getPerPage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+        cml.commitTransaction();
+        }
+        model.addAttribute("list",list);
         return "View/mana/competManage";
     }
 
@@ -334,6 +450,7 @@ public class ManaController {
         int total=eml.getSize();
         PageBean pageBean=PageBean.getInstance(page,total,"/mana","/experManage");
         List<Experiment>list=eml.findByPage(pageBean.getCurPage(),pageBean.getPerPage());
+        eml.commitTransaction();
         model.addAttribute("list",list);
         model.addAttribute("pageBean",pageBean);
         return "View/mana/experManage";

@@ -72,6 +72,9 @@ function submitLoginForm(){
         data:{"account":account,"password":password},
         success:function(data){
             var result = parseInt(data);
+            if(result==3){
+                window.location.href = "/user/home";
+            }else
             if(result == -1) {
                 var message = $("#login-message");
                 message.html("<p style='color: red'>帐号或密码错误</p>");

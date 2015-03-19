@@ -13,7 +13,7 @@ public class TeamImpl extends DaoSupportImpl<Team> implements TeamDao {
 
     public static  TeamImpl getInstance(){
         if(instance==null){
-            return new TeamImpl();
+            instance= new TeamImpl();
         }
         return instance;
     }

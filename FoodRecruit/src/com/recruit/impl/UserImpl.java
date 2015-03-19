@@ -17,7 +17,7 @@ public class UserImpl extends DaoSupportImpl<User> implements UserDao{
 
    public static  UserImpl getInstance(){
        if(instance==null){
-        return new UserImpl();
+        instance= new UserImpl();
        }
        return instance;
    }
@@ -53,7 +53,20 @@ public class UserImpl extends DaoSupportImpl<User> implements UserDao{
         Iterator<User>iterator=list.iterator();
         while (iterator.hasNext()){
             User user=iterator.next();
+            if(user.getClasses()!=null){
+                user.getClasses().getClassName();
+            }
+            if(user.getMajor()!=null){
+                user.getMajor().getMajorName();
+            }
+        }
+    }
+
+    public void Instance(User user){
+        if(user.getClasses()!=null){
             user.getClasses().getClassName();
+        }
+        if(user.getMajor()!=null){
             user.getMajor().getMajorName();
         }
     }

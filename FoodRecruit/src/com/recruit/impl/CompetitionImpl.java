@@ -13,7 +13,7 @@ public class CompetitionImpl extends DaoSupportImpl<Competition> implements Comp
 
     public static  CompetitionImpl getInstance(){
         if(instance==null){
-            return new CompetitionImpl();
+            instance= new CompetitionImpl();
         }
         return instance;
     }

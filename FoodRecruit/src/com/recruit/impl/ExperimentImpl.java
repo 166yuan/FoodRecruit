@@ -16,7 +16,7 @@ public class ExperimentImpl extends DaoSupportImpl<Experiment> implements Experi
 
     public static  ExperimentImpl getInstance(){
         if(instance==null){
-            return new ExperimentImpl();
+            instance= new ExperimentImpl();
         }
         return instance;
     }

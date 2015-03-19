@@ -30,13 +30,13 @@
 			<li>
 				<c:choose>
 					<c:when test="${from == 'me'}">
-						<a href="/exper/myPublishExperiment">已发布实验</a>
+						<a href="/exper/myPublishExperiment?page=1">已发布实验</a>
 					</c:when>
 					<c:when test="${from == 'myInvolve'}">
 						<a href="#">我参与的实验</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/exper/nendAssistant">成为实验助手</a>
+						<a href="/exper/nendAssistant?page=1">成为实验助手</a>
 					</c:otherwise>
 				</c:choose>
 			</li>

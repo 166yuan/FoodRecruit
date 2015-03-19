@@ -64,34 +64,39 @@ public class UserController {
     public void login(String account,String password,HttpServletRequest request,PrintWriter out){
         UserImpl uml= UserImpl.getInstance();
         int result = 0;
-        try {
-            uml.startTransaction();
-            User user=uml.forAccount(account);
-            if (user != null){
-                if(user.getStatus() != 1){
-                    result = -2;
-                }else {
-                    if (user.getPassword().equals(password)) {
-                        result = SUCCESS;
-                        request.getSession().setAttribute("account", account);
-                        request.getSession().setAttribute("userId",user.getId());
-                        request.getSession().setAttribute("user_type",user.getType());
-                        request.getSession().setAttribute("imageUrl",user.getImage_url());
-                        if(user.getType()==3){
-                            result=ADMIN;
+        Integer userId=(Integer)request.getSession().getAttribute("userId");
+        if(userId!=null){
+            result=3;
+        }else {
+            try {
+                uml.startTransaction();
+                User user=uml.forAccount(account);
+                if (user != null){
+                    if(user.getStatus() != 1){
+                        result = -2;
+                    }else {
+                        if (user.getPassword().equals(password)) {
+                            result = SUCCESS;
+                            request.getSession().setAttribute("account", account);
+                            request.getSession().setAttribute("userId",user.getId());
+                            request.getSession().setAttribute("user_type",user.getType());
+                            request.getSession().setAttribute("imageUrl",user.getImage_url());
+                            if(user.getType()==3){
+                                result=ADMIN;
+                            }
+                        } else {
+                            result = FAILURE;
                         }
-                    } else {
-                        result = FAILURE;
                     }
+                }else {
+                    result = FAILURE;
                 }
-            }else {
-                result = FAILURE;
-            }
 
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            uml.commitTransaction();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }finally {
+                uml.commitTransaction();
+            }
         }
         out.print(result);
     }
@@ -130,9 +135,10 @@ public class UserController {
             }else {
                 result = FAILURE;
             }
-               uml.commitTransaction();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+           uml.commitTransaction();
         }
         out.print(result);
     }
@@ -185,27 +191,53 @@ public class UserController {
         MajorImpl mml=MajorImpl.getInstance();
         ClassesImpl cml=ClassesImpl.getInstance();
         int result = 0;
+        User u=new User();
         try {
             uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
-            User u=uml.forAccount(account);
+            u=uml.forAccount(account);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
             uml.commitTransaction();
+        }
+
+        try {
             JSONObject j = createJson(request);
+            Major major=new Major();
             u.setName(j.getString("name"));
-            Major major=mml.getById(j.getInt("major"));
+            try {
+                mml.startTransaction();
+                major=mml.getById(j.getInt("major"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                mml.commitTransaction();
+            }
             u.setMajor(major);
-            Classes classes=cml.getById(j.getInt("classes"));
+            Classes classes=new Classes();
+            try{
+                cml.startTransaction();
+                classes=cml.getById(j.getInt("classes"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                cml.commitTransaction();
+            }
             u.setClasses(classes);
             u.setGender(j.getBoolean("gender"));
             u.setSelf_info(j.getString("self_info"));
             u.setEmail(j.getString("email"));
             u.setPhone(j.getString("phone"));
             u.setQq(j.getString("QQ"));
+            uml.startTransaction();
             uml.update(u);
-            uml.commitTransaction();
+
             result = SUCCESS;
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            uml.commitTransaction();
         }
         out.print(result);
     }
@@ -219,18 +251,20 @@ public class UserController {
     @RequestMapping("/getProfile")
     public String getProfile(HttpServletRequest request,Model model){
         UserImpl uml=UserImpl.getInstance();
+        User user=new User();
         try {
             uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
-            User user = uml.forAccount(account);
+            user = uml.forAccount(account);
             //去除hibernate延迟加载取数据，下面两条一定要
-            user.getMajor().getMajorName();
-            user.getClasses().getClassName();
-            model.addAttribute("user", user);
-            uml.commitTransaction();
+            uml.Instance(user);
+
         }catch (Exception ex){
             ex.printStackTrace();
+        }finally {
+            uml.commitTransaction();
         }
+        model.addAttribute("user", user);
         return "/View/user/profile";
     }
 
@@ -273,9 +307,11 @@ public class UserController {
                 model.addAttribute("user",user);
                 request.getSession().setAttribute("imageUrl",user.getImage_url());
             }
-            uml.commitTransaction();
+
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            uml.commitTransaction();
         }
         return "/View/user/profile";
     }
@@ -303,8 +339,17 @@ public class UserController {
     public String addfeedBack(String info,HttpServletRequest request){
         NotificationImpl nml=NotificationImpl.getInstance();
         UserImpl uml=UserImpl.getInstance();
-        String account = (String)request.getSession().getAttribute("account");
-        User user = uml.forAccount(account);
+        User user=new User();
+        Integer userId=(Integer)request.getSession().getAttribute("userId");
+        try{
+            uml.startTransaction();
+            user=uml.getById(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            uml.commitTransaction();
+        }
+
         try{
             nml.startTransaction();
             Notification notification=new Notification();
@@ -312,9 +357,11 @@ public class UserController {
             notification.setInfo(info);
             notification.setReceiver(user);
             nml.save(notification);
-            nml.commitTransaction();
+
         }catch (Exception e){
         e.printStackTrace();
+        }finally {
+            nml.commitTransaction();
         }
         return "View/user/infoSuccess";
     }

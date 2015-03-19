@@ -73,7 +73,7 @@
       </li>
 
       <li class="hover hsub" id="contentpage">
-        <a href="/mana/competManage" class="dropdown-toggle">
+        <a href="/mana/competManage?page=1" class="dropdown-toggle">
           <i class="menu-icon fa fa-globe"></i>
           <span class="menu-text"> 竞赛管理 </span>
 
@@ -82,13 +82,13 @@
       </li>
 
       <li class="hover hsub" id="feedpage">
-        <a href="/mana/showfeedback?type=3" >
+        <a href="/mana/showfeedback?type=3&page=1" >
           <i class="menu-icon fa fa-user"></i>
           <span class="menu-text"> 用户反馈 </span>
         </a>
 
       <li class="hover hsub" id="classpage">
-        <a href="/mana/classmanager?page=1" >
+        <a href="/mana/classmanager?page=1&page=1" >
           <i class="menu-icon fa fa-pencil-square-o"></i>
           <span class="menu-text"> 班级管理 </span>
         </a>
