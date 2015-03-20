@@ -1,6 +1,7 @@
 package com.recruit.controller;
 
 
+import com.recruit.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
  */
 @Controller
 @RequestMapping("/score")
-public class ScoreController {
+public class ScoreController extends BaseController {
     @RequestMapping("scorePage")
     public String scorePage(HttpSession session,Long experId,Long userId,String experName,String userName,Model model){
        /* model.addAttribute("userName",userName);

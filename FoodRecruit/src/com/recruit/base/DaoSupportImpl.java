@@ -8,12 +8,12 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-
-
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.recruit.util.HibernateUtils;
 
 
 /**实现一些数据库实体的相关常用方法
@@ -21,14 +21,15 @@ import com.recruit.util.HibernateUtils;
  *
  * @param <T>
  */
-public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
+@Repository
+@Transactional
+public abstract class DaoSupportImpl<T>  implements DaoSupport<T>{
 
-
-	String orderByTimeDesc ;
-	String orderByTimeAsc  ;
+	@Autowired
+	private SessionFactory sessionFactory;
 	String from_table_t ;
-	private Session session;
-	private Transaction transaction;
+	//private Session session;
+	//private Transaction transaction;
 	private Class<T> clazz;
 
 	public DaoSupportImpl() {
@@ -39,7 +40,7 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 		System.out.println("clazz ---> " + clazz);
 	}
 	
-	
+	/*
 	public void startTransaction(){
 		if(session==null||!session.isOpen()){
 			session=HibernateUtils.getInstance().getSession();
@@ -52,7 +53,7 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 		transaction.commit();
 	}
 
-
+*/
 
 
 	/**
@@ -61,7 +62,8 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	 * @return
 	 */
 	public Session getSession() {
-		return this.session;
+		
+		return sessionFactory.getCurrentSession();
 	}
 
 	public void save(T entity) {
@@ -78,12 +80,15 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 			getSession().delete(obj);
 		}
 	}
+
     public void delete(Integer id) {
         Object obj = getById(id);
         if (obj != null) {
             getSession().delete(obj);
         }
     }
+	
+
 	public T getById(Long id) {
 		if (id == null) {
 			return null;
@@ -96,16 +101,16 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 		if (id == null) {
 			return null;
 		} else {
-			return (T) session.get(clazz, id);
+			return (T) getSession().get(clazz, id);
 		}
 	}
-
+	
 	public List<T> getByIds(Long[] ids) {
 		if (ids == null || ids.length == 0) {
 			return Collections.emptyList();
 		} else {
 			String hql ="FROM " + clazz.getSimpleName() + " t WHERE id IN (:ids) ";
-			return session.createQuery(hql).setParameterList("ids", ids).list();
+			return getSession().createQuery(hql).setParameterList("ids", ids).list();
 		}
 	}
 	
@@ -139,12 +144,10 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	public List<T> findByHql(String hql,int page, int pageSize) {
 		int firstResult= (page-1)*pageSize;
 		int lastResult= firstResult+pageSize;
-		Query query = session.createQuery(hql).setFirstResult(firstResult).setMaxResults(lastResult);
+		Query query = getSession().createQuery(hql).setFirstResult(firstResult).setMaxResults(lastResult);
 		System.out.println("query="+query.toString());
 		return query.list();
 	}
-
-
 
 	@Override
 	public List<T> findByHql(String hql, int page, int pageSize,
@@ -164,7 +167,7 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	@Override
 	public Integer getSize(String hql) {
 		hql ="select count(*) "+ hql;
-		Query query = session.createQuery(hql);
+		Query query = getSession().createQuery(hql);
 		int count = ((Number)query.uniqueResult()).intValue();
 		return count;
 	}
@@ -195,13 +198,10 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	
 	@Override
 	public List<T> findByProperties(T entity,int page , int pageSize) {
-        if(page<1){
-            page=1;
-        }
 		int firstResult= (page-1)*pageSize;
-		int lastResult=pageSize;
+		int lastResult= firstResult+pageSize;
 		
-		return session.createCriteria(clazz).add(Example.create(entity))
+		return getSession().createCriteria(clazz).add(Example.create(entity))
 				.setFirstResult(firstResult).setMaxResults(lastResult).list();
 	}
 	
@@ -257,8 +257,8 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 
 	@Override
 	public Query createQuery(String queryString, Object... values) {
-		session.createQuery(queryString);
-        Query queryObject = session.createQuery(queryString);
+		getSession().createQuery(queryString);
+        Query queryObject = getSession().createQuery(queryString);
         if (values != null) {
             for (int i = 0; i < values.length; i++) {
                 queryObject.setParameter(i, values[i]);
@@ -302,7 +302,7 @@ public  abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	@Override
 	public String createFindByTimeHql(String timeBegin, String timeEnd) {
 		String hql = from_table_t+" where t.createTime between :timeBegin and :timeEnd";
-		Query query = session.createQuery(hql).setString("timeBegin", timeBegin)
+		Query query = getSession().createQuery(hql).setString("timeBegin", timeBegin)
 											  .setString("timeEnd", timeEnd);
 		hql = query.getQueryString();
 		return hql;

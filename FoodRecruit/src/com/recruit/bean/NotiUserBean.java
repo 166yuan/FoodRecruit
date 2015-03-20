@@ -1,4 +1,4 @@
-package com.recruit.base;
+package com.recruit.bean;
 
 import java.util.Date;
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 
 /**定义数据库实体的一些常用方法
@@ -22,7 +23,7 @@ public interface DaoSupport<T> {
 	 * @param id
 	 */
 	void delete(Long id);
-
+    void delete(Integer id);
 	/** 更新实体
 	 * @param entity
 	 */

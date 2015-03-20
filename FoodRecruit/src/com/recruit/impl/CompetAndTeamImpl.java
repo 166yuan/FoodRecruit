@@ -1,26 +1,19 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
-import com.recruit.base.PageBean;
-import com.recruit.bean.ComTeamBean;
+import com.recruit.bean.PageBean;
 import com.recruit.dao.CompetAndTeamDao;
 import com.recruit.model.CompetAndTeam;
 import com.recruit.model.User;
 import org.hibernate.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-
+@Service
+@Transactional
 public class CompetAndTeamImpl extends DaoSupportImpl<CompetAndTeam> implements CompetAndTeamDao {
-    private static CompetAndTeamImpl instance=null;
-
-    public static  CompetAndTeamImpl getInstance(){
-        if(instance==null){
-            instance= new CompetAndTeamImpl();
-        }
-        return instance;
-    }
-
     public List<CompetAndTeam> getByUser(User user,PageBean pageBean){
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("user",user);

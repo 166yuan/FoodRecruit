@@ -1,26 +1,19 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
-import com.recruit.base.PageBean;
+import com.recruit.bean.PageBean;
 import com.recruit.dao.MajorDao;
 import com.recruit.model.Major;
 import org.hibernate.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
+@Service
+@Transactional
 public class MajorImpl extends DaoSupportImpl<Major> implements MajorDao{
-    private static MajorImpl instance=null;
-
-    public static  MajorImpl getInstance(){
-        if(instance==null){
-            instance= new MajorImpl();
-        }
-        return instance;
-    }
-
     public List<Major>getAllMajor(PageBean pageBean){
         Major major=new Major();
        return this.findByProperties(major,pageBean.getCurPage(),pageBean.getPerPage());

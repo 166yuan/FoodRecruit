@@ -6,26 +6,20 @@ import com.recruit.bean.TeamBean;
 import com.recruit.dao.TeamDao;
 import com.recruit.model.CompetAndTeam;
 import com.recruit.model.Team;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
+@Service
+@Transactional
 public class TeamImpl extends DaoSupportImpl<Team> implements TeamDao {
-    private static TeamImpl instance=null;
-
-    public static  TeamImpl getInstance(){
-        if(instance==null){
-            instance= new TeamImpl();
-        }
-        return instance;
-    }
-
     public List<Team> findByComId(Integer comId){
         Map<String,Object>map=new HashMap<String,Object>();
         map.put("competition",comId);
         return this.findByProperties(map,1,100);
     }
 
-    public static TeamBean build(Team team){
+    public TeamBean build(Team team){
         TeamBean tbBean=new TeamBean();
         tbBean.setLeader(team.getLeader().getName());
         tbBean.setClasses(team.getLeader().getClasses().getClassName());

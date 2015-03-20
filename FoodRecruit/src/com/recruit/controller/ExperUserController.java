@@ -1,5 +1,6 @@
 package com.recruit.controller;
 
+import com.recruit.base.BaseController;
 import com.recruit.impl.ExperUserImpl;
 import com.recruit.impl.ExperimentImpl;
 import com.recruit.impl.NotificationImpl;
@@ -22,7 +23,7 @@ import java.io.PrintWriter;
  */
 @Controller
 @RequestMapping("/experUser")
-public class ExperUserController{
+public class ExperUserController extends BaseController {
     private static final int SUCCESS = 1;
     private static final int FAILURE = -1;
 
@@ -45,38 +46,26 @@ public class ExperUserController{
     @RequestMapping("join")
     public void join(Integer experId,HttpServletRequest request,PrintWriter out){
         Integer userId=(Integer)request.getSession().getAttribute("userId");
-        ExperimentImpl eml=ExperimentImpl.getInstance();
-        ExperUserImpl euml=ExperUserImpl.getInstance();
-        UserImpl uml=UserImpl.getInstance();
-        uml.startTransaction();
-        User user=uml.getById(userId);
-        uml.commitTransaction();
-        eml.startTransaction();
-        Experiment experiment=eml.getById(experId);
-        eml.commitTransaction();
+        User user=userDao.getById(userId);
+        Experiment experiment=experimentDao.getById(experId);
         int result = 0;
         try {
-            euml.startTransaction();
-            if(euml.findByExperAndUserId(experId,userId)!=null){
+            if(experUserDao.findByExperAndUserId(experId,userId)!=null){
                 result=-2;
             }else{
 
             //-----创建Experiment 与 助手 联系 (Score要在同意后才新建一个）
-            ExperUser experUser=euml.create(user,experiment);
-            euml.save(experUser);
-            euml.commitTransaction();
+            ExperUser experUser=experUserDao.create(user,experiment);
+            experUserDao.save(experUser);
             //-----创建通知notification
 
                 //获取实验发布者的ID
             User publisher=experiment.getPublisher();
-            NotificationImpl nml=NotificationImpl.getInstance();
-            nml.startTransaction();
             Notification noti = new Notification();
             noti.setReceiver(publisher);
             noti.setType(0);
             noti.setInfo("你有一个新的助手申请");
-            nml.save(noti);
-            nml.commitTransaction();
+            notificationDao.save(noti);
             result = 1;
             }
         }catch (Exception ex){

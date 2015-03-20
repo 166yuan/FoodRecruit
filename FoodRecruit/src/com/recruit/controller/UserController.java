@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+import com.recruit.base.BaseController;
 import com.recruit.impl.ClassesImpl;
 import com.recruit.impl.MajorImpl;
 import com.recruit.impl.NotificationImpl;
@@ -29,7 +30,7 @@ import java.io.*;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
     public static final int SUCCESS = 1;
     public static final int FAILURE = -1;
     public static final int ADMIN=2;
@@ -62,15 +63,13 @@ public class UserController {
      */
     @RequestMapping("/doLogin")
     public void login(String account,String password,HttpServletRequest request,PrintWriter out){
-        UserImpl uml= UserImpl.getInstance();
         int result = 0;
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         if(userId!=null){
             result=3;
         }else {
             try {
-                uml.startTransaction();
-                User user=uml.forAccount(account);
+                User user=userDao.forAccount(account);
                 if (user != null){
                     if(user.getStatus() != 1){
                         result = -2;
@@ -94,8 +93,6 @@ public class UserController {
 
             }catch (Exception ex){
                 ex.printStackTrace();
-            }finally {
-                uml.commitTransaction();
             }
         }
         out.print(result);
@@ -123,22 +120,18 @@ public class UserController {
      */
     @RequestMapping("/register")
     public void register(String account,String password,PrintWriter out){
-        UserImpl uml=UserImpl.getInstance();
         int result = 0;
         try{
-            uml.startTransaction();
-            User user = uml.forAccount(account);
+            User user = userDao.forAccount(account);
             if (user == null) {
                 result = SUCCESS;
-                user=uml.create(account,password);
-                uml.save(user);
+                user=userDao.create(account,password);
+                userDao.save(user);
             }else {
                 result = FAILURE;
             }
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-           uml.commitTransaction();
         }
         out.print(result);
     }
@@ -158,19 +151,16 @@ public class UserController {
      */
     @RequestMapping("passwd")
     public void passwd(String password,String newPass,HttpServletRequest request,PrintWriter out){
-        UserImpl uml = UserImpl.getInstance();
         int result = 0;
         try {
-            uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
-            User user = uml.forAccount(account);
+            User user = userDao.forAccount(account);
             if (!user.getPassword().equals(password)){
                 result = FAILURE;
             }else {
                 user.setPassword(newPass);
                 result = SUCCESS;
             }
-            uml.commitTransaction();
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -187,42 +177,29 @@ public class UserController {
      */
     @RequestMapping("/updateProfile")
     public void updateProfile(HttpServletRequest request,PrintWriter out){
-        UserImpl uml=UserImpl.getInstance();
-        MajorImpl mml=MajorImpl.getInstance();
-        ClassesImpl cml=ClassesImpl.getInstance();
         int result = 0;
         User u=new User();
         try {
-            uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
-            u=uml.forAccount(account);
+            u=userDao.forAccount(account);
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            uml.commitTransaction();
         }
-
         try {
             JSONObject j = createJson(request);
             Major major=new Major();
             u.setName(j.getString("name"));
             try {
-                mml.startTransaction();
-                major=mml.getById(j.getInt("major"));
+                major=majorDao.getById(j.getInt("major"));
             }catch (Exception e){
                 e.printStackTrace();
-            }finally {
-                mml.commitTransaction();
             }
             u.setMajor(major);
             Classes classes=new Classes();
             try{
-                cml.startTransaction();
-                classes=cml.getById(j.getInt("classes"));
+                classes=classesDao.getById(j.getInt("classes"));
             }catch (Exception e){
                 e.printStackTrace();
-            }finally {
-                cml.commitTransaction();
             }
             u.setClasses(classes);
             u.setGender(j.getBoolean("gender"));
@@ -230,14 +207,10 @@ public class UserController {
             u.setEmail(j.getString("email"));
             u.setPhone(j.getString("phone"));
             u.setQq(j.getString("QQ"));
-            uml.startTransaction();
-            uml.update(u);
-
+            userDao.update(u);
             result = SUCCESS;
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            uml.commitTransaction();
         }
         out.print(result);
     }
@@ -250,19 +223,13 @@ public class UserController {
      */
     @RequestMapping("/getProfile")
     public String getProfile(HttpServletRequest request,Model model){
-        UserImpl uml=UserImpl.getInstance();
         User user=new User();
         try {
-            uml.startTransaction();
             String account = (String)request.getSession().getAttribute("account");
-            user = uml.forAccount(account);
+            user = userDao.forAccount(account);
             //去除hibernate延迟加载取数据，下面两条一定要
-            uml.Instance(user);
-
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            uml.commitTransaction();
         }
         model.addAttribute("user", user);
         return "/View/user/profile";
@@ -288,7 +255,6 @@ public class UserController {
         String fileName =request.getRealPath("/images/")+File.separator+System.currentTimeMillis()+file.getOriginalFilename().
                 substring(file.getOriginalFilename().lastIndexOf("."));
         File uploadFile = new File(fileName);
-
         try{
             FileCopyUtils.copy(file.getBytes(),uploadFile);
         }catch (Exception e){
@@ -296,10 +262,8 @@ public class UserController {
         }
 
         String account = (String)request.getSession().getAttribute("account");
-        UserImpl uml=UserImpl.getInstance();
         try{
-            uml.startTransaction();
-            User user = uml.forAccount(account);
+            User user = userDao.forAccount(account);
             if(user!=null){
                 user.setImage_url("/images/"+uploadFile.getName());
                 user.getMajor().getMajorName();
@@ -310,8 +274,6 @@ public class UserController {
 
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            uml.commitTransaction();
         }
         return "/View/user/profile";
     }
@@ -337,31 +299,21 @@ public class UserController {
      */
     @RequestMapping("addfeedback")
     public String addfeedBack(String info,HttpServletRequest request){
-        NotificationImpl nml=NotificationImpl.getInstance();
-        UserImpl uml=UserImpl.getInstance();
         User user=new User();
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         try{
-            uml.startTransaction();
-            user=uml.getById(userId);
+            user=userDao.getById(userId);
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            uml.commitTransaction();
         }
-
         try{
-            nml.startTransaction();
             Notification notification=new Notification();
             notification.setType(3);
             notification.setInfo(info);
             notification.setReceiver(user);
-            nml.save(notification);
-
+            notificationDao.save(notification);
         }catch (Exception e){
         e.printStackTrace();
-        }finally {
-            nml.commitTransaction();
         }
         return "View/user/infoSuccess";
     }

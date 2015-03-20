@@ -1,25 +1,19 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
-import com.recruit.base.NotiUserBean;
-import com.recruit.base.PageBean;
+import com.recruit.bean.NotiUserBean;
+import com.recruit.bean.PageBean;
 import com.recruit.dao.NotificationDao;
 import com.recruit.model.Notification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+@Service
+@Transactional
 public class NotificationImpl extends DaoSupportImpl<Notification> implements NotificationDao {
-    private static NotificationImpl instance=null;
-
-    public static  NotificationImpl getInstance(){
-        if(instance==null){
-            instance= new NotificationImpl();
-        }
-        return instance;
-    }
-
     public List<Notification> getAllByType(int type,PageBean pageBean){
         String hql=null;
         if(type==3){

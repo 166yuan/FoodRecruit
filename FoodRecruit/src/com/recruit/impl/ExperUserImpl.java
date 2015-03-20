@@ -7,20 +7,14 @@ import com.recruit.model.Experiment;
 import com.recruit.model.Score;
 import com.recruit.model.User;
 import org.hibernate.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.List;
-
+@Service
+@Transactional
 public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUserDao {
-    private static ExperUserImpl instance=null;
-
-    public static  ExperUserImpl getInstance(){
-        if(instance==null){
-            instance= new ExperUserImpl();
-        }
-        return instance;
-    }
-
     public ExperUser findByExperAndUserId(Integer experId,Integer userId){
         String hql="from ExperUser eu where eu.experiment.id="+experId+" and eu.user.id="+userId;
         List<ExperUser> list=this.findByHql(hql,0,10);

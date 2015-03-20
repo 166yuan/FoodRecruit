@@ -1,5 +1,6 @@
 package com.recruit.controller;
 
+import com.recruit.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/notification")
-public class NotificationController {
+public class NotificationController extends BaseController {
     private static final int SUCCESS = 1;
     private static final int FAILURE = -1;
 

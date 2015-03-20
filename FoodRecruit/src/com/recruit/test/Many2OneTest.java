@@ -1,25 +1,16 @@
 package com.recruit.test;
 
-import static org.junit.Assert.*;
-
-import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
 
-import com.recruit.base.PageBean;
-import com.recruit.bean.ExperScoreBean;
-import com.recruit.impl.ExperUserImpl;
+import com.recruit.bean.PageBean;
 import com.recruit.impl.TeamImpl;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.recruit.impl.ExperimentImpl;
@@ -35,7 +26,6 @@ import com.recruit.model.PublishLog;
 import com.recruit.model.Score;
 import com.recruit.model.Team;
 import com.recruit.model.User;
-import com.recruit.util.HibernateUtils;
 
 public class Many2OneTest {
 
@@ -48,7 +38,7 @@ public class Many2OneTest {
 		
 		
 		ExperimentImpl experimentImpl = new ExperimentImpl();
-		 experimentImpl.startTransaction();
+
 		 
 
 			User user = new User();
@@ -62,7 +52,7 @@ public class Many2OneTest {
 		for(Experiment exp:list){
 			System.out.println(exp.getId());
 		}
-		experimentImpl.commitTransaction();
+
 		//List<User> list = userImpl.findByTime("2015-03-13 23:58:57", "2015-03-14 13:59:47");
 		//List<User> list = userImpl.findByPage(2, 3);
 		//List<User> list = userImpl.findByProperty("gender", 0);
@@ -95,31 +85,17 @@ public class Many2OneTest {
    public void testHql(){
        String hql="from CompetAndTeam cat where cat.user.id=2";
        TeamImpl tml=new TeamImpl();
-       tml.startTransaction();
+
        Query query=tml.createQuery(hql);
        List<CompetAndTeam>list=query.list();
        Iterator<CompetAndTeam>iterator=list.iterator();
        while (iterator.hasNext()){
            System.out.println(iterator.next().getId());
        }
-       tml.commitTransaction();
+
    }
 
-    @Test
-    public void testPageBean(){
-        ExperimentImpl eml=ExperimentImpl.getInstance();
-        eml.startTransaction();
-       /* if ("asc".equals(order))
-            dc.addOrder(Order.asc(by));
-        if ("desc".equals(order))
-            dc.addOrder(Order.desc(by));
-*/
-        int total=eml.countNeedAssistant();
-        PageBean pageBean=PageBean.getInstance(1,total,"/exper","/nendAssistant");
-        List<Experiment> list = eml.getNeedAssistant(pageBean);
-        eml.commitTransaction();
 
-    }
     @Test
 	public void insertData(){
 		
@@ -147,7 +123,7 @@ public class Many2OneTest {
 		
 		
 		UserImpl userImpl = new UserImpl();
-		userImpl.startTransaction();
+
 		
 		Session session = userImpl.getSession();
 		
@@ -163,8 +139,7 @@ public class Many2OneTest {
 		session.save(experUser);
 		session.save(publishLog);
 		session.save(notification);
-		
-		userImpl.commitTransaction();
+
 		
 	}
 	

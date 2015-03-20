@@ -1,5 +1,6 @@
 package com.recruit.controller;
 
+import com.recruit.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("home")
-public class HomeController {
+public class HomeController extends BaseController {
     @RequestMapping("index")
     public String index(Model model){
 

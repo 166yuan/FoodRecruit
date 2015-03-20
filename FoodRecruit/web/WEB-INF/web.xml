@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="WebApp_ID" version="2.5">
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>springMVC1</display-name>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    <!--
+        配置Spring监听(ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext的配置信息。
+        它能监听所有的servlet)
+    -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>springMVC</servlet-name>
@@ -48,6 +60,25 @@
         <filter-name>sessionFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>

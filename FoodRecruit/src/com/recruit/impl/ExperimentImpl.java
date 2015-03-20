@@ -1,26 +1,17 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
-import com.recruit.base.PageBean;
+import com.recruit.bean.PageBean;
 import com.recruit.bean.ExperScoreBean;
 import com.recruit.dao.ExperimentDao;
-import com.recruit.model.ExperUser;
 import com.recruit.model.Experiment;
-import com.recruit.model.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
+@Service
+@Transactional
 public class ExperimentImpl extends DaoSupportImpl<Experiment> implements ExperimentDao {
-
-    private static ExperimentImpl instance=null;
-
-    public static  ExperimentImpl getInstance(){
-        if(instance==null){
-            instance= new ExperimentImpl();
-        }
-        return instance;
-    }
-
     @Override
     public List<Experiment> getAllByUser(Integer userId,int page) {
         String hql="from Experiment t where t.publisher.id="+userId;
