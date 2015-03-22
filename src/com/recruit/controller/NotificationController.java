@@ -1,6 +1,7 @@
 package com.recruit.controller;
 
 import com.recruit.base.BaseController;
+import com.recruit.model.Notification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,53 +19,31 @@ public class NotificationController extends BaseController {
     private static final int SUCCESS = 1;
     private static final int FAILURE = -1;
 
-  /*  @RequestMapping("")
+    @RequestMapping("")
     public void m(PrintWriter out){
-        NotificationDao notificationDao = NotificationDao.getInstance();
         int result = 0;
-        try {
-            notificationDao.begin();
-
-            notificationDao.commit();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            notificationDao.close();
-        }
         out.print(result);
-    }*/
+    }
 
     /**
      * 设置指定的通知为已读
      * @param notiId
      * @param out
      */
-  /*  @RequestMapping("readed")
-    public void setReaded(HttpServletRequest req, Long notiId,PrintWriter out){
-        NotificationDao notificationDao = NotificationDao.getInstance();
-        Long uid = (Long)req.getSession().getAttribute("userId");
+    @RequestMapping("readed")
+    public void setReaded(HttpServletRequest req, Integer notiId,PrintWriter out){
+        Integer uid = (Integer)req.getSession().getAttribute("userId");
         int result = 0;
         try {
-            notificationDao.begin();
-
-            Notification noti = notificationDao.get(notiId);
-
+            Notification noti = notificationDao.getById(notiId);
             noti.setIsNew(false);
-
             notificationDao.update(noti);
-
             result = notificationDao.getUnreadNotificationByUserId(uid).size();
-
-            notificationDao.commit();
-
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            notificationDao.close();
         }
         out.print(result);
     }
-*/
     /**
      * 得到个人所有未读通知
      * @param req
@@ -73,22 +52,13 @@ public class NotificationController extends BaseController {
      */
     @RequestMapping("myNotification")
     public String myNotification(HttpServletRequest req,Model model){
-      /*  NotificationDao notificationDao = NotificationDao.getInstance();
-        Long uid = (Long)req.getSession().getAttribute("userId");
+        Integer uid = (Integer)req.getSession().getAttribute("userId");
         try {
-            notificationDao.begin();
-
             List<Notification> list = notificationDao.getUnreadNotificationByUserId(uid);
-
-            notificationDao.commit();
-
             model.addAttribute("list",list);
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            notificationDao.close();
-        }*/
-
+        }
         return "View/notification/unread";
     }
 
@@ -97,29 +67,18 @@ public class NotificationController extends BaseController {
      * @param req
      * @param out
      */
-/*    @RequestMapping("getNew")
+    @RequestMapping("getNew")
     public void haveNewNotification(HttpServletRequest req,PrintWriter out){
-        NotificationDao notificationDao = NotificationDao.getInstance();
-        Long uid = (Long)req.getSession().getAttribute("userId");
-
+        Integer uid = (Integer)req.getSession().getAttribute("userId");
         int result = 0;
         try {
-            notificationDao.begin();
-
             List<Notification> list = notificationDao.getUnreadNotificationByUserId(uid);
-
             result = list.size();
-
-            notificationDao.commit();
-
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            notificationDao.close();
         }
-
         out.print(result);
-    }*/
+    }
 
     /**
      * 返回个人的所有通知
@@ -129,25 +88,15 @@ public class NotificationController extends BaseController {
      */
     @RequestMapping("allNotification")
     public String allNotification(HttpServletRequest req,Model model){
-      /*  NotificationDao notificationDao = NotificationDao.getInstance();
-        Long uid = (Long)req.getSession().getAttribute("userId");
+        Integer uid = (Integer)req.getSession().getAttribute("userId");
         try {
-            notificationDao.begin();
-
             int unreadSize = notificationDao.getUnreadNotificationByUserId(uid).size();
-
             List<Notification> list = notificationDao.getAllNotificationByUserId(uid);
-
-            notificationDao.commit();
-
             model.addAttribute("list",list);
             model.addAttribute("unreadSize",unreadSize);
         }catch (Exception ex){
             ex.printStackTrace();
-        }finally {
-            notificationDao.close();
         }
-*/
         return "View/notification/allNotification";
     }
 

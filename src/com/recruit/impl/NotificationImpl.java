@@ -8,9 +8,8 @@ import com.recruit.model.Notification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
 @Service
 @Transactional
 public class NotificationImpl extends DaoSupportImpl<Notification> implements NotificationDao {
@@ -52,6 +51,18 @@ public class NotificationImpl extends DaoSupportImpl<Notification> implements No
             list1.add(nbean);
         }
         return list1;
+    }
+    public List<Notification>getUnreadNotificationByUserId(Integer userId){
+        Map<String,Object>map=new HashMap<String, Object>();
+        map.put("receiver",userId);
+        map.put("isNew",true);
+        return this.findByProperties(map,1,200);
+    }
+
+    public List<Notification>getAllNotificationByUserId(Integer userId){
+        Map<String,Object>map=new HashMap<String, Object>();
+        map.put("receiver",userId);
+        return this.findByProperties(map,1,200);
     }
 
 }

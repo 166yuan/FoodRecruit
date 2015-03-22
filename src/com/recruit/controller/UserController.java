@@ -299,6 +299,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("addfeedback")
     public String addfeedBack(String info,HttpServletRequest request){
+        System.out.println("info is:"+info);
         User user=new User();
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         try{

@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 @Transactional
 public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUserDao {
@@ -36,6 +39,12 @@ public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUse
         experUser.setExperiment(experiment);
         experUser.setUser(user);
         return experUser;
+    }
+
+    public List<ExperUser>getByExperiment(Integer experId){
+        Map<String,Object>map=new HashMap<String, Object>();
+        map.put("experiment",experId);
+        return this.findByProperties(map,1,10);
     }
 
 }

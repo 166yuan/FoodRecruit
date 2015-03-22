@@ -22,6 +22,7 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -274,11 +275,26 @@ public class ComController extends BaseController {
      */
     @RequestMapping("passCompet")
     public String pastCompetition(HttpSession session,Model model,int page){
-       /* Long userId=(Long)session.getAttribute("userId");
-        TeamComDao teamComDao=TeamComDao.getInstance();
-        List<CompetAndTeam> list=teamComDao.getByUser(userId);
-        List<ComTeamBean>list1=ComTeamBean.buildList1(list);
-        model.addAttribute("list",list1);*/
+        if(page==0){
+            page=1;
+        }
+        Integer userId=(Integer)session.getAttribute("userId");
+        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/mycompet");
+        User user=new User();
+        try {
+            user=userDao.getById(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        List<CompetAndTeam> list= null;
+        try {
+            int total=competAndTeamDao.getSize();
+            pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
+            list=competAndTeamDao.getByUser(user,pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("list",list);
         return "View/compet/pastCompet";
     }
 
@@ -384,17 +400,11 @@ public class ComController extends BaseController {
      * @return
      */
     @RequestMapping("doUpdate")
-    public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,long id,Model model){
+    public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,Integer id,Model model){
         System.out.println("the content is:"+description);
         CommonsMultipartFile file = (CommonsMultipartFile)request.getFile("file");
         File uploadFile = null;
-
-        System.out.println("id = " + id);
-/*
-
-        ComDao comDao = ComDao.getInstance();
-        Competition competition = comDao.get(id);
-
+        Competition competition = competitionDao.getById(id);
         if (file.getOriginalFilename().length() > 0){
             try {
                 //删除旧文件
@@ -402,16 +412,12 @@ public class ComController extends BaseController {
                     File oldFile = new File(competition.getImage_url());
                     oldFile.delete();
                 }
-
                 System.out.println(file);
-
                 System.out.println(file.getName() + " 1 " + file.getOriginalFilename() + " 2 " + competition.getImage_url());
-
                 String fileName = request.getRealPath("/images/") + File.separator + System.currentTimeMillis() + file.getOriginalFilename().
                         substring(file.getOriginalFilename().lastIndexOf("."));
                 uploadFile = new File(fileName);
                 FileCopyUtils.copy(file.getBytes(), uploadFile);
-
             }catch (IOException ex){
                 ex.printStackTrace();
             }
@@ -421,7 +427,6 @@ public class ComController extends BaseController {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         try {
-            comDao.begin();
             Date date1 = sdf.parse(date[0]);
             Date date2 = sdf.parse(date[1]);
             competition.setName(name);
@@ -433,17 +438,11 @@ public class ComController extends BaseController {
             if(uploadFile!=null){
                 competition.setImage_url("/images/"+uploadFile.getName());
             }
-            comDao.update(competition);
-            comDao.commit();
-
+            competitionDao.update(competition);
             model.addAttribute("competition",competition);
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            comDao.close();
         }
-*/
-
         return "/View/compet/competition";
     }
 

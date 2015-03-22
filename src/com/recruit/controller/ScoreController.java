@@ -2,6 +2,10 @@ package com.recruit.controller;
 
 
 import com.recruit.base.BaseController;
+import com.recruit.model.ExperUser;
+import com.recruit.model.Experiment;
+import com.recruit.model.Score;
+import com.recruit.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,43 +20,38 @@ import java.io.PrintWriter;
 @RequestMapping("/score")
 public class ScoreController extends BaseController {
     @RequestMapping("scorePage")
-    public String scorePage(HttpSession session,Long experId,Long userId,String experName,String userName,Model model){
-       /* model.addAttribute("userName",userName);
+    public String scorePage(HttpSession session,Integer experId,Integer userId,String experName,String userName,Model model){
+        model.addAttribute("userName",userName);
         model.addAttribute("experName",experName);
-        ScoreDao scoreDao=ScoreDao.getInstance();
-        Score score=scoreDao.getByExperIdAndUserId(experId, userId);
-        Long fromId=(Long)session.getAttribute("userId");
+        Score score=scoreDao.getByExperIdAndUserId(experId,userId);
+        Integer fromId=(Integer)session.getAttribute("userId");
+        Experiment experiment=experimentDao.getById(experId);
+        User user=userDao.getById(userId);
+        User from=userDao.getById(fromId);
         if(score==null){
             score=new Score();
             try{
-                scoreDao.begin();
-                score.setExper_id(experId);
-                score.setUserId(userId);
-                score.setFromId(fromId);
+                score.setExperiment(experiment);
+                score.setTeacher(from);
+                score.setStudent(user);
                 scoreDao.save(score);
-                scoreDao.commit();
             }catch (Exception e){
                 e.printStackTrace();
-            }finally {
-                scoreDao.close();
             }
-
         }
-        model.addAttribute("score",score);*/
+        model.addAttribute("score",score);
         return "View/experiment/scorePage";
     }
-   /* @RequestMapping("saveScoreA")
-    public void saveScoreA(int duty,int discipline,int tidy,int care,int operation,int fault,int efficiency,int advise,Long experId,Long userId,HttpSession session,PrintWriter out){
+    @RequestMapping("saveScoreA")
+    public void saveScoreA(int duty,int discipline,int tidy,int care,int operation,int fault,int efficiency,int advise,Integer experId,Integer userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
-        Long fromId=(Long)session.getAttribute("userId");
-        ScoreDao scoreDao=ScoreDao.getInstance();
+        Integer fromId=(Integer)session.getAttribute("userId");
         Score score=scoreDao.getByExperIdAndUserId(experId,userId);
         if(score==null){
             score=new Score();
             temp=1;
         }
         try{
-            scoreDao.begin();
         score.setDuty(duty);
         score.setDiscipline(discipline);
         score.setCare(care);
@@ -63,70 +62,65 @@ public class ScoreController extends BaseController {
         score.setAdvise(advise);
         score.setScoreA();
             if (temp==1){
-                score.setExper_id(experId);
-                score.setUserId(userId);
-                score.setFromId(fromId);
+                Experiment experiment=experimentDao.getById(experId);
+                User student=userDao.getById(userId);
+                User teacher=userDao.getById(fromId);
+                score.setStudent(student);
+                score.setTeacher(teacher);
+                score.setExperiment(experiment);
                 scoreDao.save(score);
             }else {
              if(score.getScoreB()!=null&&score.getSecscore()!=null)
                  score.setTotal();
              scoreDao.update(score);
             }
-        scoreDao.commit();
         }catch (Exception e){
             e.printStackTrace();
             result=-1;
-        }finally {
-            scoreDao.close();
         }
         out.print(result);
-    }*/
+    }
 
-    /*@RequestMapping("saveScoreB")
-    public void saveScoreB(int scoreB,Long experId,Long userId,HttpSession session,PrintWriter out){
+    @RequestMapping("saveScoreB")
+    public void saveScoreB(int scoreB,Integer experId,Integer userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
-        Long fromId=(Long)session.getAttribute("userId");
-        ScoreDao scoreDao=ScoreDao.getInstance();
+        Integer fromId=(Integer)session.getAttribute("userId");
         Score score=scoreDao.getByExperIdAndUserId(experId,userId);
         if(score==null){
             score=new Score();
             temp=1;
         }
         try{
-        scoreDao.begin();
         score.setScoreB(scoreB);
         if(temp==1){
-            score.setExper_id(experId);
-            score.setUserId(userId);
-            score.setFromId(fromId);
+            Experiment experiment=experimentDao.getById(experId);
+            User student=userDao.getById(userId);
+            User teacher=userDao.getById(fromId);
+            score.setStudent(student);
+            score.setTeacher(teacher);
+            score.setExperiment(experiment);
         scoreDao.save(score);
         }else {
         if(score.getScoreA()!=null&&score.getSecscore()!=null)
             score.setTotal();
         scoreDao.update(score);
         }
-        scoreDao.commit();
         }catch (Exception e){
         e.printStackTrace();
-        }finally {
-        scoreDao.close();
         }
         out.print(result);
-    }*/
+    }
 
-    /*@RequestMapping("saveScoreC")
-    public void saveScoreC(int Ttidy,int Tcare,int Toperation,int Tconnect,int member,int recorded,int append,Long experId,Long userId,HttpSession session,PrintWriter out){
+    @RequestMapping("saveScoreC")
+    public void saveScoreC(int Ttidy,int Tcare,int Toperation,int Tconnect,int member,int recorded,int append,Integer experId,Integer userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
         Long fromId=(Long)session.getAttribute("userId");
-        ScoreDao scoreDao=ScoreDao.getInstance();
-        ExperUserDao experUserDao=ExperUserDao.getInstance();
         Score score=scoreDao.getByExperIdAndUserId(experId,userId);
         if(score==null){
             score=new Score();
             temp=1;
         }
         try{
-            scoreDao.begin();
             score.setTtidy(Ttidy);
             score.setTcare(Tcare);
             score.setTconnect(Tconnect);
@@ -137,24 +131,25 @@ public class ScoreController extends BaseController {
             if(temp==1){
                 scoreDao.save(score);
             }else {
-                score.setExper_id(experId);
-                score.setUserId(userId);
-                score.setFromId(fromId);
+                Experiment experiment=experimentDao.getById(experId);
+                User student=userDao.getById(userId);
+                User teacher=userDao.getById(fromId);
+                score.setStudent(student);
+                score.setTeacher(teacher);
+                score.setExperiment(experiment);
                 score.setSecscore();
                 if(score.getScoreA()!=null&&score.getScoreB()!=null)
                 score.setTotal();
-                ExperUser experUser=experUserDao.forExperIdAndUserId(experId, userId);
+                ExperUser experUser=experUserDao.findByExperAndUserId(experId, userId);
                 experUser.setIsEvaluate(true);
-                scoreDao.update(experUser);
+                experUserDao.update(experUser);
                 scoreDao.update(score);
             }
-            scoreDao.commit();
+
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            scoreDao.close();
         }
         out.print(result);
-    }*/
+    }
 
 }

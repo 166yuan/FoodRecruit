@@ -43,7 +43,7 @@
           <h1>写下你宝贵的意见</h1>
         </div>
 
-        <form action="/user/addfeedback" id="feedback" class="form-horizontal" >
+        <form action="/user/addfeedback" id="feedback" class="form-horizontal" method="post" >
           <div class="form-group">
             <div class="col-md-12">
               <textarea class="form-control" rows="8" name="info" placeholder="请写下您的宝贵意见"></textarea>

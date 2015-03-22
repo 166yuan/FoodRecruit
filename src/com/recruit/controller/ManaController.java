@@ -285,10 +285,11 @@ public class ManaController extends BaseController {
      */
     @RequestMapping("addmajor")
     public void addMajor(String name,int year,PrintWriter out){
+        System.out.println("major:"+name);
         int result=1;
         Major major=new Major();
         try{
-            if(major!=null){
+            if(majorDao.getByNameAndYear(name,year)){
                 result=-2;
             }else {
                 major.setMajorName(name);

@@ -11,4 +11,5 @@ public interface ExperUserDao extends DaoSupport<ExperUser>{
     public ExperUser findByExperAndUserId(Integer experId,Integer userId);
     public List<ExperUser> findByExper(Integer experId);
     public ExperUser create(User user,Experiment experiment);
+    public List<ExperUser>getByExperiment(Integer experId);
 }

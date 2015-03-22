@@ -62,7 +62,6 @@ public class ExperController extends BaseController {
     /**
      * 根据跟定的id 跳转到显示该实验信息的界面
      * @param id
-     * @param from  利用from 在show_experiment页面中判断面包屑的显示
      * @param session
      * @param model
      * @return
@@ -76,10 +75,6 @@ public class ExperController extends BaseController {
 
     /**
      * 返回我发布的所有实验
-     * @param start 返回结果的起始数
-     * @param size  返回结果的个数
-     * @param order 升序(asc) | 降序（desc）
-     * @param by    按该字段进行排序
      * @param session
      * @param model
      * @return
@@ -111,8 +106,6 @@ public class ExperController extends BaseController {
 
     /**
      * 返回所有需要招收实验助手的实验
-     * @param start 返回结果的起始数
-     * @param size  返回结果的个数
      * @param order 升序(asc) | 降序（desc）
      * @param by    按该字段进行排序
      * @param session
@@ -151,6 +144,7 @@ public class ExperController extends BaseController {
             Experiment exper=new Experiment();
             System.out.println("exe herer");
             exper.setPublisher(user);
+            System.out.println("name is:"+j.getString("name"));
             exper.setName(j.getString("name"));
             exper.setInformation(j.getString("content"));
             exper.setRequirement(j.getString("requirement"));
@@ -293,12 +287,10 @@ public class ExperController extends BaseController {
      */
     @RequestMapping("scoreList")
     public String scoreList(Integer experId,Model model){
-      /*  ExperimentImpl eml=ExperimentImpl.getInstance();
-        ExperUserImpl euml=ExperUserImpl.getInstance();
-        Experiment experiment=eml.getById(experId);
-        List<ExperUser>list=euml.findByProperties(experiment)
+        Experiment experiment=experimentDao.getById(experId);
+        List<ExperUser>list=experUserDao.findByExper(experId);
         model.addAttribute("list",list);
-        model.addAttribute("experName",experiment.getName());*/
+        model.addAttribute("experName",experiment.getName());
         return "View/experiment/scoreList";
     }
 

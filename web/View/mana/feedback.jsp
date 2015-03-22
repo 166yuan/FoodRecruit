@@ -120,9 +120,9 @@
 </html>
 </html>
 <script type="text/javascript">
-$('#unread').click(function(){window.location.href="/mana/showfeedback?type=1";});
-$('#read').click(function(){window.location.href="/mana/showfeedback?type=2";});
-$('#all').click(function(){window.location.href="/mana/showfeedback?type=3";});
+$('#unread').click(function(){window.location.href="/mana/showfeedback?type=1&page=1";});
+$('#read').click(function(){window.location.href="/mana/showfeedback?type=2&page=1";});
+$('#all').click(function(){window.location.href="/mana/showfeedback?type=3&page=1";});
 
 $(document).ready(
         function(){

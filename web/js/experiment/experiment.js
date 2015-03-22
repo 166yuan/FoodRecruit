@@ -12,7 +12,6 @@ function publish(){
     var email         = document.getElementById("Email").value;
     var count         = document.getElementById("count").value;
     var note          = document.getElementById("remark").value;
-
     var data = {"name":name,"content":content,"requirement":requirement,"type":type,
                 "pretime":pretime,"endtime":endtime,"linkman":linkman,"phone":phone,
                 "qq":qq,"email":email,"count":count,"note":note};

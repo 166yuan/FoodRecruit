@@ -14,6 +14,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <property name="connection.useUnicode">true</property>
+
         <property name="connection.characterEncoding">UTF-8</property>
         <!-- 设置hibernate的事务隔离级别 -->
         <property name="connection.isolation">2</property>

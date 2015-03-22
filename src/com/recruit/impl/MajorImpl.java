@@ -31,7 +31,7 @@ public class MajorImpl extends DaoSupportImpl<Major> implements MajorDao{
 
     public boolean getByNameAndYear(String name,int year){
         Map<String,Object>map=new HashMap<String, Object>();
-        map.put("name",name);
+        map.put("majorName",name);
         map.put("year",year);
         List<Major>list=this.findByProperties(map,1,10);
         if (list.size()!=0){

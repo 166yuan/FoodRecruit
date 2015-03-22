@@ -115,6 +115,8 @@
     </div>
     <div class="jqResize ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
 </div>
+
+
 <c:import url="header.jsp"/>
 
 <div class="col-xs-12" >

@@ -11,4 +11,6 @@ public interface NotificationDao extends DaoSupport<Notification>{
     public List<Notification> getAllByType(int type,PageBean pageBean);
     public Integer getSizeByType(int type);
     public List<NotiUserBean>buildList(List<Notification>list);
+    public List<Notification>getUnreadNotificationByUserId(Integer userId);
+    public List<Notification>getAllNotificationByUserId(Integer userId);
 }

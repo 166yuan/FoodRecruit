@@ -88,7 +88,7 @@
         </a>
 
       <li class="hover hsub" id="classpage">
-        <a href="/mana/classmanager?page=1&page=1" >
+        <a href="/mana/classmanager?page=1" >
           <i class="menu-icon fa fa-pencil-square-o"></i>
           <span class="menu-text"> 班级管理 </span>
         </a>
