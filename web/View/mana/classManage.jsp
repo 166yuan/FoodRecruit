@@ -189,18 +189,18 @@
                     </td>
 
                     <td class=" ">
-                        <a>${cla.classId}</a>
+                        <a>${cla.id}</a>
                     </td>
-                    <td class=" ">${cla.name}</td>
-                    <td class=" ">${cla.year}</td>
-                    <td class="">${cla.majorName}</td>
+                    <td class=" ">${cla.className}</td>
+                    <td class=" ">${cla.major.year}</td>
+                    <td class="">${cla.major.majorName}</td>
                     <td class=" ">
                         <div class="hidden-sm hidden-xs action-buttons">
                             <a class="green" href="#">
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
 
-                            <a class="red" href="#">
+                            <a class="red" href="#" onclick="deleteclass(${cla.id})">
                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                             </a>
                         </div>
@@ -295,5 +295,20 @@
                     }
                 }
         );
+    }
+    function deleteclass(cid) {
+        console.log(cid);
+        if (confirm("您确定要删除?")) {
+            $.getJSON("/mana/deleteClass?classId=" + cid,
+                    function (data) {
+                        if(data==1){
+                            alert("删除成功");
+                            window.location.reload();
+                        }else{
+                            alert("删除失败，未知错误");
+                        }
+                    }
+            );
+        }
     }
 </script>

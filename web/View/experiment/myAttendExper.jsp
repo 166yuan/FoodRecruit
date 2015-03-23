@@ -28,7 +28,7 @@
             <a href="/View/user/myspace.jsp">主页</a>
         </li>
         <li class="active">
-            我的实验助手
+            我参与的实验助手
         </li>
     </ul><!-- /.breadcrumb -->
 
@@ -38,7 +38,7 @@
 <div class="page-content">
     <div class="page-header">
         <h1>
-            已发布实验
+            我参与的实验
         </h1>
     </div>
 
@@ -55,7 +55,14 @@
                 <div class="widget-body">
                     <div class="widget-main">
                         <ul class="list-unstyled spaced">
-
+                            <c:forEach items="${list}" var="exper">
+                                <li>
+                                    <h4 class="lighter no-margin-bottom">
+                                        <a href="/exper/showExper?id=${exper.experiment.id}">${exper.experiment.name}</a>
+                                        <label> 已同意</label>
+                                    </h4>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>

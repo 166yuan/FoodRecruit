@@ -1,6 +1,7 @@
 package com.recruit.controller;
 
 import com.recruit.base.BaseController;
+import com.recruit.base.PageBean;
 import com.recruit.impl.ExperUserImpl;
 import com.recruit.impl.ExperimentImpl;
 import com.recruit.impl.NotificationImpl;
@@ -11,12 +12,15 @@ import com.recruit.model.Notification;
 import com.recruit.model.User;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by Mklaus on 15/2/1.
@@ -72,6 +76,33 @@ public class ExperUserController extends BaseController {
             ex.printStackTrace();
         }
         out.print(result);
+    }
+
+    @RequestMapping("myattendExper")
+    public String myAttendExper(HttpSession session,int page,Model model){
+        if (page==0){
+            page=1;
+        }
+        Integer uid=(Integer)session.getAttribute("userId");
+        int total=experUserDao.countMyAttendExper(uid);
+        PageBean pageBean=PageBean.getInstance(page,total,"/experUser","/myattendExper");
+        List<ExperUser> list=experUserDao.getByUser(uid,pageBean);
+        model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
+        return "View/experiment/myAttendExper";
+    }
+
+    @RequestMapping("acceptUser")
+    public void acceptUser(Integer euid,PrintWriter out){
+        int result=1;
+        ExperUser experUser=experUserDao.getById(euid);
+        if (experUser!=null){
+            experUser.setIsAgree(true);
+            experUserDao.update(experUser);
+        }else {
+            result=-1;
+        }
+    out.print(result);
     }
 
 }

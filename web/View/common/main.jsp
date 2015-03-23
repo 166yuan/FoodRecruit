@@ -101,7 +101,7 @@
           </li>
 
           <li class="hover">
-            <a href="#">
+            <a href="/experUser/myattendExper?page=1">
               <i class="menu-icon fa fa-caret-right"></i>
               我参与的实验助手
             </a>
@@ -141,7 +141,7 @@
               </li>
 
               <li class="hover">
-                <a href="/compet/mycompet">
+                <a href="/compet/mycompet?page=1">
                   <i class="menu-icon fa fa-caret-right"></i>
                   我参与的竞赛
                 </a>
@@ -201,7 +201,14 @@
 
         <b class="arrow"></b>
       </li>
-
+        <c:if test="${user_type==3}">
+            <li class="hover">
+                <a href="/mana/index">
+                    <i class="menu-icon fa fa-list-alt"></i>
+                    <span class="menu-text"> 后台管理 </span>
+                </a>
+            </li>
+        </c:if>
 
     </ul><!-- /.nav-list -->
 

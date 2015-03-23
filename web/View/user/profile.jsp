@@ -279,11 +279,51 @@
                                     <div class="space-4"></div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label no-padding-right" >专业，年级</label>
+                                        <label class="col-sm-4 control-label no-padding-right" >专业</label>
 
-                                        <div class="col-sm-8">
-                                            <input class="input-small" type="text" name="major" value="aa" id="form-field-major" placeholder="专业">
-                                            <input class="input-small" type="text" name="classes" value="..." id="form-field-classes" placeholder="年级">
+                                        <div class="col-sm-4">
+                                            <select class="form-control" name="major" id="form-field-select-1" onchange="getClass(this.value)">
+                                                <c:choose>
+                                                    <c:when test="${user.major==null}">
+                                                        <option value=""></option>
+                                                        <c:forEach items="${majorList}" var="major">
+                                                            <option value="${major.id}">${major.majorName}</option>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${user.major.id}">${user.major.majorName}</option>
+                                                        <c:forEach items="${majorList}" var="major">
+                                                            <c:if test="${major.id!=user.major.id}">
+                                                                <option value="${major.id}">${major.majorName}</option>
+                                                            </c:if>
+
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label no-padding-right" >班级</label>
+
+                                        <div class="col-sm-4">
+                                            <select class="form-control" name="classes" id="classes">
+                                                <c:choose>
+                                                    <c:when test="${classList.size()!=0}">
+                                                        <option value="${user.classes.id}">${user.classes.className}</option>
+                                                        <c:forEach items="${classList}" var="cla">
+                                                            <c:if test="${cla.id!=user.classes.id}">
+                                                                <option value="${cla.id}">${cla.className}</option>
+                                                            </c:if>
+
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value=""></option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -494,5 +534,22 @@
         $('#user-profile-1').hide();
         $('#change1').removeClass("active");
         $('#change2').addClass("active");
+    }
+    function  getClass(mid){
+        $.ajax(
+                { type:"POST",
+                    url:"/mana/getClassByMajor",
+                    data:"mid="+mid,
+                    dataType: "json",
+                    success:function(data){
+                        var arr=eval(data);
+                        $('#classes option').remove();
+                        for(var i=0;i<arr.length;i++)
+                        {
+                            $('#classes').append("<option value='"+ arr[i].id+"'>"+arr[i].className+"</option>");
+                        }
+                    }
+                }
+        );
     }
 </script>

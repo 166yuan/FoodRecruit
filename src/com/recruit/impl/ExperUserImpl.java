@@ -1,6 +1,7 @@
 package com.recruit.impl;
 
 import com.recruit.base.DaoSupportImpl;
+import com.recruit.base.PageBean;
 import com.recruit.dao.ExperUserDao;
 import com.recruit.model.ExperUser;
 import com.recruit.model.Experiment;
@@ -45,6 +46,16 @@ public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUse
         Map<String,Object>map=new HashMap<String, Object>();
         map.put("experiment",experId);
         return this.findByProperties(map,1,10);
+    }
+    public List<ExperUser>getByUser(Integer userId,PageBean pageBean){
+        Map<String,Object>map=new HashMap<String, Object>();
+        map.put("user",userId);
+        return this.findByProperties(map,pageBean.getCurPage(),pageBean.getPerPage());
+    }
+
+    public Integer countMyAttendExper(Integer uid){
+        String hql="from ExperUser eu where eu.user="+uid;
+        return this.getSize(hql);
     }
 
 }

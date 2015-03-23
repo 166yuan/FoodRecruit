@@ -79,7 +79,7 @@
         <div class="row">
             <div class="col-xs-3"></div>
             <div class="col-xs-3">
-                <button class="btn btn-info btn-primary">招收以下所选</button>
+                <button class="btn btn-info btn-primary" onclick="acceptAll()">招收以下所选</button>
             </div>
             <div class="col-xs-3">
                 <button class="btn btn-warning btn-primary">取消以下所选</button>
@@ -127,10 +127,9 @@
                     </tr>
                     </thead>
 
-                    <c:forEach items="${list}">
+
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-
-
+                        <c:forEach items="${list}" var="eu">
                         <tr class="odd">
                             <td class="center  sorting_1">
                                 <label class="position-relative">
@@ -138,26 +137,47 @@
                                     <span class="lbl"></span>
                                 </label>
                             </td>
-
-                            <td class=" ">vvv</td>
-                            <td class=" ">xxxxx</td>
-                            <td class="">男</td>
-                            <td class=" ">aa</td>
-                            <td class=" ">aa</td>
+                            <input type="hidden" value="${eu.id}" class="hidden-id">
+                            <td class=" "><fmt:formatDate value="${eu.createTime}" pattern="yyyy年MM月dd日 hh:MM"/></td>
+                            <td class=" ">${eu.user.name}</td>
+                            <c:choose>
+                                <c:when test="${eu.user.gender==true}">
+                                    <td class=" ">男</td>
+                                </c:when>
+                                <c:when test="${eu.user.gender==false}">
+                                    <td class=" ">女</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td class="">保密</td>
+                                </c:otherwise>
+                            </c:choose>
+                            <td class=" ">${eu.user.major.majorName}</td>
+                            <td class=" ">${eu.user.classes.className}</td>
                             <td class=" ">
-                                <span class="label label-sm label-danger">未招收</span>
-                                <span class="label label-sm label-success">招收</span>
+                                <c:choose>
+                                    <c:when test="${eu.isAgree==true}">
+                                        <span class="label label-sm label-success">招收</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="label label-sm label-danger">未招收</span>
+                                    </c:otherwise>
+                                </c:choose>
+
+
                             </td>
                         </tr>
-
+                        </c:forEach>
                     </tbody>
-                    </c:forEach>
+
                 </table>
 
                 <div class="row">
                     <!--这里分页-->
                 </div>
                 <!-- main content end-->
+                <br>
+                <div class="center"><button class="btn btn-info">保存并通知</button></div>
+                <div class="center"><span><strong>仅有保存了实验员才能收到通知</strong></span></div>
             </div>
         </div>
     </div>
@@ -183,5 +203,19 @@
                     $(this).closest('tr').toggleClass('selected');
                 });
     });
-
+    function acceptAll(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    if(this.checked){
+                        var dom= $(this).parents(".odd").find('.hidden-id').val();
+                        $.get("/experUser/acceptUser?euid="+dom
+                        ,function(data){
+                                }
+                        );
+                    }
+                }
+        );
+        alert("操作成功");
+        window.location.reload();
+    }
 </script>

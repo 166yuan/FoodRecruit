@@ -15,8 +15,8 @@ import java.util.Map;
 @Transactional
 public class MajorImpl extends DaoSupportImpl<Major> implements MajorDao{
     public List<Major>getAllMajor(PageBean pageBean){
-        Major major=new Major();
-       return this.findByProperties(major,pageBean.getCurPage(),pageBean.getPerPage());
+        String hql="from Major m";
+       return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
     }
     public List<Major>getMajorByYear(int year){
         Map<String,Object> map=new HashMap<String, Object>();
@@ -29,15 +29,17 @@ public class MajorImpl extends DaoSupportImpl<Major> implements MajorDao{
         return query.list();
     }
 
-    public boolean getByNameAndYear(String name,int year){
+    public boolean existNameAndYear(String name,int year){
         Map<String,Object>map=new HashMap<String, Object>();
         map.put("majorName",name);
         map.put("year",year);
         List<Major>list=this.findByProperties(map,1,10);
-        if (list.size()!=0){
+        System.out.println("size of:"+list.size());
+        if (list.size()==0){
             return false;
         }else {
             return true;
         }
     }
+
 }

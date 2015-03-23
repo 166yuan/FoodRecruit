@@ -24,6 +24,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * @author Yuan
@@ -223,15 +225,22 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/getProfile")
     public String getProfile(HttpServletRequest request,Model model){
-        User user=new User();
+        Integer id=(Integer)request.getSession().getAttribute("userId");
+        User user=null;
+        List<Classes> classesList=new ArrayList<Classes>();
         try {
-            String account = (String)request.getSession().getAttribute("account");
-            user = userDao.forAccount(account);
-            //去除hibernate延迟加载取数据，下面两条一定要
-        }catch (Exception ex){
-            ex.printStackTrace();
+            user=userDao.getById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
+        if (user.getMajor()!=null){
+            Integer mid=user.getMajor().getId();
+            classesList=classesDao.getClassByMajor(mid);
+        }
+        List<Major>majorlist=majorDao.findAll();
         model.addAttribute("user", user);
+        model.addAttribute("majorList",majorlist);
+        model.addAttribute("classList",classesList);
         return "/View/user/profile";
     }
 
@@ -243,11 +252,10 @@ public class UserController extends BaseController {
      * 上传图片
      * @param request
      * @param session
-     * @param model
      * @return
      */
     @RequestMapping("/upload")
-    public String update3(DefaultMultipartHttpServletRequest request,HttpSession session,Model model){
+    public String update3(DefaultMultipartHttpServletRequest request,HttpSession session){
         CommonsMultipartFile file=(CommonsMultipartFile)request.getFile("file");
         if(file.isEmpty()){
             return null;
@@ -266,16 +274,14 @@ public class UserController extends BaseController {
             User user = userDao.forAccount(account);
             if(user!=null){
                 user.setImage_url("/images/"+uploadFile.getName());
-                user.getMajor().getMajorName();
-                user.getClasses().getClassName();
-                model.addAttribute("user",user);
+                userDao.update(user);
                 request.getSession().setAttribute("imageUrl",user.getImage_url());
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "/View/user/profile";
+        return "redirect:/user/getProfile";
     }
 
 

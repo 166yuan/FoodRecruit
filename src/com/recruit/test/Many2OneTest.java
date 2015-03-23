@@ -1,11 +1,23 @@
 package com.recruit.test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.Date;
 
 
+import com.recruit.base.BaseController;
 import com.recruit.bean.PageBean;
+import com.recruit.dao.MajorDao;
+import com.recruit.impl.MajorImpl;
 import com.recruit.impl.TeamImpl;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -26,13 +38,32 @@ import com.recruit.model.PublishLog;
 import com.recruit.model.Score;
 import com.recruit.model.Team;
 import com.recruit.model.User;
+import sun.net.www.http.HttpClient;
 
-public class Many2OneTest {
+public class Many2OneTest extends BaseController{
+    BufferedReader in = null;
+
+    String content = null;
+    @Test
+    public void zhuabao() throws MalformedURLException {
+        URL ur=new URL("http://www.xxzs.org/school_view2.asp?id=1");
+
+    }
 
 	//private SessionFactory sessionFactory;
 	//private Session session;
 	//private Transaction transaction;
-	
+	@Test
+    public void testMajor(){
+        Map<String,Object>map=new HashMap<String, Object>();
+        map.put("majorName","软件工程");
+        map.put("year",2012);
+        if(majorDao==null){
+            System.out.println("null");
+        }
+
+    }
+
 	@Test
 	public void test() {
 		

@@ -174,7 +174,7 @@
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
 
-                            <a class="red" href="#">
+                            <a class="red" href="#" onclick="deletemajor(${majar.id})">
                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                             </a>
                         </div>
@@ -244,22 +244,49 @@
     function submit(){
         var name=document.getElementById('m_name').value;
         var year=document.getElementById('m_year').value;
+        console.log(name);
         if(isNaN(year)){
         alert("年级必须是数字");
         }else if(year<2000||year>3000){
         alert("年级格式必须是20XX");
         }else{
-            $.getJSON('/mana/addmajor?name='+name+'&year='+year,function(data){
-                if(data==1){
-                    alert("添加成功");
-                    window.location.href="/mana/majormanager?page=1";
-                }else if(data==-2){
-                    alert("改专业已存在");
-                }else{
-                    alert("添加失败，未知错误");
+            var data={
+                "name":name,
+                "year":year
+            };
+            data=JSON.stringify(data);
+            $.ajax({
+                url:"/mana/addmajor",
+                type:"post",
+                dataType:"json",
+                data:data,
+                success:function(data){
+                    console.log(data);
+                    if(data==1){
+                        alert("添加成功");
+                        window.location.href="/mana/majormanager?page=1";
+                    }else if(data==-2){
+                        alert("改专业已存在");
+                    }else{
+                        alert("添加失败，未知错误");
+                    }
                 }
             });
         }
     }
-
+function deletemajor(mid) {
+    console.log(mid);
+    if (confirm("您确定要删除?")) {
+        $.getJSON("/mana/deleteMajor?majorId=" + mid,
+                function (data) {
+                   if(data==1){
+                       alert("删除成功");
+                       window.location.reload();
+                   }else{
+                       alert("删除失败，未知错误");
+                   }
+                }
+        );
+    }
+}
 </script>

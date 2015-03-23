@@ -28,7 +28,7 @@ public class UserImpl extends DaoSupportImpl<User> implements UserDao{
     User user=new User();
     user.setAccount(account);
     user.setPassword(password);
-    user.setStatus(-2);
+    user.setStatus(-1);
     user.setType(1);
     user.setIsActive(false);
     user.setGender(null);

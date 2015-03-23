@@ -10,5 +10,5 @@ public interface MajorDao extends DaoSupport<Major>{
     public List<Major> getAllMajor(PageBean pageBean);
     public List<Major>getMajorByYear(int year);
     public List<Integer>getAllYear();
-    public boolean getByNameAndYear(String name,int year);
+    public boolean existNameAndYear(String name,int year);
 }

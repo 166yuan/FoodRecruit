@@ -129,6 +129,13 @@
         <b class="arrow"></b>
       </li>
 
+        <li class="hover hsub">
+            <a href="/user/home" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> 去前台 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+        </li>
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->

@@ -48,7 +48,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 账号 </label>
           <div class="col-sm-9">
-            <input type="text" name="account" value="${user.account}" placeholder="账号" class="col-xs-10 col-sm-5">
+            <input type="text" name="account" value="${user.account}"  class="col-xs-10 col-sm-5">
           </div>
         </div>
         <!-- /section:elements.form -->
@@ -58,7 +58,7 @@
           <label  class="col-sm-3 control-label no-padding-right" for="form-field-2"> 密码 </label>
 
           <div class="col-sm-9">
-            <input type="password" readonly="" value="${user.password}" id="form-field-2" name="password" placeholder="密码" class="col-xs-10 col-sm-5">
+            <input type="password" readonly="" value="${user.password}" id="form-field-2" name="password"  class="col-xs-10 col-sm-5">
           <span class="help-inline col-xs-12 col-sm-7">
 											<label class="middle">
                                               <input class="ace" type="checkbox" id="id-disable-check">
@@ -73,7 +73,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 姓名 </label>
           <div class="col-sm-9">
-            <input type="text"  value="${user.name}" placeholder="姓名" name="name" class="col-xs-10 col-sm-5">
+            <input type="text"  value="${user.name}"  name="name" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -195,8 +195,25 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 专业 </label>
           <div class="col-sm-3">
-            <select class="form-control" name="major" id="form-field-select-1">
-              <option value="${user.major.id}">${user.major.majorName}</option>
+            <select class="form-control" name="major" id="form-field-select-1" onchange="getClass(this.value)">
+             <c:choose>
+                 <c:when test="${user.major==null}">
+                     <option value=""></option>
+                     <c:forEach items="${majorList}" var="major">
+                         <option value="${major.id}">${major.majorName}</option>
+                     </c:forEach>
+                 </c:when>
+                 <c:otherwise>
+                     <option value="${user.major.id}">${user.major.majorName}</option>
+                     <c:forEach items="${majorList}" var="major">
+                         <c:if test="${major.id!=user.major.id}">
+                             <option value="${major.id}">${major.majorName}</option>
+                         </c:if>
+
+                     </c:forEach>
+                 </c:otherwise>
+             </c:choose>
+
             </select>
           </div>
         </div>
@@ -206,8 +223,21 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 班级 </label>
           <div class="col-sm-3">
-            <select class="form-control" name="classes" id="form-field-select-2">
-              <option value="${user.classes.id}">${user.classes.className}</option>
+            <select class="form-control" name="classes" id="classes">
+               <c:choose>
+                   <c:when test="${classList.size()!=0}">
+                       <option value="${user.classes.id}">${user.classes.className}</option>
+                       <c:forEach items="${classList}" var="cla">
+                           <c:if test="${cla.id!=user.classes.id}">
+                               <option value="${cla.id}">${cla.className}</option>
+                           </c:if>
+
+                        </c:forEach>
+                   </c:when>
+                   <c:otherwise>
+                       <option value=""></option>
+                   </c:otherwise>
+               </c:choose>
             </select>
           </div>
         </div>
@@ -217,7 +247,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 联系方式 </label>
           <div class="col-sm-9">
-            <input type="text" placeholder="联系方式" value="${user.phone}" name="phone" class="col-xs-10 col-sm-5">
+            <input type="text"  value="${user.phone}" name="phone" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -226,7 +256,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 邮箱 </label>
           <div class="col-sm-9">
-            <input type="text" placeholder="邮箱"  value="${user.email}"  name="email" class="col-xs-10 col-sm-5">
+            <input type="text"  value="${user.email}"  name="email" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -235,7 +265,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> qq </label>
           <div class="col-sm-9">
-            <input type="text" placeholder="qq" value="${user.qq}" name="qq" class="col-xs-10 col-sm-5">
+            <input type="text"  value="${user.qq}" name="qq" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -244,7 +274,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 地址 </label>
           <div class="col-sm-9">
-            <input type="text" placeholder="地址"  value="${user.address}"  name="address" class="col-xs-10 col-sm-5">
+            <input type="text"   value="${user.address}"  name="address" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -253,7 +283,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 个人简介 </label>
           <div class="col-sm-9">
-            <input type="text" placeholder="个人简介" value="${user.self_info}" name="self_info" class="col-xs-10 col-sm-5">
+            <input type="text"  value="${user.self_info}" name="self_info" class="col-xs-10 col-sm-5">
           </div>
         </div>
 
@@ -301,7 +331,11 @@
         <div class="hr hr-24"></div>
       </form>
       </div>
-      <div class="col-lg-2"><img src="${user.image_url}" alt="头像"> </div>
+      <div class="col-lg-2">
+      <span class="profile-picture">
+                <img id="avatar" class="editable img-responsive editable-click editable-empty" width="150px" height="150px" alt="头像" src="${user.image_url}">
+            </span>
+      </div>
     </div><!-- /.col -->
   </div><!-- /.row -->
     </div>
@@ -317,5 +351,22 @@
                 $('#userpage').addClass("active");
             }
     );
+    function  getClass(mid){
+        $.ajax(
+                { type:"POST",
+                    url:"/mana/getClassByMajor",
+                    data:"mid="+mid,
+                    dataType: "json",
+                    success:function(data){
+                        var arr=eval(data);
+                        $('#classes option').remove();
+                        for(var i=0;i<arr.length;i++)
+                        {
+                            $('#classes').append("<option value='"+ arr[i].id+"'>"+arr[i].className+"</option>");
+                        }
+                    }
+                }
+        );
+    }
 </script>
 

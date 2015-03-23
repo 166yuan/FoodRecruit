@@ -1,16 +1,21 @@
 package com.recruit.controller;
 
 import com.recruit.base.BaseController;
+import com.recruit.bean.ClassesBean;
 import com.recruit.bean.NotiUserBean;
 import com.recruit.bean.PageBean;
 import com.recruit.impl.*;
 import com.recruit.model.*;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,18 @@ import java.util.List;
 @Controller
 @RequestMapping("/mana")
 public class ManaController extends BaseController {
+    //从request中提取出json数据
+    public JSONObject createJson (HttpServletRequest request) throws IOException {
+        StringBuffer sb = new StringBuffer();
+        String line = null;
+        BufferedReader br = request.getReader();
+        while((line = br.readLine()) != null){
+            sb.append(line);
+        }
+
+        JSONObject json = JSONObject.fromObject(sb.toString());
+        return json;
+    }
 
     /**
      * 用户管理页面，这里用户管理做未后台的主页面
@@ -56,12 +73,20 @@ public class ManaController extends BaseController {
     @RequestMapping("showuserbyid")
     public String showUserById(Integer id,Model model){
         User user=null;
+        List<Classes>classesList=new ArrayList<Classes>();
         try {
             user=userDao.getById(id);
         }catch (Exception e) {
             e.printStackTrace();
         }
+        if (user.getMajor()!=null){
+            Integer mid=user.getMajor().getId();
+            classesList=classesDao.getClassByMajor(mid);
+        }
+        List<Major>majorlist=majorDao.findAll();
         model.addAttribute("user", user);
+        model.addAttribute("majorList",majorlist);
+        model.addAttribute("classList",classesList);
         return "View/mana/editUser";
     }
 
@@ -245,7 +270,7 @@ public class ManaController extends BaseController {
             }
         }
         model.addAttribute("user",user);
-        return "View/mana/editUser";
+        return "redirect:/mana/showuserbyid?id="+id;
     }
 
     /**
@@ -279,17 +304,18 @@ public class ManaController extends BaseController {
 
     /**
      * 新增专业
-     * @param name 名称
-     * @param year 年级
      * @param out json输出
      */
     @RequestMapping("addmajor")
-    public void addMajor(String name,int year,PrintWriter out){
-        System.out.println("major:"+name);
+    public void addMajor(HttpServletRequest request,PrintWriter out){
         int result=1;
         Major major=new Major();
         try{
-            if(majorDao.getByNameAndYear(name,year)){
+            JSONObject j = createJson(request);
+            String name=j.getString("name");
+            int year=j.getInt("year");
+            System.out.println(name);
+            if(majorDao.existNameAndYear(name,year)){
                 result=-2;
             }else {
                 major.setMajorName(name);
@@ -378,5 +404,92 @@ public class ManaController extends BaseController {
         return "View/mana/experManage";
     }
 
+    @RequestMapping("getClassByMajor")
+    public @ResponseBody List<ClassesBean>getByMajor(Integer mid){
+        List<Classes>list=new ArrayList<Classes>();
+        List<ClassesBean>beanList=new ArrayList<ClassesBean>();
+        list=classesDao.getClassByMajor(mid);
+        for (int i=0;i<list.size();i++){
+            Classes cla=list.get(i);
+            ClassesBean classesBean=new ClassesBean();
+            classesBean.setId(cla.getId());
+            classesBean.setClassName(cla.getClassName());
+            beanList.add(classesBean);
+        }
+        return beanList;
+    }
+    @RequestMapping("activeByid")
+    public void activeByUserId(Integer uid,PrintWriter out){
+          int result=1;
+           User user= userDao.getById(uid);
+        if (user!=null){
+            user.setStatus(1);
+            userDao.update(user);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+    @RequestMapping("cancleByid")
+    public void cancelByUserId(Integer uid,PrintWriter out){
+        int result=1;
+        User user= userDao.getById(uid);
+        if (user!=null){
+            user.setStatus(-1);
+            userDao.update(user);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+    @RequestMapping("freezeByid")
+    public void freezeByUserId(Integer uid,PrintWriter out){
+        int result=1;
+        User user= userDao.getById(uid);
+        if (user!=null){
+            user.setStatus(-2);
+            userDao.update(user);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+
+    @RequestMapping("deleteUser")
+    public void deleteUser(Integer userId,PrintWriter out){
+        int result=1;
+        User user=userDao.getById(userId);
+        if (user!=null){
+            userDao.delete(userId);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+
+    @RequestMapping("deleteMajor")
+    public void deleteMajor(Integer majorId,PrintWriter out){
+        System.out.println("majorId:"+majorId);
+        int result=1;
+        Major major=majorDao.getById(majorId);
+        if (major!=null){
+            majorDao.delete(majorId);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+
+    @RequestMapping("deleteClass")
+    public void deleteClass(Integer classId,PrintWriter out){
+        int result=1;
+        Classes classes=classesDao.getById(classId);
+        if (classes!=null){
+            classesDao.delete(classId);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
 
 }

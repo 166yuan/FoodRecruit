@@ -24,7 +24,7 @@
      style="width: 300px; height: auto; overflow: hidden; z-index: 1050; display: block; left: 483px; top: 174px;" onmousedown="mouseDown(this,event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)">
     <div class="ui-jqdialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" id="edithdgrid-table"
          style="cursor: move;">
-        <div class="widget-header"><span class="ui-jqdialog-title" style="float: left;">新增班级</span><a
+        <div class="widget-header"><span class="ui-jqdialog-title" style="float: left;">新增用户</span><a
                 class="ui-jqdialog-titlebar-close ui-corner-all" id="divclose" style="right: 0.3em;"><span
                 class="ui-icon ui-icon-closethick"></span></a></div>
     </div>
@@ -40,41 +40,17 @@
                     <tr style="display:none" class="tinfo">
                         <td class="topinfo" colspan="2"></td>
                     </tr>
-                    <tr rowpos="1" class="FormData" id="tr_id">
-                        <td class="CaptionTD">名称</td>
-                        <td class="DataTD">&nbsp;<input type="text" id="name" name="name" role="textbox"
+                    <tr rowpos="1" class="FormData" >
+                        <td class="CaptionTD">学号</td>
+                        <td class="DataTD">&nbsp;<input type="text" id="account" name="account" role="textbox"
+                                                        class="FormElement ui-widget-content ui-corner-all"></td>
+                    </tr>
+                    <tr rowpos="1" class="FormData">
+                        <td class="CaptionTD">密码</td>
+                        <td class="DataTD">&nbsp;<input type="text" id="password" name="password" role="textbox"
                                                         class="FormElement ui-widget-content ui-corner-all"></td>
                     </tr>
 
-                    <tr rowpos="3" class="FormData" id="tr_name">
-                        <td class="CaptionTD">年级</td>
-                        <td class="DataTD">&nbsp;<select role="select" id="year" name="year" size="1"
-                                                         class="FormElement ui-widget-content ui-corner-all"  onchange="addyear(this.value)">
-                            <c:choose>
-                                <c:when test="${yearList.size()!=0}">
-                                    <c:forEach items="${yearList}" var="year">
-
-                                        <option role="option" value="${year}"><c:out value="${year}"/></option>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <option role="option" >暂无专业，请添加</option>
-                                </c:otherwise>
-                            </c:choose>
-
-                        </select> </td>
-                    </tr>
-
-                    <tr rowpos="5" class="FormData" id="tr_ship">
-                        <td class="CaptionTD">专业</td>
-                        <td class="DataTD">&nbsp;<select role="select" id="major" name="major" size="1"
-                                                         class="FormElement ui-widget-content ui-corner-all">
-                            <c:forEach items="${majorList}" var="major">
-
-                                <option role="option" value="${major.id}"><c:out value="${major.majorName}"/></option>
-                            </c:forEach>
-                        </select></td>
-                    </tr>
                     <tr class="FormData" style="display:none">
                         <td class="CaptionTD"></td>
                         <td colspan="1" class="DataTD"><input class="FormElement" id="id_g" type="text"
@@ -99,9 +75,9 @@
                                                                            style="display: none;"><span
                             class="ui-icon ui-icon-triangle-1-e" style="display: none;"></span><i
                             class="ace-icon fa fa-chevron-right"></i></a></td>
-                    <td class="EditButton"><button class="btn btn-info" id="sDate" onclick="submit()">
+                    <td class="EditButton"><button class="btn btn-info" id="sDate" onclick="adduser()">
                         确定
-                    </button>&nbsp;<button class="btn btn-info" id="qDate" onclick="">
+                    </button>&nbsp;<button class="btn btn-info" id="qDate" type="reset">
                         取消
                     </button></td>
                 </tr>
@@ -133,7 +109,11 @@
                       <a href="#"><span
                             class="ui-icon ace-icon fa fa-plus-circle purple" id="adduser"> </span></a></div>
                 </div>
-
+                <div class="col-xs-6">
+                    <div id="" class="dataTables_length">
+                    <button class="btn btn-success" onclick="acceptAll()">激活所选</button> <button class="btn btn-info" onclick="cancelAll()">取消所选</button> <button class="btn btn-danger" onclick="freezeAll()">冻结所选</button>
+                    </div>
+                </div>
             </div>
             <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable"
                    aria-describedby="sample-table-2_info">
@@ -149,6 +129,9 @@
                             <input type="checkbox" class="ace">
                             <span class="lbl"></span>
                         </label>
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1"
+                        colspan="1" aria-label="Domain: activate to sort column ascending">ID
                     </th>
                     <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1"
                         colspan="1" aria-label="Domain: activate to sort column ascending">账号
@@ -192,7 +175,7 @@
                                         <span class="lbl"></span>
                                     </label>
                                 </td>
-
+                                <td>${user.id}</td>
                                 <td class=" ">
                                     <a href="/mana/showuserbyid?id=${user.id}">${user.account}</a>
                                 </td>
@@ -270,11 +253,11 @@
                                 </td>
                                 <td class=" ">
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a class="green" href="#">
+                                        <a class="green" href="/mana/showuserbyid?id=${user.id}">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#">
+                                        <a class="red" href="#" onclick="deleteuser(${user.id})">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -335,5 +318,98 @@
             var div=document.getElementById("editmodgrid-table");
             isdown=false;
         }
+    }
+    function adduser(){
+        var account=document.getElementById('account').value;
+        var password=document.getElementById('password').value;
+        console.log(account);
+        console.log(password);
+        $.ajax({
+            url:"/user/register",
+            type:"post",
+            dataType:"text",
+            data:{"account":account,"password":password},
+            success:function(data){
+                result = parseInt(data);
+                if(result == -1) {
+                    var message = $("#message");
+                    message.html("<p style='color: red'>帐号已存在</p>");
+                    return false;
+                }else if(result == 1){
+                   alert("注册成功");
+                    window.location.reload();
+                }
+            }
+
+        });
+    }
+    function deleteuser(uid){
+        if(confirm("您确定要删除用户？")){
+            $.get("/mana/deleteUser?userId="+uid,
+                    function(data){
+                   if(data==1){
+                       alert("删除成功");
+                       window.location.reload();
+                   }else{
+                       alert("删除失败，未知错误");
+                   }
+                    }
+
+            );
+
+    }}
+    $(document).on('click', 'th input:checkbox' , function(){
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+    });
+
+    function acceptAll(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    if(this.checked){
+                       var dom= $(this).parents(".odd").children().eq(1);
+                        var uid=dom.html();
+                        $.get("/mana/activeByid?uid="+uid,function(data){
+
+                        });
+                    }
+                }
+        );
+        alert("操作成功");
+        window.location.reload();
+    }
+    function cancelAll(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    if(this.checked){
+                        var dom= $(this).parents(".odd").children().eq(1);
+                        var uid=dom.html();
+                        $.get("/mana/cancleByid?uid="+uid,function(data){
+
+                        });
+                    }
+                }
+        );
+        alert("操作成功");
+        window.location.reload();
+    }
+    function freezeAll(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    if(this.checked){
+                        var dom= $(this).parents(".odd").children().eq(1);
+                        var uid=dom.html();
+                        $.get("/mana/freezeByid?uid="+uid,function(data){
+
+                        });
+                    }
+                }
+        );
+        alert("操作成功");
+        window.location.reload();
     }
 </script>
