@@ -32,7 +32,7 @@ function submitPassForm(){
             var result = parseInt(data);
             if(result == 1){
                 alert("modify success.");
-                window.location.href = "/View/user/profile.jsp";
+                window.location.reload();
             }else{
                 $("#passwd-message").html("<p style='color: red'>密码不正确</p>");
                 return false;
@@ -47,7 +47,7 @@ function submitPassForm(){
 function submitProfileForm(){
     var name    = $("#form-field-name").val();
     var major   = $("#major option:selected").val();
-    var classes = $("#major option:selected").val();
+    var classes = $("#classes option:selected").val();
     var radio   = document.getElementsByName("form-field-radio");
     var gender;
     if(radio[1].checked == true){
@@ -76,7 +76,7 @@ function submitProfileForm(){
             var result = parseInt(data);
             if(result == 1){
                 alert("modify success");
-                window.location.href = "/user/getProfile";
+                window.location.reload();
             }else{
                 alert("未知错误!");
             }

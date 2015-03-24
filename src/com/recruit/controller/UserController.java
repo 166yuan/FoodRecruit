@@ -161,6 +161,7 @@ public class UserController extends BaseController {
                 result = FAILURE;
             }else {
                 user.setPassword(newPass);
+                userDao.update(user);
                 result = SUCCESS;
             }
         }catch (Exception ex){

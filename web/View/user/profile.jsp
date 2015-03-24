@@ -160,8 +160,11 @@
                         <c:when test="${user.type == 1}">
                             <c:out value="学生"></c:out>
                         </c:when>
-                        <c:otherwise>
+                        <c:when test="${user.type == 2}">
                             <c:out value="管理员"></c:out>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="超级管理员"></c:out>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -374,7 +377,7 @@
                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-comment">个人简介</label>
 
                                 <div class="col-sm-9">
-                                    <textarea id="form-field-comment" ></textarea>
+                                    <textarea id="form-field-comment" >${user.self_info}</textarea>
                                 </div>
                             </div>
 
