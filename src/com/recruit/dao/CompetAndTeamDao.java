@@ -8,6 +8,6 @@ import com.recruit.model.User;
 import java.util.List;
 
 public interface CompetAndTeamDao extends DaoSupport<CompetAndTeam>{
-    public List<CompetAndTeam> getByUser(User user,PageBean pageBean);
+    public List<CompetAndTeam> getByUser(Integer userId,int type,PageBean pageBean);
     public Integer getSizeByType(Integer userId,int type);
 }

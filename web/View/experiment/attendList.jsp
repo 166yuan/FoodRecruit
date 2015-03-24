@@ -82,7 +82,7 @@
                 <button class="btn btn-info btn-primary" onclick="acceptAll()">招收以下所选</button>
             </div>
             <div class="col-xs-3">
-                <button class="btn btn-warning btn-primary">取消以下所选</button>
+                <button class="btn btn-warning btn-primary" onclick="cancelAll()">取消以下所选</button>
             </div>
             <div class="col-xs-3"></div>
         </div>
@@ -209,7 +209,22 @@
                     if(this.checked){
                         var dom= $(this).parents(".odd").find('.hidden-id').val();
                         $.get("/experUser/acceptUser?euid="+dom
-                        ,function(data){
+                                ,function(data){
+                                }
+                        );
+                    }
+                }
+        );
+        alert("操作成功");
+        window.location.reload();
+    }
+    function cancelAll(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    if(this.checked){
+                        var dom= $(this).parents(".odd").find('.hidden-id').val();
+                        $.get("/experUser/cancelUser?euid="+dom
+                                ,function(data){
                                 }
                         );
                     }

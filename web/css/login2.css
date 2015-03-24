@@ -1,0 +1,4 @@
+.light-login {
+    background-image: url(/images/1.jpg), url(/images/3.jpg), url(/images/1.jpg) !important;
+    background-repeat: repeat-x, repeat, repeat !important;
+}

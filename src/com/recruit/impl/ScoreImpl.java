@@ -18,7 +18,7 @@ public class ScoreImpl extends DaoSupportImpl<Score> implements ScoreDao {
         map.put("student",userId);
         map.put("experiment",experId);
         List<Score>list=this.findByProperties(map,1,10);
-        if (list!=null){
+        if (list.size()!=0){
             return list.get(0);
         }else {
             return null;

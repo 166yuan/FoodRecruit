@@ -105,4 +105,17 @@ public class ExperUserController extends BaseController {
     out.print(result);
     }
 
+    @RequestMapping("cancelUser")
+    public void cancelUser(Integer euid,PrintWriter out){
+        int result=1;
+        ExperUser experUser=experUserDao.getById(euid);
+        if (experUser!=null){
+            experUser.setIsAgree(false);
+            experUserDao.update(experUser);
+        }else {
+            result=-1;
+        }
+        out.print(result);
+    }
+
 }

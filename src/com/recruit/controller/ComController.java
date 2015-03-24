@@ -228,7 +228,7 @@ public class ComController extends BaseController {
         try {
             int total=competAndTeamDao.getSize();
             pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
-            list=competAndTeamDao.getByUser(user,pageBean);
+            list=competAndTeamDao.getByUser(userId,1,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -259,7 +259,7 @@ public class ComController extends BaseController {
         try {
             int total=competAndTeamDao.getSize();
             pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
-            list=competAndTeamDao.getByUser(user,pageBean);
+            list=competAndTeamDao.getByUser(userId,3,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -290,7 +290,7 @@ public class ComController extends BaseController {
         try {
             int total=competAndTeamDao.getSize();
             pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
-            list=competAndTeamDao.getByUser(user,pageBean);
+            list=competAndTeamDao.getByUser(userId,2,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

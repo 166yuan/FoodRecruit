@@ -94,17 +94,17 @@
 <c:forEach items="${list}" var="competiotion">
                     <tr>
 
-                        <td class="">${  competiotion.competName}</td>
+                        <td class="">${  competiotion.team.competition.name}</td>
 
                         <td>
-                            <fmt:formatDate value="${competiotion.beginTime}"></fmt:formatDate> -
-                            <fmt:formatDate value="${competiotion.endTime}"></fmt:formatDate>
+                            <fmt:formatDate value="${competiotion.team.competition.beginTime}"></fmt:formatDate> -
+                            <fmt:formatDate value="${competiotion.team.competition.endTime}"></fmt:formatDate>
 
                         </td>
 
                         <td class="hidden-480">
                             <c:set var="nowDate" value='<%=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date())%>'></c:set>
-                            <c:set var="endDate" value="${competiotion.endTime}"/>
+                            <c:set var="endDate" value="${competiotion.team.competition.endTime}"/>
                            <c:if test="${nowDate>endDate}">
                                <span class="label label-warning">已结束</span>
                            </c:if>
@@ -114,13 +114,13 @@
                         </td>
 
                         <td>
-                            <a href="/compet/showTeam?teamId=${competiotion.teamId}&comId=${competiotion.competId}">
+                            <a href="/compet/showTeam?teamId=${competiotion.team.id}&comId=${competiotion.team.competition.id}">
                                 <span class="btn btn-info btn-sm popover-info" >查看</span>
                             </a>
                         </td>
 
                         <td>
-                            <a href="/compet/getById?id=${competiotion.competId}">
+                            <a href="/compet/getById?id=${competiotion.team.competition.id}">
                                 <span class="btn btn-info btn-sm popover-info" >查看</span>
                             </a>
                         </td>

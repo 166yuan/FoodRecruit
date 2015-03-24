@@ -25,7 +25,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="/View/user/myspace.jsp">主页${from}</a>
+            <a href="/View/user/myspace.jsp">主页</a>
         </li>
         <li>
             <c:choose>
@@ -40,7 +40,7 @@
                 </c:otherwise>
             </c:choose>
         </li>
-        <li class="active" id="smallTitle">${exper.name}</li>
+        <li class="active" id="smallTitle">${experName}</li>
     </ul>
     <!-- /.breadcrumb -->
 
@@ -52,8 +52,8 @@
         <h5>实验员：${userName}<c:if test="${score.total!=null}">，总分 ：${score.total}</c:if></h5>
     </div>
     <div class="row">
-        <input type="hidden" name="experId" value="${score.exper_id}">
-        <input type="hidden" name="userId" value="${score.userId}">
+        <input type="hidden" name="experId" value="${score.experiment.id}">
+        <input type="hidden" name="userId" value="${score.student.id}">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
