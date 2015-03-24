@@ -44,8 +44,8 @@
 <br>
 <div class="col-sm-2">
     <div class="list-group">
-        <a href="/compet/mycompet" class="list-group-item">我参与的竞赛</a>
-        <a href="/compet/nowCompet" class="list-group-item">我现在进行的竞赛</a>
+        <a href="/compet/mycompet?page=1" class="list-group-item">我参与的竞赛</a>
+        <a href="/compet/nowCompet?page=1" class="list-group-item">我现在进行的竞赛</a>
         <a href="#" class="list-group-item active">过去的竞赛</a>
     </div>
 </div>

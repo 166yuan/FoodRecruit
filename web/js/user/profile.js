@@ -46,13 +46,16 @@ function submitPassForm(){
 
 function submitProfileForm(){
     var name    = $("#form-field-name").val();
-    var major   = $("#form-field-major").val();
-    var classes = $("#form-field-classes").val();
+    var major   = $("#major option:selected").val();
+    var classes = $("#major option:selected").val();
     var radio   = document.getElementsByName("form-field-radio");
-    var gender  = 0;
+    var gender;
     if(radio[1].checked == true){
-        gender = 1;
+        gender = false;
+    }else{
+        gender=true;
     }
+    console.log(gender);
     var self_info = $("#form-field-comment").val();
     var email     = $("#form-field-email").val();
     var phone     = $("#form-field-phone").val();

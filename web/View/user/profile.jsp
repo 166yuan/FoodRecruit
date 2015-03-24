@@ -282,7 +282,7 @@
                                         <label class="col-sm-4 control-label no-padding-right" >专业</label>
 
                                         <div class="col-sm-4">
-                                            <select class="form-control" name="major" id="form-field-select-1" onchange="getClass(this.value)">
+                                            <select class="form-control" name="major" id="major" onchange="getClass(this.value)">
                                                 <c:choose>
                                                     <c:when test="${user.major==null}">
                                                         <option value=""></option>
@@ -338,16 +338,33 @@
                                 <label class="col-sm-3 control-label no-padding-right">性别</label>
 
                                 <div class="col-sm-9">
-                                    <label class="inline">
-                                        <input name="form-field-radio" type="radio" class="ace" checked="true">
-                                        <span class="lbl middle"> 男</span>
-                                    </label>
+                                    <c:choose>
+                                        <c:when test="${user.gender==true}">
+                                            <label class="inline">
+                                                <input name="form-field-radio" type="radio" class="ace" checked="true">
+                                                <span class="lbl middle"> 男</span>
+                                            </label>
 
-                                    &nbsp; &nbsp; &nbsp;
-                                    <label class="inline">
-                                        <input name="form-field-radio" type="radio" class="ace">
-                                        <span class="lbl middle"> 女</span>
-                                    </label>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <label class="inline">
+                                                <input name="form-field-radio" type="radio" class="ace">
+                                                <span class="lbl middle"> 女</span>
+                                            </label>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <label class="inline">
+                                                <input name="form-field-radio" type="radio" class="ace">
+                                                <span class="lbl middle"> 男</span>
+                                            </label>
+
+                                            &nbsp; &nbsp; &nbsp;
+                                            <label class="inline">
+                                                <input name="form-field-radio" type="radio" class="ace" checked="true">
+                                                <span class="lbl middle"> 女</span>
+                                            </label>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </div>
                             </div>
 

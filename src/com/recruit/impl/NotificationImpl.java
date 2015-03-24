@@ -16,22 +16,22 @@ public class NotificationImpl extends DaoSupportImpl<Notification> implements No
     public List<Notification> getAllByType(int type,PageBean pageBean){
         String hql=null;
         if(type==3){
-           hql="from Notification n";
+           hql="from Notification n where a.type=3";
         }else if(type==2){
-            hql="from Notification n where n.isNew=false";
+            hql="from Notification n where n.isNew=false and n.type=3";
         }else {
-            hql="from Notification n where n.isNew=true";
+            hql="from Notification n where n.isNew=true and n.type=3";
         }
         return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
     }
     public Integer getSizeByType(int type){
         String hql=null;
         if(type==3){
-            hql="from Notification n";
+            hql="from Notification n where n.type=3";
         }else if(type==2){
-            hql="from Notification n where n.isNew=false";
+            hql="from Notification n where n.isNew=false and n.type=3";
         }else {
-            hql="from Notification n where n.isNew=true";
+            hql="from Notification n where n.isNew=true and n.type=3";
         }
         return this.getSize(hql);
     }
@@ -47,6 +47,10 @@ public class NotificationImpl extends DaoSupportImpl<Notification> implements No
             nbean.setInfo(notification.getInfo());
             nbean.setIsNew(notification.getIsNew());
             nbean.setType(notification.getType());
+            nbean.setNotiId(notification.getId());
+            if(notification.getCreator()!=null){
+
+            }
             nbean.setName(notification.getCreator().getName());
             list1.add(nbean);
         }

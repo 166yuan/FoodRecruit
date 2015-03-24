@@ -17,7 +17,7 @@ public class SessionFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         // 过滤的uri
-        String[] notFilter = new String[] { "user/home","mana/index", "exper","publish","myPublishExperiment","addExper","delete","employ","scoreExper","myAttend"
+        String[] notFilter = new String[] { "user/home","mana", "exper","publish","myPublishExperiment","addExper","delete","employ","scoreExper","myAttend"
         ,"Profile","upload","addfeedback","edit","compet"};
 
         // 请求的uri

@@ -101,7 +101,7 @@
           </td>
 
           <td>
-            <a href="/mana/showNotiById?id=${noti.notiId}&name=${noti.name}">
+            <a href="/mana/showNotiById?id=${noti.notiId}">
             <span class="btn btn-info btn-sm popover-info" data-rel="popover" data-placement="bottom" title="" data-content="Heads up! This alert needs your attention, but it's not super important." data-original-title="Some Info">查看</span>
             </a>
           </td>

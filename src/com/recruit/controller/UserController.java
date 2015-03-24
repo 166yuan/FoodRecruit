@@ -199,6 +199,7 @@ public class UserController extends BaseController {
             u.setMajor(major);
             Classes classes=new Classes();
             try{
+                System.out.println("class:"+j.get("classes"));
                 classes=classesDao.getById(j.getInt("classes"));
             }catch (Exception e){
                 e.printStackTrace();
@@ -305,7 +306,6 @@ public class UserController extends BaseController {
      */
     @RequestMapping("addfeedback")
     public String addfeedBack(String info,HttpServletRequest request){
-        System.out.println("info is:"+info);
         User user=new User();
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         try{
@@ -317,7 +317,7 @@ public class UserController extends BaseController {
             Notification notification=new Notification();
             notification.setType(3);
             notification.setInfo(info);
-            notification.setReceiver(user);
+            notification.setCreator(user);
             notificationDao.save(notification);
         }catch (Exception e){
         e.printStackTrace();

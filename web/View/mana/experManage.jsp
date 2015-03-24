@@ -89,11 +89,11 @@
                         <td class=""><fmt:formatDate  value="${exper.beginTime}"  pattern="yyyy年MM月dd日" />——<fmt:formatDate  value="${exper.endTime}"  pattern="yyyy年MM月dd日" /></td>
                         <td class=" ">
                             <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="green" href="/compet/update?id=${exper.id}">
+                                <a class="green" href="/exper/update?id=${exper.id}">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="red" href="#" onclick="">
+                                <a class="red" href="#" onclick="deleteExper(${exper.id})">
                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                 </a>
                             </div>
@@ -124,23 +124,26 @@
     $(document).ready(function(){
         $('#experpage').addClass('active');
     });
-    function deleteCompet(id){
-        $.ajax({
-            url:"/compet/delete",
-            type:"get",
-            dataType:"text",
-            data:{"id":id},
-            success:function(data){
-                var result = parseInt(data);
-                if(result==1){
-                    alert("删除成功");
-                    window.location.reload();
-                }else{
-                    alert("删除失败，未知错误");
+    function deleteExper(id){
+        if(confirm("确定要删除该实验？")){
+            $.ajax({
+                url:"/exper/delete",
+                type:"get",
+                dataType:"text",
+                data:{"id":id},
+                success:function(data){
+                    var result = parseInt(data);
+                    if(result==1){
+                        alert("删除成功");
+                        window.location.reload();
+                    }else{
+                        alert("删除失败，未知错误");
+                    }
                 }
-            }
 
-        });
+            });
+        }
+
     }
 </script>
 

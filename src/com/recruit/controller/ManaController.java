@@ -119,12 +119,11 @@ public class ManaController extends BaseController {
     /**
      * 用id找出对应反馈。交给前端
      * @param id 反馈id
-     * @param name 用户名，减少数据读取。
      * @param model
      * @return 反馈页面
      */
     @RequestMapping("showNotiById")
-    public String showNotiById(Integer id,String name,Model model){
+    public String showNotiById(Integer id,Model model){
         Notification notification=new Notification();
         try {
             notification=notificationDao.getById(id);
@@ -134,7 +133,6 @@ public class ManaController extends BaseController {
             e.printStackTrace();
         }
         model.addAttribute("notification",notification);
-        model.addAttribute("name",name);
         return "View/mana/showNotiById";
     }
 
@@ -279,7 +277,8 @@ public class ManaController extends BaseController {
      * @param content 回复内容
      */
     @RequestMapping("reply")
-    public void reply(Integer id,HttpSession session,String content){
+    public void reply(Integer id,String content,HttpSession session,PrintWriter out){
+        int result=1;
         User recervier=new User();
         User creater=new User();
         try {
@@ -288,9 +287,11 @@ public class ManaController extends BaseController {
             creater=userDao.getById(cid);
         }catch (Exception e){
             e.printStackTrace();
+            result=-1;
         }
         Notification notification=new Notification();
         try {
+            content=new String(content.getBytes("iso-8859-1"),"UTF-8");
         notification.setReceiver(recervier);
         notification.setInfo(content);
         notification.setType(4);
@@ -299,7 +300,9 @@ public class ManaController extends BaseController {
             notificationDao.save(notification);
         }catch (Exception e){
             e.printStackTrace();
+            result=-1;
         }
+        out.print(result);
         }
 
     /**
