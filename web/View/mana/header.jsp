@@ -112,7 +112,7 @@
       </li>
 
       <li class="hover" id="oppage">
-        <a href="widgets.html">
+        <a href="/mana/publishLog?page=1">
           <i class="menu-icon fa fa-list-alt"></i>
           <span class="menu-text"> 操作一览 </span>
         </a>

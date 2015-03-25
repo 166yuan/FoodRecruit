@@ -44,32 +44,88 @@
 
 </div>
 <div class="row">
-    <div class="col-xs-12">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
+
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
             <div class="widget-box">
                 <div class="widget-header widget-header-flat">
                     <h4 class="widget-title">实验列表</h4>
                 </div>
+                <br>
+                <c:choose>
+                    <c:when test="${list.size()==0}">
+                        <div class="center" style="font-size: larger">还没参加？<a href="/exper/nendAssistant?page=1">去看看</a></div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="widget-body">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>实验名</th>
+                                    <th>
+                                        <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                        申请时间</th>
+                                    <th class="hidden-480">状态</th>
+                                    <th>评分状态</th>
+                                    <th>查看分数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${list}" var="exper">
+                                    <tr>
+                                        <td>
+                                            <a href="/exper/showExper?id=${exper.experiment.id}">${exper.experiment.name}</a>
+                                        </td>
+                                        <td><fmt:formatDate value="${exper.createTime}" pattern="yyyy年MM月dd日 HH:mm"/></td>
 
-                <div class="widget-body">
-                    <div class="widget-main">
-                        <ul class="list-unstyled spaced">
-                            <c:forEach items="${list}" var="exper">
-                                <li>
-                                    <h4 class="lighter no-margin-bottom">
-                                        <a href="/exper/showExper?id=${exper.experiment.id}">${exper.experiment.name}</a>
-                                        <label> 已同意</label>
-                                    </h4>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </div>
+                                        <td class="hidden-480">
+                                            <c:choose>
+                                                <c:when test="${exper.isAgree==true}">
+                                                    <span class="label label-sm label-success">已招收</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-sm label-danger">未招收</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${exper.isAgree==true}">
+                                                    <c:choose>
+                                                        <c:when test="${exper.isEvaluate==true}">
+                                                            <span class="label label-sm label-success">已评分</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="label label-sm label-danger">未评分</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    /
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${exper.isEvaluate==true}">
+                                                    <a class="btn btn-info" href="#">查看评分</a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    /
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
-            <div class="col-sm-1"></div>
         </div>
-    </div>
+        <div class="col-sm-2"></div>
     <!-- main content end-->
 </div>
 </body>

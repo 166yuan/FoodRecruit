@@ -16,7 +16,7 @@ public class NotificationImpl extends DaoSupportImpl<Notification> implements No
     public List<Notification> getAllByType(int type,PageBean pageBean){
         String hql=null;
         if(type==3){
-           hql="from Notification n where a.type=3";
+           hql="from Notification n where n.type=3";
         }else if(type==2){
             hql="from Notification n where n.isNew=false and n.type=3";
         }else {

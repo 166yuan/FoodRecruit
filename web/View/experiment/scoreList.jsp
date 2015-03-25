@@ -134,7 +134,7 @@
 
                             <td class=" ">${paticipater.user.major.majorName}</td>
                             <td class=" ">${paticipater.user.classes.className}</td>
-                            <td class=" ">${paticipater.score.total}</td>
+                            <td class=" ">${paticipater.score.scoreA}</td>
                             <td class=" ">
                                 <c:choose>
                                     <c:when test="${paticipater.isEvaluate==true}">
@@ -149,10 +149,10 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${paticipater.isEvaluate==true}">
-                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experiment.id}&userId=${paticipater.user.id}&experName=${experName}&userName=${paticipater.user.name}">查看/修改</a>
+                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experiment.id}&userId=${paticipater.user.id}">查看/修改</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experiment.id}&userId=${paticipater.user.id}&experName=${experName}&userName=${paticipater.user.name}">去评分</a>
+                                        <a class="btn btn-info btn-xs" href="/score/scorePage?experId=${paticipater.experiment.id}&userId=${paticipater.user.id}">去评分</a>
                                     </c:otherwise>
                                 </c:choose>
                             </td>

@@ -108,15 +108,6 @@
 
             <b class="arrow"></b>
           </li>
-
-          <li class="hover">
-            <a href="#">
-              <i class="menu-icon fa fa-caret-right"></i>
-              我得到的实验评分
-            </a>
-
-            <b class="arrow"></b>
-          </li>
         </ul>
       </li>
 

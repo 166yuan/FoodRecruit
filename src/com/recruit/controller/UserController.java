@@ -121,7 +121,7 @@ public class UserController extends BaseController {
      * @param out
      */
     @RequestMapping("/register")
-    public void register(String account,String password,PrintWriter out){
+    public void register(String account,String password,HttpSession session,PrintWriter out){
         int result = 0;
         try{
             User user = userDao.forAccount(account);
@@ -129,6 +129,14 @@ public class UserController extends BaseController {
                 result = SUCCESS;
                 user=userDao.create(account,password);
                 userDao.save(user);
+                Integer userId=(Integer)session.getAttribute("userId");
+                if (userId!=null){
+                    User operator=userDao.getById(userId);
+                    if(operator.getType()==3){
+                        publishLogDao.addUser(operator,user);
+                    }
+                }
+                publishLogDao.addUser(user);
             }else {
                 result = FAILURE;
             }
@@ -163,6 +171,7 @@ public class UserController extends BaseController {
                 user.setPassword(newPass);
                 userDao.update(user);
                 result = SUCCESS;
+                publishLogDao.updateUser(user);
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -213,6 +222,7 @@ public class UserController extends BaseController {
             u.setQq(j.getString("QQ"));
             userDao.update(u);
             result = SUCCESS;
+            publishLogDao.updateUser(u);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -278,6 +288,7 @@ public class UserController extends BaseController {
                 user.setImage_url("/images/"+uploadFile.getName());
                 userDao.update(user);
                 request.getSession().setAttribute("imageUrl",user.getImage_url());
+                publishLogDao.updateUser(user);
             }
 
         }catch (Exception e){

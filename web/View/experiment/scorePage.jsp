@@ -375,7 +375,7 @@
                                 <div class="center">
                                     <h3 class="green">评分完成!</h3>
                                  <span style="font-size: larger">  您可以查看并修改结果，或者
-                                    <a href="/exper/scoreList?experId=${score.exper_id}" target="_blank">继续评分</a></span>
+                                    <a href="/exper/scoreList?experId=${score.experiment.id}" target="_blank">继续评分</a></span>
                                 </div>
                             </div>
                         </div>

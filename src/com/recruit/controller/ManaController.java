@@ -227,7 +227,7 @@ public class ManaController extends BaseController {
      */
     @RequestMapping("edituser")
     public String edituser(Integer id,String password,int type,int status,String name,Boolean gender,Integer major,Integer classes
-            ,String phone,String email,String qq,String address,String self_info,Boolean isActive,Model model)
+            ,String phone,String email,String qq,String address,String self_info,Boolean isActive,HttpSession session,Model model)
     {
         Classes cla= null;
         try {
@@ -263,6 +263,9 @@ public class ManaController extends BaseController {
                 user.setSelf_info(self_info);
                 user.setIsActive(isActive);
                 userDao.update(user);
+                Integer opid=(Integer)session.getAttribute("userId");
+                User operator=userDao.getById(opid);
+                publishLogDao.updateUser(operator,user);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -324,6 +327,9 @@ public class ManaController extends BaseController {
                 major.setMajorName(name);
                 major.setYear(year);
                 majorDao.save(major);
+              Integer userId= (Integer) request.getSession().getAttribute("userId");
+              User user= userDao.getById(userId);
+                publishLogDao.addMajor(user,major);
             }
         }catch (Exception e){
         e.printStackTrace();
@@ -339,7 +345,7 @@ public class ManaController extends BaseController {
      * @param out
      */
     @RequestMapping("addclass")
-    public void addClass(String name,Integer majorId,PrintWriter out){
+    public void addClass(String name,Integer majorId,HttpSession session,PrintWriter out){
         Classes classes=new Classes();
         Major major=new Major();
         try {
@@ -352,6 +358,9 @@ public class ManaController extends BaseController {
             classes.setClassName(name);
             classes.setMajor(major);
             classesDao.save(classes);
+            Integer userId=(Integer)session.getAttribute("userId");
+            User user=userDao.getById(userId);
+            publishLogDao.addClasses(user,classes);
             out.print(result);
         }catch (Exception e){
         e.printStackTrace();
@@ -459,11 +468,14 @@ public class ManaController extends BaseController {
     }
 
     @RequestMapping("deleteUser")
-    public void deleteUser(Integer userId,PrintWriter out){
+    public void deleteUser(Integer userId,HttpSession session,PrintWriter out){
         int result=1;
         User user=userDao.getById(userId);
         if (user!=null){
             userDao.delete(userId);
+            Integer opid=(Integer)session.getAttribute("userId");
+            User operator=userDao.getById(opid);
+            publishLogDao.deleteUser(operator,user);
         }else {
             result=-1;
         }
@@ -471,12 +483,15 @@ public class ManaController extends BaseController {
     }
 
     @RequestMapping("deleteMajor")
-    public void deleteMajor(Integer majorId,PrintWriter out){
+    public void deleteMajor(Integer majorId,HttpSession session,PrintWriter out){
         System.out.println("majorId:"+majorId);
         int result=1;
         Major major=majorDao.getById(majorId);
         if (major!=null){
             majorDao.delete(majorId);
+            Integer userId=(Integer)session.getAttribute("userId");
+            User user=userDao.getById(userId);
+            publishLogDao.deleteMajor(user,major);
         }else {
             result=-1;
         }
@@ -484,15 +499,26 @@ public class ManaController extends BaseController {
     }
 
     @RequestMapping("deleteClass")
-    public void deleteClass(Integer classId,PrintWriter out){
+    public void deleteClass(Integer classId,HttpSession session,PrintWriter out){
         int result=1;
         Classes classes=classesDao.getById(classId);
         if (classes!=null){
             classesDao.delete(classId);
+            Integer userId=(Integer)session.getAttribute("userId");
+            User user=userDao.getById(userId);
+            publishLogDao.deleteClasses(user,classes);
         }else {
             result=-1;
         }
         out.print(result);
     }
-
+    @RequestMapping("publishLog")
+    public String publishLog(int page,Model model){
+        int total=publishLogDao.getSize();
+        PageBean pageBean=PageBean.getInstance(page,total,"/mana","/publishLog");
+        List<PublishLog>list=publishLogDao.findByPage(pageBean.getCurPage(),pageBean.getPerPage());
+        model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
+        return "View/mana/publishLog";
+    }
 }

@@ -18,7 +18,7 @@ public class SessionFilter extends OncePerRequestFilter{
 
         // 过滤的uri
         String[] notFilter = new String[] { "user/home","mana", "exper","publish","myPublishExperiment","addExper","delete","employ","scoreExper","myAttend"
-        ,"Profile","upload","addfeedback","edit","compet"};
+        ,"Profile","upload","addfeedback","edit","compet","score"};
 
         // 请求的uri
         String uri = request.getRequestURI();

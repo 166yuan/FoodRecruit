@@ -160,6 +160,7 @@ public class ExperController extends BaseController {
             exper.setIsOutDate(false);
             experimentDao.save(exper);
             experId = exper.getId();
+            publishLogDao.addExper(user,exper);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -173,13 +174,21 @@ public class ExperController extends BaseController {
      * @param out
      */
     @RequestMapping("delete")
-    public void delete(Integer id,PrintWriter out){
-        int result = 0;
+    public void delete(Integer id,HttpSession session,PrintWriter out){
+        int result = 1;
         try{
-            experimentDao.delete(id);
-            result = 1;
+           Experiment experiment=experimentDao.getById(id);
+            if (experiment!=null){
+                experimentDao.delete(id);
+                Integer userId=(Integer)session.getAttribute("userId");
+                User user=userDao.getById(userId);
+                publishLogDao.deleteExper(user,experiment);
+            }else {
+                result=-1;
+            }
         }catch (Exception ex){
             ex.printStackTrace();
+            result=-1;
         }
         out.print(result);
     }
@@ -243,6 +252,9 @@ public class ExperController extends BaseController {
             exper.setNote(j.getString("note"));
             exper.setCount(j.getInt("count"));
             experimentDao.update(exper);
+            Integer userId=(Integer)request.getSession().getAttribute("userId");
+            User user=userDao.getById(userId);
+            publishLogDao.updateExper(user,exper);
             result = j.getLong("experId");
         }catch (Exception ex){
             ex.printStackTrace();

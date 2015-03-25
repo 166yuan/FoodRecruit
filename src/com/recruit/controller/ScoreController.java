@@ -20,9 +20,7 @@ import java.io.PrintWriter;
 @RequestMapping("/score")
 public class ScoreController extends BaseController {
     @RequestMapping("scorePage")
-    public String scorePage(HttpSession session,Integer experId,Integer userId,String experName,String userName,Model model){
-        model.addAttribute("userName",userName);
-        model.addAttribute("experName",experName);
+    public String scorePage(HttpSession session,Integer experId,Integer userId,Model model){
         Score score=scoreDao.getByExperIdAndUserId(experId,userId);
         Integer fromId=(Integer)session.getAttribute("userId");
         Experiment experiment=experimentDao.getById(experId);
@@ -31,15 +29,21 @@ public class ScoreController extends BaseController {
         if(score==null){
             score=new Score();
             try{
+
                 score.setExperiment(experiment);
                 score.setTeacher(from);
                 score.setStudent(user);
                 scoreDao.save(score);
+                ExperUser eu=experUserDao.findByExperAndUserId(experId, userId);
+                eu.setScore(score);
+                experUserDao.update(eu);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
         model.addAttribute("score",score);
+        model.addAttribute("experName",experiment.getName());
+        model.addAttribute("userName",user.getName());
         return "View/experiment/scorePage";
     }
     @RequestMapping("saveScoreA")
@@ -112,9 +116,9 @@ public class ScoreController extends BaseController {
     }
 
     @RequestMapping("saveScoreC")
-    public void saveScoreC(int Ttidy,int Tcare,int Toperation,int Tconnect,int member,int recorded,int append,Integer experId,Integer userId,HttpSession session,PrintWriter out){
+    public void saveScoreC(Integer experId,Integer userId,int Ttidy,int Tcare,int Toperation,int Tconnect,int member,int recorded,int append,HttpSession session,PrintWriter out){
         int result=1,temp=0;
-        Long fromId=(Long)session.getAttribute("userId");
+        Integer fromId=(Integer)session.getAttribute("userId");
         Score score=scoreDao.getByExperIdAndUserId(experId,userId);
         if(score==null){
             score=new Score();
@@ -148,6 +152,7 @@ public class ScoreController extends BaseController {
 
         }catch (Exception e){
             e.printStackTrace();
+            result=-1;
         }
         out.print(result);
     }

@@ -10,8 +10,7 @@ import java.util.Date;
 public class PublishLog  implements InstanceInterface{
 
 	private Integer id;
-	
-    //发布内容归属：0实验 1竞赛
+    //发布内容归属：0实验 1竞赛 2 用户 3.其它
     private Integer type;
     //发布的信息
     private String info;

@@ -447,10 +447,18 @@ public class ComController extends BaseController {
     }
 
     @RequestMapping("delete")
-    public void delete(Integer id,PrintWriter out){
+    public void delete(Integer id,HttpSession session,PrintWriter out){
         int result=1;
         try{
-            competitionDao.delete(id);
+            Competition competition=competitionDao.getById(id);
+            if (competition!=null){
+                competitionDao.delete(id);
+                Integer userId=(Integer)session.getAttribute("userId");
+                User user=userDao.getById(userId);
+                publishLogDao.deleteCompetition(user,competition);
+            }else {
+                result=-1;
+            }
         }catch (Exception e){
             e.printStackTrace();
             result=-1;

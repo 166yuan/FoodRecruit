@@ -301,6 +301,6 @@
       "/images/3.jpg"
   ], {
       fade: 1000,
-      duration: 3000
+      duration: 5000
   });
 </script>

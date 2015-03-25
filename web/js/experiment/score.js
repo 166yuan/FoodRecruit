@@ -40,7 +40,7 @@ $(document).ready(function () {
     $('#spinner4').ace_spinner({
         value: 0,
         min: 0,
-        max: 15,
+        max: 10,
         step: 1,
         on_sides: true,
         icon_up: 'ace-icon fa fa-plus smaller-75',
