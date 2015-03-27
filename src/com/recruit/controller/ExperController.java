@@ -251,6 +251,7 @@ public class ExperController extends BaseController {
             exper.setEmail(j.getString("email"));
             exper.setNote(j.getString("note"));
             exper.setCount(j.getInt("count"));
+            exper.setIsShow(j.getBoolean("isShow"));
             experimentDao.update(exper);
             Integer userId=(Integer)request.getSession().getAttribute("userId");
             User user=userDao.getById(userId);

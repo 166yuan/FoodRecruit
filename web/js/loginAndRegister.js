@@ -54,35 +54,42 @@ alert("请勿再次提交！");
 
 
 function submitLoginForm(){
-    var account= document.getElementById("login-account").value;
-    var password = document.getElementById("login-password").value;
-
-    if (account.length <=0 || password.length <= 0) {
-        $("#message").html("<p style='color: red'>帐号和密码不能为空</p>");
-        return false;
+    if(checkSubmitFlg==false){
+        checkSubmitFlg=true;
     }
+    if(checkSubmitFlg){
+        alert("请勿重复点击");
+    }else{
+        var account= document.getElementById("login-account").value;
+        var password = document.getElementById("login-password").value;
 
-    $.ajax({
-        url:"/user/doLogin",
-        type:"post",
-        dataType:"text",
-        data:{"account":account,"password":password},
-        success:function(data){
-            var result = parseInt(data);
-            if(result == 2) {
-                var message = $("#login-message");
-                message.html("<p style='color: red'>帐号或密码错误</p>");
-                return false;
-            }else if(result == 3) {
-                var message = $("#login-message");
-                message.html("<p style='color: red'>帐号未通过审核或被冻结，请联系管理员</p>");
-                return false;
-            }else if(result == 1){
-                window.location.href = "/user/success";
-            }
+        if (account.length <=0 || password.length <= 0) {
+            $("#message").html("<p style='color: red'>帐号和密码不能为空</p>");
+            return false;
         }
 
-    });
+        $.ajax({
+            url:"/user/doLogin",
+            type:"post",
+            dataType:"text",
+            data:{"account":account,"password":password},
+            success:function(data){
+                var result = parseInt(data);
+                if(result == 2) {
+                    var message = $("#login-message");
+                    message.html("<p style='color: red'>帐号或密码错误</p>");
+                    return false;
+                }else if(result == 3) {
+                    var message = $("#login-message");
+                    message.html("<p style='color: red'>帐号未通过审核或被冻结，请联系管理员</p>");
+                    return false;
+                }else if(result == 1){
+                    window.location.href = "/user/success";
+                }
+            }
 
-    return false;
+        });
+    }
+
+
 }

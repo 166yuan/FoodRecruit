@@ -38,5 +38,8 @@
         <property name="updateTime" type="java.util.Date">
             <column name="UPDATETIME" />
         </property>
+        <property name="isShow" type="java.lang.Boolean">
+            <column name="ISSHOW" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -12,7 +12,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>experiment_release</title>
+  <title>实验更新</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.css" >
   <script type="text/javascript" src="/js/experiment/experimentUpdate.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
@@ -32,7 +32,7 @@
   <ul class="breadcrumb">
     <li>
       <i class="ace-icon fa fa-home home-icon"></i>
-      <a href="/View/user/myspace.jsp">主页</a>
+      <a href="/user/home">主页</a>
     </li>
     <li class="active">实验发布</li>
   </ul><!-- /.breadcrumb -->
@@ -184,6 +184,27 @@
           <textarea class="form-control" rows="5" name="note" id="remark" >${exper.note}</textarea>
         </div>
       </div>
+
+        <div class="form-group">
+            <label  class="col-sm-4 control-label">是否可见（他人可见）</label>
+            <div class="col-sm-5">
+                <c:choose>
+                    <c:when test="${exper.isShow==true}">
+                        <input name="isShow" type="radio" checked="true" class="ace" value="1">
+                        <span class="lbl">是</span>
+                        <input name="isShow" type="radio" class="ace" value="0">
+                        <span class="lbl">否</span>
+                    </c:when>
+                    <c:otherwise>
+                        <input name="isShow" type="radio" class="ace" value="1">
+                        <span class="lbl">是</span>
+                        <input name="isShow" type="radio" checked="true" class="ace" value="0">
+                        <span class="lbl">否</span>
+                    </c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
 
       <div class="form-group">
         <div class="col-sm-5">

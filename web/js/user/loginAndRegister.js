@@ -57,6 +57,7 @@ alert("请勿重复提交");
 
 
 function submitLoginForm(){
+
     var account  = document.getElementById("login-account").value;
     var password = document.getElementById("login-password").value;
 

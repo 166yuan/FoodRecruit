@@ -25,6 +25,8 @@ public class Competition implements InstanceInterface{
     private Date beginTime;
 
     private Date endTime;
+
+    private Boolean isShow;
     
     public Date createTime;
     
@@ -34,14 +36,13 @@ public class Competition implements InstanceInterface{
     	super();
         inite();
     }
-    
-    
-    
+
     public Competition(String image_url, String link, String name,
 			String information, Integer minNumber, Integer maxNumber,
 			Date beginTime, Date endTime) {
 		super();
 		this.image_url = image_url;
+
 		this.link = link;
 		this.name = name;
 		this.information = information;
@@ -59,6 +60,7 @@ public class Competition implements InstanceInterface{
 	public Competition inite(){
 		this.createTime=new Date();
         this.updateTime=new Date();
+        this.setIsShow(false);
         return this;
 	}
 
@@ -162,13 +164,15 @@ public class Competition implements InstanceInterface{
 		this.updateTime = updateTime;
 	}
 
+    public Boolean getIsShow() {
+        return isShow;
+    }
 
+    public void setIsShow(Boolean isShow) {
+        this.isShow = isShow;
+    }
 
-
-
-
-	
-	@Override
+    @Override
 	public String toString() {
 		return "[createTime=" + createTime + "]";
 	}

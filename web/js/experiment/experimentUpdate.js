@@ -17,10 +17,16 @@ function update(){
     var count         = document.getElementById("count").value;
     var note          = document.getElementById("remark").value;
     var experId       = document.getElementById("experId").value;
-
+    var isShow=$('input[name="isShow"]:checked').val();
+    if(isShow==1){
+        isShow=true;
+    }else{
+        isShow=false;
+    }
+    console.log(isShow);
     var data = {"name":name,"content":content,"requirement":requirement,"type":type,
         "pretime":pretime,"endtime":endtime,"linkman":linkman,"phone":phone,
-        "qq":qq,"email":email,"count":count,"note":note,"experId":experId};
+        "qq":qq,"email":email,"count":count,"note":note,"experId":experId,"isShow":isShow};
 
 
     var jsonData = JSON.stringify(data);

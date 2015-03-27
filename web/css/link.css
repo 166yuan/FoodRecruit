@@ -276,7 +276,7 @@ a:hover {
   min-width: 960px;
 }
 .header-wrap {
-  height: 120px !important;
+  height: 150px !important;
   background: rgba(204, 255, 255, 0.68);
 }
 .header-wrap header {
@@ -711,10 +711,10 @@ section .support-list li:hover #oracleBox2.detail{
 }
 /* �������� */
 .header-wrap p{
-    position:absolute;
+
 	text-align:center;
     width:100%;
-    color:#FFF;
+    color:#4558BB;
     bottom:27px;
     font-size:20px;
 }
@@ -809,4 +809,32 @@ hr {
   background-color: #FFF;
   border: 1px solid rgba(0,0,0,0.2);
   padding: 3px;
+}
+.center, .align-center {
+  text-align: center !important;
+}
+.com-title{
+ font-size: 26px;
+}
+.btn {
+  display: inline-block;
+  color: #FFF !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+  background-image: none !important;
+  border: 5px solid #FFF;
+  border-radius: 0;
+  box-shadow: none !important;
+  -webkit-transition: all ease .15s;
+  transition: all ease .15s;
+  cursor: pointer;
+  vertical-align: middle;
+  margin: 0;
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-user-select: none;
 }

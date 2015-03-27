@@ -162,7 +162,7 @@
               </li>
 
               <li class="hover">
-                <a href="/compet/getAll?page=1">
+                <a href="/compet/competManage?page=1">
                   <i class="menu-icon fa fa-caret-right"></i>
                   竞赛管理
                 </a>

@@ -3,6 +3,7 @@ package com.recruit.bean;
 import com.recruit.model.ExperUser;
 import com.recruit.model.Experiment;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ExperScoreBean {
     Date beginTime;
 
     public static ExperScoreBean build(Experiment experiment){
-        List<ExperUser>list=experiment.getExperUser();
+        List<ExperUser>list=new ArrayList<ExperUser>(experiment.getExperUsers());
         System.out.println(list.size());
         if (list.size()==0)return null;
         ExperScoreBean esBean=new ExperScoreBean();

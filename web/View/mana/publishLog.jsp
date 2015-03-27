@@ -97,8 +97,12 @@
     </div>
 </div>
 <!-- 下面这个div不是多余的，是include页面中header.jsp的另一半-->
+
 </div>
 <!-- 主体结束-->
+<br>
+<br>
+<br>
 </body>
 </html>
 </html>

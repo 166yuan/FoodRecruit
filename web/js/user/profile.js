@@ -50,12 +50,20 @@ function submitProfileForm(){
     var classes = $("#classes option:selected").val();
     var radio   = document.getElementsByName("form-field-radio");
     var gender;
+    if(!major){
+        major=-1;
+    }
+    if(!classes){
+        classes=-1;
+    }
     if(radio[1].checked == true){
         gender = false;
     }else{
         gender=true;
     }
     console.log(gender);
+    console.log("major:"+major);
+    console.log("classes:"+classes);
     var self_info = $("#form-field-comment").val();
     var email     = $("#form-field-email").val();
     var phone     = $("#form-field-phone").val();

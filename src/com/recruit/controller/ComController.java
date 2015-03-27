@@ -57,13 +57,29 @@ public class ComController extends BaseController {
         try {
             int total=competitionDao.getSize();
             pageBean=PageBean.getInstance(page,total,"/compet","/getAll");
-            list = competitionDao.getAllCompetition(pageBean);
+            list = competitionDao.getAllPublishCompetition(pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("pageBean",pageBean);
         model.addAttribute("list",list);
         return "View/compet/competList";
+    }
+
+    @RequestMapping("competManage")
+    public String competManage(int page,Model model){
+        List<Competition>list= new ArrayList<Competition>();
+        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/competManage");
+        try {
+            int total=competitionDao.getSize();
+            pageBean=PageBean.getInstance(page,total,"/compet","/competManage");
+            list = competitionDao.getAllCompetition(pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("pageBean",pageBean);
+        model.addAttribute("list",list);
+        return "View/compet/competManage";
     }
 
     /**
@@ -98,7 +114,7 @@ public class ComController extends BaseController {
             model.addAttribute("user",user);
             Competition competition=competitionDao.getById(id);
             model.addAttribute("competition",competition);
-            List<Team>list=teamDao.findByComId(1);
+            List<Team>list=teamDao.findByComId(id);
             model.addAttribute("teamList",list);
            return "View/compet/attendance";
         }
@@ -226,13 +242,14 @@ public class ComController extends BaseController {
         }
         List<CompetAndTeam> list= null;
         try {
-            int total=competAndTeamDao.getSize();
+            int total=competAndTeamDao.getSizeByType(userId,1);
             pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
             list=competAndTeamDao.getByUser(userId,1,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/compet/myCompet";
     }
 
@@ -248,7 +265,7 @@ public class ComController extends BaseController {
             page=1;
         }
         Integer userId=(Integer)session.getAttribute("userId");
-        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/mycompet");
+        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/nowCompet");
         User user=new User();
         try {
             user=userDao.getById(userId);
@@ -257,13 +274,14 @@ public class ComController extends BaseController {
         }
         List<CompetAndTeam> list= null;
         try {
-            int total=competAndTeamDao.getSize();
-            pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
+            int total=competAndTeamDao.getSizeByType(userId,3);
+            pageBean=PageBean.getInstance(page,total,"/compet","/nowCompet");
             list=competAndTeamDao.getByUser(userId,3,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/compet/goingCompet";
     }
 
@@ -279,7 +297,7 @@ public class ComController extends BaseController {
             page=1;
         }
         Integer userId=(Integer)session.getAttribute("userId");
-        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/mycompet");
+        PageBean pageBean=PageBean.getInstance(1,0,"/compet","/passCompet");
         User user=new User();
         try {
             user=userDao.getById(userId);
@@ -288,13 +306,14 @@ public class ComController extends BaseController {
         }
         List<CompetAndTeam> list= null;
         try {
-            int total=competAndTeamDao.getSize();
-            pageBean=PageBean.getInstance(page,total,"/compet","/mycompet");
+            int total=competAndTeamDao.getSizeByType(userId,2);
+            pageBean=PageBean.getInstance(page,total,"/compet","/passCompet");
             list=competAndTeamDao.getByUser(userId,2,pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("list",list);
+        model.addAttribute("pageBean",pageBean);
         return "View/compet/pastCompet";
     }
 
@@ -400,7 +419,7 @@ public class ComController extends BaseController {
      * @return
      */
     @RequestMapping("doUpdate")
-    public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,String description,Integer id,Model model){
+    public String doUpdateCompetition(DefaultMultipartHttpServletRequest request,String name,String daterange,int minnumber,int maxnumber,Boolean isshow,String description,Integer id,Model model){
         System.out.println("the content is:"+description);
         CommonsMultipartFile file = (CommonsMultipartFile)request.getFile("file");
         File uploadFile = null;
@@ -435,6 +454,7 @@ public class ComController extends BaseController {
             competition.setEndTime(date2);
             competition.setMinNumber(minnumber);
             competition.setMaxNumber(maxnumber);
+            competition.setIsShow(isshow);
             if(uploadFile!=null){
                 competition.setImage_url("/images/"+uploadFile.getName());
             }

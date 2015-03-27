@@ -21,6 +21,7 @@ public class ExperimentImpl extends DaoSupportImpl<Experiment> implements Experi
    public List<Experiment> getNeedAssistant(PageBean pageBean){
        Map<String,Object>map=new HashMap<String, Object>();
        map.put("isOk",false);
+       map.put("isShow",true);
        return this.findByProperties(map,pageBean.getCurPage(),pageBean.getPerPage());
    }
 
@@ -39,6 +40,7 @@ public class ExperimentImpl extends DaoSupportImpl<Experiment> implements Experi
     public Integer countNeedAssistant(){
         Map<String,Object>map=new HashMap<String, Object>();
         map.put("isOk",false);
+        map.put("isShow",true);
         return this.getFindByPropertiesSize(map);
     }
 

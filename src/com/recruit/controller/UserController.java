@@ -202,15 +202,26 @@ public class UserController extends BaseController {
             Major major=new Major();
             u.setName(j.getString("name"));
             try {
-                major=majorDao.getById(j.getInt("major"));
+                System.out.println(j.get("major"));
+                int majorId=j.getInt("major");
+                if (majorId==-1){
+                    major=null;
+                }else {
+                    major=majorDao.getById(majorId);
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
             u.setMajor(major);
             Classes classes=new Classes();
             try{
-                System.out.println("class:"+j.get("classes"));
-                classes=classesDao.getById(j.getInt("classes"));
+                Integer claId=j.getInt("classes");
+                if(claId==-1){
+                    classes=null;
+                }else {
+                    classes=classesDao.getById(claId);
+                }
+
             }catch (Exception e){
                 e.printStackTrace();
             }

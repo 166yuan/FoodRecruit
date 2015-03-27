@@ -60,7 +60,11 @@
         <property name="isOutDate" type="java.lang.Boolean">
             <column name="ISOUTDATE" />
         </property>
-        
+
+        <property name="isShow" type="java.lang.Boolean">
+            <column name="ISSHOW" />
+        </property>
+
         <set name="experUsers" table="EXPERUSER" inverse="true" lazy="true">
             <key>
                 <column name="EXPERIMENT" />

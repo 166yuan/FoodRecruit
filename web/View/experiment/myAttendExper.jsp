@@ -108,7 +108,7 @@
                                         <td>
                                             <c:choose>
                                                 <c:when test="${exper.isEvaluate==true}">
-                                                    <a class="btn btn-info" href="#">查看评分</a>
+                                                    <a class="btn btn-xs btn-info" href="#">查看分数</a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     /

@@ -32,7 +32,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="/View/user/myspace.jsp">主页</a>
+            <a href="/user/home">主页</a>
         </li>
         <li class="active">
             我的竞赛
@@ -126,6 +126,9 @@
             </div>
         </div>
 
+    </div>
+    <div class="dataTables_paginate paging_bootstrap">
+        <c:import url="/View/common/page.jsp"></c:import>
     </div>
 </div>
 

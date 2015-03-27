@@ -27,7 +27,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="/View/user/myspace.jsp">主页</a>
+            <a href="/user/home">主页</a>
         </li>
         <li class="active">竞赛编辑</li>
     </ul><!-- /.breadcrumb -->
@@ -75,6 +75,26 @@
                 <div class="col-sm-8">
                     <input type="text" name="daterange" id="id-date-range-picker-1" value="<fmt:formatDate value="${competition.beginTime}" pattern="MM/dd/yyyy"/>-<fmt:formatDate value="${competition.endTime}" pattern="MM/dd/yyyy"/>" class="col-xs-10 col-sm-5"/>
                     <small>手动修改请严格按照时间格式</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right" >是否显示在主页</label>
+                <div class="col-sm-8">
+                    <c:choose>
+                        <c:when test="${competition.isShow==true}">
+                            <input name="isshow" type="radio" class="ace" checked="true" value="true"/>
+                            <span class="lbl">发布</span>
+                            <input name="isshow" type="radio" class="ace" value="false"/>
+                            <span class="lbl">不发布</span>
+                        </c:when>
+                        <c:otherwise>
+                            <input name="isshow" type="radio" class="ace" value="true"/>
+                            <span class="lbl">发布</span>
+                            <input name="isshow" type="radio" class="ace" checked="false" value="false"/>
+                            <span class="lbl">不发布</span>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
 

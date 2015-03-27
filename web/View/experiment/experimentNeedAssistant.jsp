@@ -25,7 +25,7 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="ace-icon fa fa-home home-icon"></i>
-			<a href="/View/user/myspace.jsp">主页</a>
+			<a href="/user/home">主页</a>
 		</li>
 		<li class="active">
 			成为实验助手
@@ -55,10 +55,10 @@
 				<div class="widget-body">
 					<div class="widget-main">
 						<ul class="list-unstyled spaced">
-							<c:forEach items="${list}" var="exper">
+							<c:forEach items="${list}" var="exper" varStatus="num">
 							<li>
 								<h4 class="lighter no-margin-bottom">
-                                    <span >${exper.id}.</span><a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
+                                    <span >${num.count}.</span><a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
 									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
                                     <c:set var="now" value="<%=System.currentTimeMillis()%>"/>
                                     <c:if test="${(now-exper.createTime.time)<1209600000}">

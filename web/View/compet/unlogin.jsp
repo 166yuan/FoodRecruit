@@ -14,7 +14,7 @@
   <div class="topbar">
     <div class="topbar-grid topbar-wrap">
       <p class="toplink">
-        <a href="#" target="_blank">食科联首页</a></p>
+        <a href="/user/home" target="_blank">食科联首页</a></p>
       <ul class="topmenu">
         <li id="topmenu-item-first-a" class="topmenu-item topmenu-item-first">
           <a href="#" target="_blank" title="登录" seed="topmenuItem-link">登录</a><b class="split">-</b><a href="#" target="_blank" title="注册">注册</a></li><li class="topmenu-item topmenu-item-last topmenu-jingkao-help"><a href="#" target="_blank" title="帮助中心">帮助中心</a></li></ul></div></div></div>

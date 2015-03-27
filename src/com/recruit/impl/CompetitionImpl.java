@@ -12,8 +12,13 @@ import java.util.List;
 @Service
 @Transactional
 public class CompetitionImpl extends DaoSupportImpl<Competition> implements CompetitionDao {
+    public List<Competition>getAllPublishCompetition(PageBean pageBean){
+        String hql="from Competition c where c.isShow=true";
+       return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
+    }
+
     public List<Competition>getAllCompetition(PageBean pageBean){
         String hql="from Competition c";
-       return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
+        return this.findByHql(hql,pageBean.getCurPage(),pageBean.getPerPage());
     }
 }

@@ -41,10 +41,12 @@ public class Experiment  implements InstanceInterface{
     private Date endTime;
     //是否已经招够助手
     private Boolean isOk;
-    
+    private Boolean isShow;
+
     public Date createTime;
     
     public Date updateTime;
+
     
     Set<ExperUser> experUsers = new HashSet<ExperUser>();
 
@@ -57,7 +59,7 @@ public class Experiment  implements InstanceInterface{
 	public Experiment(String name, String information, String requirement,
 			String type, String contact, String phone, String email, String qQ,
 			int count, User publisher, String note, Date beginTime,
-			Date endTime, boolean isOk, Boolean isOutDate) {
+			Date endTime, boolean isOk, Boolean isOutDate,Boolean isShow) {
 		super();
 		this.name = name;
 		this.information = information;
@@ -74,6 +76,7 @@ public class Experiment  implements InstanceInterface{
 		this.endTime = endTime;
 		this.isOk = isOk;
 		this.isOutDate = isOutDate;
+        this.isShow=isShow;
 	}
 	
 	/**初始化类，如所当前时间赋值给createTime 和 updateTime isOk=false
@@ -83,10 +86,16 @@ public class Experiment  implements InstanceInterface{
 		this.createTime=new Date();
         this.updateTime=new Date();
         isOk=false;
+        isShow=false;
         return this;
 	}
 
-	public Integer getId() {
+
+    public Boolean isOutDate() {
+        return isOutDate;
+    }
+
+    public Integer getId() {
 		return id;
 	}
 
@@ -153,9 +162,7 @@ public class Experiment  implements InstanceInterface{
         this.isOk = isOk;
     }
 
-    public ArrayList<ExperUser>getExperUser(){
-        return new ArrayList<ExperUser>(experUsers);
-    }
+
 
     public User getPublisher() {
 		return publisher;
@@ -255,8 +262,15 @@ public class Experiment  implements InstanceInterface{
 		this.experUsers = experUsers;
 	}
 
-	
-	@Override
+    public Boolean getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Boolean isShow) {
+        this.isShow = isShow;
+    }
+
+    @Override
 	public String toString() {
 		return "[createTime=" + createTime + "]";
 	}
