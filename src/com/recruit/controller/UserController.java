@@ -1,7 +1,9 @@
 package com.recruit.controller;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import java.io.*;
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +67,7 @@ public class UserController extends BaseController {
      *  进行登录认证
      */
     @RequestMapping("/doLogin")
-    public void login(String account,String password,HttpServletRequest request,PrintWriter out){
+    public void login(String account,String password,   Boolean remember,HttpServletRequest request,HttpServletResponse response,PrintWriter out){
         int result = 0;
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         if(userId!=null){
@@ -82,6 +85,13 @@ public class UserController extends BaseController {
                             request.getSession().setAttribute("userId",user.getId());
                             request.getSession().setAttribute("user_type",user.getType());
                             request.getSession().setAttribute("imageUrl",user.getImage_url());
+                            System.out.println("reme:"+remember);
+                            if(remember==true){
+                                Cookie cookie=new Cookie("userLogin","true");
+                                cookie.setMaxAge(60*60);
+                                cookie.setPath("/");
+                                response.addCookie(cookie);
+                            }
                             if(user.getType()==3){
                                 result=ADMIN;
                             }

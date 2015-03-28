@@ -60,6 +60,7 @@ function submitLoginForm(){
 
     var account  = document.getElementById("login-account").value;
     var password = document.getElementById("login-password").value;
+    var remember =$("input[type='checkbox']").is(':checked');
 
     if (account.length <=0 || password.length <= 0) {
         $("#login-message").html("<p style='color: red'>帐号和密码不能为空</p>");
@@ -70,7 +71,7 @@ function submitLoginForm(){
         url:"/user/doLogin",
         type:"post",
         dataType:"text",
-        data:{"account":account,"password":password},
+        data:{"account":account,"password":password,"remember":remember},
         success:function(data){
             var result = parseInt(data);
             if(result==3){

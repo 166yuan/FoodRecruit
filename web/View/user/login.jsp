@@ -84,7 +84,7 @@
 
                                             <div class="clearfix">
                                                 <label class="inline">
-                                                    <input type="checkbox" class="ace" />
+                                                    <input type="checkbox" name="remember" id="remember" class="ace" />
                                                     <span class="lbl"> 记住我</span>
                                                 </label>
 
