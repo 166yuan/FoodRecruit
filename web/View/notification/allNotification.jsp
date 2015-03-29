@@ -81,8 +81,7 @@
 						<div class="notification-item unread issue-notification">
 						<div class="float-right">
 							<div class="">
-							<a href="http://git.oschina.net/Mklaus" >
-							</a>2分钟前
+							${noti.createTime}
 							</div>
 						</div>
 						<strong>

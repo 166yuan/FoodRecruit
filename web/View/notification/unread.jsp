@@ -81,7 +81,7 @@
 						<div class="notification-item unread issue-notification">
 							<div class="float-right">
 									<a href="#" onclick="setReaded(this,${noti.id})" ><span class="glyphicon glyphicon-remove"  title="标记为已读"/>
-									</a>&nbsp;2分钟前
+									</a>&nbsp;${noti.createTime}
 							</div>
 							<strong>
 								<c:choose>
