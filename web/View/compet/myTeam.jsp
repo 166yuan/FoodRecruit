@@ -49,36 +49,54 @@
 <div class="col-sm-3">
 </div>
     <div class="col-sm-6">
-        <div class="widget-box">
-            <div class="widget-header widget-header-flat">
-                <h4 class="widget-title">${team.comName}</h4>
+        <h4 class="widget-title blue smaller">
+            <i class="ace-icon fa fa-rss orange"></i>
+            我的队伍
+            <c:if test="${userId==team.leader.id}">
+                <a href="#" id="alterTeam" class="green pull-right" onclick="edit()">
+                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                </a>
+            </c:if>
+
+        </h4>
+        <hr>
+        <div class="widget-body">
+          <div class="center">
+              <h5 class="red showteam">队名：${team.name}</h5>
+              <input type="hidden" class="update-action" id="teamname" value="${team.name}"/>
+          </div>
+            <div class="center">
+                <h5 class="red showteam">口号：${team.slogan}</h5>
+                <input type="hidden" class="update-action" id="slogan" value="${team.slogan}"/>
             </div>
 
-            <div class="widget-body">
-                <div class="widget-main">
-                    <div class="row">
-                        <div class="col-sm-6" id="team">
-                            <p>队长：${team.leader}</p>
-                            <c:forEach items="${team.nameList}" var="member">
-                                <p>队员：${member}</p>
-                            </c:forEach>
-                            <c:if test="${team.teamType==true}">
-                                组队状态：<span style="color: #1718ff">完成</span>
-                            </c:if>
-                            <c:if test="${team.teamType==false}">
-                                组队状态：<span style="color: #ff0000">未完成</span>
-                            </c:if>
-                        </div>
-
-
-                    </div>
-
-                    <hr>
-                    <div class="row">
-
-                    </div>
+            <div class="profile-activity clearfix">
+                <div>
+                    <img  alt="头像" src="${team.leader.image_url}">
+                    队长： <a class="user" href="#"> ${team.leader.name} </a>
+                </div>
+                <div class="tools action-buttons" style="display: none">
+                    <a href="#" class="red">
+                        <i class="ace-icon fa fa-times bigger-125"></i>
+                    </a>
                 </div>
             </div>
+            <c:forEach items="${team.participants}" var="member">
+                <c:if test="${team.leader.id!=member.user.id}">
+                    <div class="profile-activity clearfix">
+                        <div>
+                            <img class="pull-left" alt="头像" src="${member.user.image_url}">
+                            队员： <a class="user" href="#"> ${member.user.name} </a>
+                        </div>
+                        <div class="tools action-buttons" style="display: none">
+                            <a href="#" class="red">
+                                <i class="ace-icon fa fa-times bigger-125"></i>
+                            </a>
+                        </div>
+                    </div>
+                </c:if>
+
+            </c:forEach>
         </div>
     </div>
     <div class="col-sm-3">
@@ -87,3 +105,11 @@
 
 </body>
 </html>
+<script type="text/javascript">
+function edit(){
+    console.log("click");
+$('.action-buttons').show();
+    $('#teamname').show();
+    $('#slogan').show();
+}
+</script>

@@ -34,7 +34,7 @@ public class Team implements InstanceInterface{
     public Date updateTime;
     
     private Set<CompetAndTeam> participants = new HashSet<CompetAndTeam>();
-    
+
 
 	public Team() {
 		super();
@@ -167,10 +167,10 @@ public class Team implements InstanceInterface{
 	}
 
 
-	
 
 
-	
+
+
 
 
 	public Set<CompetAndTeam> getParticipants() {

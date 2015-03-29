@@ -50,7 +50,7 @@ public class ScoreController extends BaseController {
     public void saveScoreA(int duty,int discipline,int tidy,int care,int operation,int fault,int efficiency,int advise,Integer experId,Integer userId,HttpSession session,PrintWriter out){
         int result=1,temp=0;
         Integer fromId=(Integer)session.getAttribute("userId");
-        Score score=scoreDao.getByExperIdAndUserId(experId,userId);
+        Score score=scoreDao.getByExperIdAndUserId(experId, userId);
         if(score==null){
             score=new Score();
             temp=1;
@@ -156,5 +156,11 @@ public class ScoreController extends BaseController {
         }
         out.print(result);
     }
-
+    @RequestMapping("myScore")
+    public String getScoreByUserAndExper(Integer experId,HttpSession session,Model model){
+        Integer userId=(Integer)session.getAttribute("userId");
+        Score score=scoreDao.getByExperIdAndUserId(experId,userId);
+        model.addAttribute("score",score);
+        return "View/experiment/myScore";
+    }
 }

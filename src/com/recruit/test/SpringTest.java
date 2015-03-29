@@ -21,13 +21,8 @@ public class SpringTest extends BaseJunit4Test{
     @Transactional   //标明此方法需使用事务
     @Rollback(false)
     public void testDemo(){
-        Map<String,Object> map=new HashMap<String,Object>();
-        map.put("competition", 4);
-        List<Team>list= teamDao.findByProperties(map, 1, 100);
-        System.out.println("size of team:"+list.size());
-        for(int i=0;i<list.size();i++){
-            System.out.println("name of team:"+list.get(i).getName());
-        }
+        Score score=scoreDao.getByExperIdAndUserId(1, 2);
+        System.out.println(score);
 }
 
 

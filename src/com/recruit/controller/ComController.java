@@ -326,14 +326,12 @@ public class ComController extends BaseController {
     @RequestMapping("showTeam")
     public String showTeam(Integer teamId,Model model){
         Team team=null;
-        MyTeamBean myTeamBean=null;
         try{
           team=teamDao.getById(teamId);
-            myTeamBean=teamDao.buildMyTeam(team);
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("team",myTeamBean);
+        model.addAttribute("team",team);
         return "View/compet/myTeam";
     }
 
