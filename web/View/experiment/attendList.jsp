@@ -128,7 +128,7 @@
                     </thead>
 
 
-                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                    <tbody role="alert" class="tbody" aria-live="polite" aria-relevant="all">
                         <c:forEach items="${list}" var="eu">
                         <tr class="odd">
                             <td class="center  sorting_1">
@@ -176,7 +176,7 @@
                 </div>
                 <!-- main content end-->
                 <br>
-                <div class="center"><button class="btn btn-info">保存并通知</button></div>
+                <div class="center"><button class="btn btn-info" onclick="noti()">保存并通知</button></div>
                 <div class="center"><span><strong>仅有保存了实验员才能收到通知</strong></span></div>
             </div>
         </div>
@@ -185,6 +185,19 @@
 </body>
 </html>
 <script type="text/javascript">
+
+    function noti(){
+        $('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                        var dom= $(this).parents(".odd").find('.hidden-id').val();
+                        $.get("/experUser/sentNoti?euid="+dom
+                                ,function(data){
+                                }
+                        );
+                }
+        );
+    }
+
     function agree(eid, uid) {
         $.get("/exper/employ?experId=" + parseInt(eid) + "&userId=" + parseInt(uid) + "&isAgree=" + true, function (data, status) {
             window.location.reload();

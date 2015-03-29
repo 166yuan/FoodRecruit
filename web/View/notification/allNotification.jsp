@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <head>
 <meta charset="UTF-8">
@@ -12,6 +13,22 @@
 <html>
 <body class="no-skin">
 <c:import  url="/View/common/header.jsp"/>
+<!-- 面包屑-->
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			<a href="/View/user/myspace.jsp">主页</a>
+		</li>
+		<li class="active">通知</li>
+	</ul><!-- /.breadcrumb -->
+
+</div>
+<!-- 面包屑结束-->
 
 	<div class="ui grid page" id="index-nav">
 	<h3 class="page_title notifications_page_title">
