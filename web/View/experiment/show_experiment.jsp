@@ -13,7 +13,7 @@
 <body class="no-skin">
 
 <!--导航栏开始-->
-<c:import url="/View/common/header.jsp"/>
+<c:import url="/user/home"/>
 <!--导航栏结束-->
 
 <!-- 面包屑-->
@@ -25,15 +25,15 @@
 		<ul class="breadcrumb">
 			<li>
 				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="/View/user/myspace.jsp">主页</a>
+				<a href="/user/home">主页</a>
 			</li>
 			<li>
 				<c:choose>
-					<c:when test="${from == 'me'}">
+					<c:when test="${from == 'myPublish'}">
 						<a href="/exper/myPublishExperiment?page=1">已发布实验</a>
 					</c:when>
 					<c:when test="${from == 'myInvolve'}">
-						<a href="#">我参与的实验</a>
+						<a href="/experUser/myattendExper?page=1">我参与的实验</a>
 					</c:when>
 					<c:otherwise>
 						<a href="/exper/nendAssistant?page=1">成为实验助手</a>

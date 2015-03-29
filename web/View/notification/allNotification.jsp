@@ -22,7 +22,7 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="ace-icon fa fa-home home-icon"></i>
-			<a href="/View/user/myspace.jsp">主页</a>
+			<a href="/user/home">主页</a>
 		</li>
 		<li class="active">通知</li>
 	</ul><!-- /.breadcrumb -->
@@ -86,7 +86,24 @@
 							</div>
 						</div>
 						<strong>
-						<a href="#" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a></strong>
+							<c:choose>
+								<c:when test="${noti.type == 0}" >
+									<a href="/exper/attendList?experId=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 1}" >
+									<a href="/exper/showExper?from=myInvolve&id=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 2}" >
+									<a><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 4}" >
+									<a><span class="glyphicon glyphicon-file" />来自管理员的反馈回复：${noti.info}<a>
+								</c:when>
+							</c:choose>
+						</strong>
 						</div>
 					</td>
 					</tr>

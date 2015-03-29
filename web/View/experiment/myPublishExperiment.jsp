@@ -25,7 +25,7 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="ace-icon fa fa-home home-icon"></i>
-			<a href="/View/user/myspace.jsp">主页</a>
+			<a href="/user/home">主页</a>
 		</li>
 		<li class="active">
 			我发布的实验
@@ -59,7 +59,7 @@
 							<li>
 								<h4 class="lighter no-margin-bottom">
 									<a href="/exper/update?id=${exper.id}"><i class="ace-icon fa fa-pencil blue"></i></a>&nbsp;&nbsp;
-									<a href="/exper/showExper?id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
+									<a href="/exper/showExper?from=myPublish&id=${exper.id}" class="pink btn-display-help"> ${exper.name} </a>
 									&nbsp;&nbsp; <small><fmt:formatDate value="${exper.createTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
                                     <c:set var="now" value="<%=System.currentTimeMillis()%>"/>
                                     <c:if test="${(now-exper.createTime.time)<1209600000}">

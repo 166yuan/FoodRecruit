@@ -25,7 +25,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="/View/user/myspace.jsp">主页</a>
+            <a href="/user/home">主页</a>
         </li>
         <li class="active">
             我参与的实验助手
@@ -74,7 +74,7 @@
                                 <c:forEach items="${list}" var="exper">
                                     <tr>
                                         <td>
-                                            <a href="/exper/showExper?id=${exper.experiment.id}">${exper.experiment.name}</a>
+                                            <a href="/exper/showExper?from=myInvolve&id=${exper.experiment.id}">${exper.experiment.name}</a>
                                         </td>
                                         <td><fmt:formatDate value="${exper.createTime}" pattern="yyyy年MM月dd日 HH:mm"/></td>
 
