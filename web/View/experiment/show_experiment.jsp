@@ -130,9 +130,12 @@
                     alert("申请成功");
                 }else if(result==-2){
                     alert("您已经报名了");
+                }else if(result==-3){
+                    alert("请先完善您的信息");
+					window.location.href="/user/getProfile";
                 }else{
-                    alert("未成功报名，未知错误");
-                }
+					alert("报名失败，未知错误");
+				}
             }
         });
     }

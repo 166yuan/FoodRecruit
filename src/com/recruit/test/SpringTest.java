@@ -21,8 +21,7 @@ public class SpringTest extends BaseJunit4Test{
     @Transactional   //标明此方法需使用事务
     @Rollback(false)
     public void testDemo(){
-        Score score=scoreDao.getByExperIdAndUserId(1, 2);
-        System.out.println(score);
+        System.out.println(teamDao.exitMemberByCompet(4,1));
 }
 
 

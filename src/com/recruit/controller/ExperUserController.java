@@ -10,7 +10,9 @@ import com.recruit.model.ExperUser;
 import com.recruit.model.Experiment;
 import com.recruit.model.Notification;
 import com.recruit.model.User;
+import com.recruit.util.AuthUtils;
 import net.sf.json.JSONObject;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,31 +51,35 @@ public class ExperUserController extends BaseController {
 
     @RequestMapping("join")
     public void join(Integer experId,HttpServletRequest request,PrintWriter out){
+        int result = 0;
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         User user=userDao.getById(userId);
-        Experiment experiment=experimentDao.getById(experId);
-        int result = 0;
-        try {
-            if(experUserDao.findByExperAndUserId(experId,userId)!=null){
-                result=-2;
-            }else{
+        if(!AuthUtils.isPermit(user)){
+            result=-3;
+        }else {
+            Experiment experiment=experimentDao.getById(experId);
+            try {
+                if(experUserDao.findByExperAndUserId(experId,userId)!=null){
+                    result=-2;
+                }else{
 
-            //-----创建Experiment 与 助手 联系 (Score要在同意后才新建一个）
-            ExperUser experUser=experUserDao.create(user,experiment);
-            experUserDao.save(experUser);
-            //-----创建通知notification
+                    //-----创建Experiment 与 助手 联系 (Score要在同意后才新建一个）
+                    ExperUser experUser=experUserDao.create(user,experiment);
+                    experUserDao.save(experUser);
+                    //-----创建通知notification
 
-                //获取实验发布者的ID
-            User publisher=experiment.getPublisher();
-            Notification noti = new Notification();
-            noti.setReceiver(publisher);
-            noti.setType(0);
-            noti.setInfo("你有一个新的助手申请");
-            notificationDao.save(noti);
-            result = 1;
+                    //获取实验发布者的ID
+                    User publisher=experiment.getPublisher();
+                    Notification noti = new Notification();
+                    noti.setReceiver(publisher);
+                    noti.setType(0);
+                    noti.setInfo("你有一个新的助手申请");
+                    notificationDao.save(noti);
+                    result = 1;
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
         }
         out.print(result);
     }
@@ -85,10 +91,10 @@ public class ExperUserController extends BaseController {
         }
         Integer uid=(Integer)session.getAttribute("userId");
         int total=experUserDao.countMyAttendExper(uid);
-        PageBean pageBean=PageBean.getInstance(page,total,"/experUser","/myattendExper");
-        List<ExperUser> list=experUserDao.getByUser(uid,pageBean);
+        PageBean pageBean=PageBean.getInstance(page, total, "/experUser", "/myattendExper");
+        List<ExperUser> list=experUserDao.getByUser(uid, pageBean);
         model.addAttribute("list",list);
-        model.addAttribute("pageBean",pageBean);
+        model.addAttribute("pageBean", pageBean);
         return "View/experiment/myAttendExper";
     }
 
@@ -117,5 +123,6 @@ public class ExperUserController extends BaseController {
         }
         out.print(result);
     }
+
 
 }

@@ -59,7 +59,7 @@
           </ul>
           <hr>
           <div class="show">
-            <form id="new" class="form-horizontal" action="/compet/newteam">
+            <form id="new" class="form-horizontal">
               <input type="hidden" name="comId"  id="comid" value="${competition.id}"/>
               <div class="form-group">
                 <label class="col-sm-4 control-label">队伍名称</label>
@@ -70,7 +70,7 @@
               <div class="form-group">
                 <label class="col-sm-4 control-label">队伍最大人数限制</label>
                 <div class="col-sm-4">
-                  <select class="form-control" name="number" id="type">
+                  <select class="form-control" name="number" id="number">
                     <c:forEach var="i" begin="${competition.minNumber}" end="${competition.maxNumber}" step="1">
                       <option value="${i}"><c:out value="${i}"/></option>
                     </c:forEach>
@@ -80,25 +80,25 @@
               <div class="form-group">
                 <label class="col-sm-4 control-label">队伍口号</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="slogan"  placeholder="口号">
+                  <input type="text" class="form-control" name="slogan" id="slogan" placeholder="口号">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-sm-4 control-label">入队密码</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="password"  placeholder="入队密码">
+                  <input type="text" class="form-control" name="password" id="password"  placeholder="入队密码">
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="col-sm-6"></div>
-                <button type="submit" class="btn btn-primary">下一步</button>
+                <button type="button" class="btn btn-primary" onclick="newteam()">下一步</button>
               </div>
             </form>
 
               <div class="row" id="join">
-                  <div class="center"><h5>以下是参与竞赛队伍列表(点击队名查看)</h3></div>
+                  <div class="center"><h5>以下是参与竞赛队伍列表(点击队名查看)</h5></div>
                <c:forEach items="${teamList}" var="team" varStatus="num">
                 <div class="col-sm-4">
                     <i class="ace-icon fa fa-users bigger"></i>&nbsp;
@@ -146,7 +146,7 @@
                         alert("报名成功！");
                         window.location.href="../View/compet/attendSuccess.jsp";
                     }else if(data==-1){
-                        alert("队伍不存在，请检查拼写")
+                        alert("队伍不存在，请检查拼写");
                     }else if(data==-2){
                         alert("入队密码不正确");
                     }else if(data==-3){
@@ -193,6 +193,9 @@
                                                 alert("该队人数已满");
                                             }else if(data==-4){
                                                 alert("您已经报名了，请勿重复报名");
+                                            }else if(data==-5){
+                                                alert("请先完善您的信息");
+                                                window.location.href="/user/getProfile";
                                             }
                                         });
                                     }
@@ -203,5 +206,33 @@
                     }
             );
         });
+    }
+
+    function newteam(){
+        var comId=$('#comid').val();
+        var name=$('#name').val();
+        var number=$('#number').val();
+        var slogan=$('#slogan').val();
+        var password=$('#password').val();
+        var date={"comId":comId,"name":name,"number":number,"slogan":slogan,"password":password};
+        var jsonData = JSON.stringify(date);
+        $.ajax({
+            url:"/compet/newteam",
+            type:"post",
+            dataType:"json",
+            data:jsonData ,
+            success:function(data) {
+                if (data == 1) {
+                    window.location.href = "../View/compet/attendSuccess.jsp";
+                } else if (data == -2) {
+                    alert("您已经报名参赛了，请勿重复报名。");
+                } else if (data == -3) {
+                    alert("请先完善您的信息");
+                } else {
+                    alert("报名失败，未知错误。");
+                }
+            }
+                });
+
     }
 </script>

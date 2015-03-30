@@ -8,6 +8,11 @@
     <meta name="renderer" content="webkit">
     <title>我的信息</title>
     <script type="text/javascript" src="/js/user/profile.js"></script>
+    <style>
+        .need{
+            color: #ff2827;
+        }
+        </style>
 </head>
 <html>
 <body class="no-skin">
@@ -51,7 +56,7 @@
         </button>
 
         <i class="ace-icon fa fa-umbrella bigger-120 blue"></i>
-        点击下面头像可更改哦！
+        点击下面头像可更改哦！图头像大小不超过1MB。
     </div>
 
     <div class="pull-right">
@@ -213,8 +218,8 @@
         <div class="space-6"></div>
 
         <div class="center">
-            <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                <span class="bigger-110" ><a onclick="alterInfo()">修改个人信息</a></span>
+            <button type="button" class="btn btn-sm btn-primary btn-white btn-round" onclick="alterInfo()">
+                <span class="bigger-110" ><a>修改个人信息</a></span>
 
                 <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
             </button>
@@ -227,16 +232,8 @@
 <div id="user-profile-3" class="user-profile row">
     <div class="col-sm-offset-1 col-sm-10">
         <div class="well well-sm">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            &nbsp;
-            <div class="inline middle blue bigger-110"> 当前信息完整度为 50 %</div>
-
-            &nbsp; &nbsp; &nbsp;
-            <div style="width:200px;" data-percent="70%" class="inline middle no-margin progress progress-striped active">
-                <div class="progress-bar progress-bar-success" style="width:70%"></div>
-            </div>
+            <div class="inline middle blue bigger-110"> 带<span class="need">*</span>号为必填项目，否则无法报名</div>
         </div><!-- /.well -->
-
         <div class="space"></div>
 
         <form class="form-horizontal">
@@ -264,25 +261,22 @@
                             <h4 class="header blue bolder smaller">通常</h4>
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-4">
-                                    <label class="ace-file-input ace-file-multiple"><input type="file"><span class="ace-file-container" data-title="修改头像"><span class="ace-file-name" data-title="No File ..."><i class=" ace-icon ace-icon fa fa-picture-o"></i></span></span><a class="remove" href="#"><i class=" ace-icon fa fa-times"></i></a></label>
-                                </div>
 
                                 <div class="vspace-12-sm"></div>
 
                                 <div class="col-xs-12 col-sm-8">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label no-padding-right" for="form-field-name">姓名</label>
+                                        <label class="col-sm-4 control-label no-padding-right" for="form-field-name"><span class="need"> * </span>姓名</label>
 
                                         <div class="col-sm-8">
-                                            <input class="col-xs-12 col-sm-10" type="text" id="form-field-name" name="name" value="${user.name}" placeholder="Username">
+                                            <input class="col-xs-12 col-sm-10" type="text" id="form-field-name" name="name" value="${user.name}" >
                                         </div>
                                     </div>
 
                                     <div class="space-4"></div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label no-padding-right" >专业</label>
+                                        <label class="col-sm-4 control-label no-padding-right" ><span class="need"> * </span>专业</label>
 
                                         <div class="col-sm-4">
                                             <select class="form-control" name="major" id="major" onchange="getClass(this.value)">
@@ -308,7 +302,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label no-padding-right" >班级</label>
+                                        <label class="col-sm-4 control-label no-padding-right" ><span class="need"> * </span>班级</label>
 
                                         <div class="col-sm-4">
                                             <select class="form-control" name="classes" id="classes">
@@ -400,7 +394,7 @@
                             <div class="space-4"></div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-phone">电话</label>
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-phone"><span class="need"> * </span>电话</label>
 
                                 <div class="col-sm-9">
     																<span class="input-icon input-icon-right">
@@ -572,4 +566,5 @@
                 }
         );
     }
+
 </script>

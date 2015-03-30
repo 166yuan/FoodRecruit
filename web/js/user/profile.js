@@ -98,6 +98,11 @@ function uploadFile(file){
   var docObj=document.getElementById("upfile");
   var imgPreview=document.getElementById("preview");
     if(docObj.files&&docObj.files[0]){
+        var size=docObj.files[0].size;
+        if(size>1179648){
+            alert("上传图片大小超过限制。");
+            window.location.reload();
+        }
         imgPreview.style.display="block";
         imgPreview.style.width='150px';
         imgPreview.style.height='150px';

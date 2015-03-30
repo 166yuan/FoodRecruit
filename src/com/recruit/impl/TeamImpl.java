@@ -6,6 +6,7 @@ import com.recruit.bean.TeamBean;
 import com.recruit.dao.TeamDao;
 import com.recruit.model.CompetAndTeam;
 import com.recruit.model.Team;
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,16 @@ public class TeamImpl extends DaoSupportImpl<Team> implements TeamDao {
                 isExist=true;
                 break;
             }
+        }
+        return isExist;
+    }
+
+    public boolean exitMemberByCompet(Integer userId,Integer comId){
+        boolean isExist=false;
+        String hql="from CompetAndTeam cat where cat.user="+userId+" and team.competition.id="+comId;
+        Query query=this.createQuery(hql);
+        if (query.list().size()!=0){
+        isExist=true;
         }
         return isExist;
     }

@@ -12,4 +12,5 @@ public interface TeamDao extends DaoSupport<Team>{
     public  TeamBean build(Team team);
     public boolean exitMember(Integer userId,Team team);
     public MyTeamBean buildMyTeam(Team team);
+    public boolean exitMemberByCompet(Integer userId,Integer comId);
 }

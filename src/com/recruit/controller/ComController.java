@@ -12,6 +12,8 @@ import com.recruit.model.CompetAndTeam;
 import com.recruit.model.Competition;
 import com.recruit.model.Team;
 import com.recruit.model.User;
+import com.recruit.util.AuthUtils;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,6 +37,17 @@ import java.util.*;
 @Controller
 @RequestMapping("/compet")
 public class ComController extends BaseController {
+    //从request中提取出json数据
+    public JSONObject createJson (HttpServletRequest request) throws IOException {
+        StringBuffer sb = new StringBuffer();
+        String line = null;
+        BufferedReader br = request.getReader();
+        while((line = br.readLine()) != null){
+            sb.append(line);
+        }
+        JSONObject json = JSONObject.fromObject(sb.toString());
+        return json;
+    }
 
     /**
      * 竞赛发布页面
@@ -132,35 +147,49 @@ public class ComController extends BaseController {
      */
 
     @RequestMapping(value = "newteam")
-    public void newTeam(Integer comId,String name,String slogan,String password,int number,HttpSession session,PrintWriter out){
-        System.out.println("name:"+name);
-        Integer idtemp=null;
-        Integer uid=(Integer)session.getAttribute("userId");
-        User user=userDao.getById(uid);
-        CompetAndTeam competAndTeam=new CompetAndTeam();
-         try{
-             Team team=new Team();
-             team.setName(name);
-             team.setLeader(user);
-             team.setSlogan(slogan);
-             team.setPassword(password);
-             team.setMaxSize(number);
-             if (number==1){
-                 team.setType(1);
-             }else {
-                 team.setType(0);
-             }
-             Competition competition=competitionDao.getById(comId);
-             team.setCompetition(competition);
-             teamDao.save(team);
-             idtemp=team.getId();
-             competAndTeam.setTeam(team);
-             competAndTeam.setUser(user);
-             competAndTeamDao.save(competAndTeam);
-         }catch (Exception e){
+    public void newTeam(HttpServletRequest request,HttpSession session,PrintWriter out){
+        int result=1;
+        JSONObject j=null;
+        try {
+            j = createJson(request);
+            Integer idtemp = null;
+            Integer uid = (Integer) session.getAttribute("userId");
+            User user = userDao.getById(uid);
+            Integer comId = j.getInt("comId");
+            if (teamDao.exitMemberByCompet(uid, comId)) {
+                result = -2;
+            } else
+            if(!AuthUtils.isPermit(user))
+            {
+                result=-3;
+            }else
+            {
+                int number=j.getInt("number");
+                CompetAndTeam competAndTeam = new CompetAndTeam();
+                Team team = new Team();
+                team.setName(j.getString("name"));
+                team.setLeader(user);
+                team.setSlogan(j.getString("slogan"));
+                team.setPassword(j.getString("password"));
+                team.setMaxSize(number);
+                if (number == 1) {
+                    team.setType(1);
+                } else {
+                    team.setType(0);
+                }
+                Competition competition = competitionDao.getById(comId);
+                team.setCompetition(competition);
+                teamDao.save(team);
+                idtemp = team.getId();
+                competAndTeam.setTeam(team);
+                competAndTeam.setUser(user);
+                competAndTeamDao.save(competAndTeam);
+            }
+        }catch (Exception e){
             e.printStackTrace();
-         }
-        out.print(1);
+            result=-1;
+        }
+        out.print(result);
     }
 
     /**
@@ -202,7 +231,10 @@ public class ComController extends BaseController {
                     if (team.getType() == 1) {
                         //队伍已满
                         result = -3;
-                    } else {
+                    } else if(!AuthUtils.isPermit(user)){
+                        result=-5;
+                    }else
+                    {
                         if(team.getParticipants().size()+1==team.getMaxSize()) {
                             team.setType(1);
                             teamDao.update(team);
