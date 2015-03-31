@@ -328,82 +328,121 @@ jQuery(function($) {
 })
 
 function scoreA(){
+    var isOk=true;
     var duty= $('input[name="duty"]').val();
+    if(duty<0||duty>20)isOk=false;
     var discipline= $('input[name="discipline"]').val();
+    if(discipline<0||discipline>20)isOk=false;
     var tidy= $('input[name="tidy"]').val();
+    if(tidy<0||tidy>15)isOk=false;
     var care= $('input[name="care"]').val();
+    if(care<0||care>10)isOk=false;
     var operation= $('input[name="operation"]').val();
+    if(operation<0||operation>10)isOk=false;
     var fault= $('input[name="fault"]').val();
+    if(fault<0||fault>10)isOk=false;
     var efficiency= $('input[name="efficiency"]').val();
+    if(efficiency<0||efficiency>10)isOk=false;
     var advise= $('input[name="advise"]').val();
+    if(advise<0||advise>5)isOk=false;
     var experId=$('input[name="experId"]').val();
     var userId=$('input[name="userId"]').val();
     var data = {"duty":duty,"discipline":discipline,"tidy":tidy,"care":care,"operation":operation,"fault":fault,
     "efficiency":efficiency,"advise":advise,"experId":experId,"userId":userId
     };
 
-    $.ajax({
-        url:"/score/saveScoreA",
-        type:"get",
-        dataType:"text",
-        data:data,
-        success:function(data){
-            var result = parseInt(data);
-            if(result == 1){
-                alert("保存成功");
-            }else{
-                alert("未知错误");
+    if(isOk){
+        $.ajax({
+            url:"/score/saveScoreA",
+            type:"get",
+            dataType:"text",
+            data:data,
+            success:function(data){
+                var result = parseInt(data);
+                if(result == 1){
+                    alert("保存成功");
+                }else{
+                    alert("未知错误");
+                }
             }
-        }
-    });
+        });
+    }else{
+        alert("您输入的分数不合要求，请参考评分标准");
+    }
+
+
 
 }
 
 function scoreB(){
+    var isOk=true;
     var scoreB= $('input[name="scoreB"]').val();
     var experId=$('input[name="experId"]').val();
     var userId=$('input[name="userId"]').val();
-    $.ajax({
-        url:"/score/saveScoreB",
-        type:"get",
-        dataType:"text",
-        data:{"scoreB":scoreB,"experId":experId,"userId":userId},
-        success:function(data){
-            var result = parseInt(data);
-            if(result == 1){
-                alert("保存成功");
-            }else{
-                alert("未知错误");
+    if(scoreB<0||scoreB>100)
+    isOk=false;
+    if(isOk){
+        $.ajax({
+            url:"/score/saveScoreB",
+            type:"get",
+            dataType:"text",
+            data:{"scoreB":scoreB,"experId":experId,"userId":userId},
+            success:function(data){
+                var result = parseInt(data);
+                if(result == 1){
+                    alert("保存成功");
+                }else{
+                    alert("未知错误");
+                }
             }
-        }
-    });
+        });
+    }else{
+        alert("您输入的分数有误，请按照评分细则检查");
+    }
+
 }
 
 function scoreC(){
+    var isOk=true;
     var Ttidy=$('input[name="Ttidy"]').val();
+    if(Ttidy<0||Ttidy>20)
+    isOk=false;
     var Tcare=$('input[name="Tcare"]').val();
+    if(Tcare<0||Tcare>20)
+        isOk=false;
     var Toperation=$('input[name="Toperation"]').val();
+    if(Toperation<0||Toperation>15)
+        isOk=false;
     var Tconnect=$('input[name="Tconnect"]').val();
+    if(Tconnect<0||Tconnect>15)
+        isOk=false;
     var member=$('input[name="member"]:checked').val();
     var recorded=$('input[name="recorded"]:checked').val();
     var append=$('input[name="append"]').val();
+    if(append<0||append>5)
+        isOk=false;
     var experId=$('input[name="experId"]').val();
     var userId=$('input[name="userId"]').val();
     console.log(member);
     console.log(recorded);
-    $.ajax({
-        url:"/score/saveScoreC",
-        type:"get",
-        dataType:"text",
-        data:{"experId":experId,"userId":userId,"Toperation":Toperation,"Ttidy":Ttidy,"Tcare":Tcare,"Tconnect":Tconnect,"member":member,
-        "recorded":recorded,"append":append},
-        success:function(data){
-            var result = parseInt(data);
-            if(result == 1){
-                alert("保存成功");
-            }else{
-                alert("未知错误");
+    if(isOk){
+        $.ajax({
+            url:"/score/saveScoreC",
+            type:"get",
+            dataType:"text",
+            data:{"experId":experId,"userId":userId,"Toperation":Toperation,"Ttidy":Ttidy,"Tcare":Tcare,"Tconnect":Tconnect,"member":member,
+                "recorded":recorded,"append":append},
+            success:function(data){
+                var result = parseInt(data);
+                if(result == 1){
+                    alert("保存成功");
+                }else{
+                    alert("未知错误");
+                }
             }
-        }
-    });
+        });
+    }else{
+        alert("您输入的分数有误，请检查");
+    }
+
 }
