@@ -67,9 +67,10 @@ public class ExperController extends BaseController {
      * @return
      */
     @RequestMapping(value = "showExper")
-    public String showExperById(Integer id,HttpSession session,Model model){
+    public String showExperById(Integer id,HttpSession session,Model model,String from){
         Experiment experiment =experimentDao.getById(id);
         model.addAttribute("exper", experiment);
+        model.addAttribute("from",from);
      return "/View/experiment/show_experiment";
     }
 

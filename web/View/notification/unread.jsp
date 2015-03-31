@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <head>
 <meta charset="UTF-8">
@@ -12,6 +13,22 @@
 <html>
 <body class="no-skin">
 <c:import  url="/View/common/header.jsp"/>
+<!-- 面包屑-->
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			<a href="/user/home">主页</a>
+		</li>
+		<li class="active">通知</li>
+	</ul><!-- /.breadcrumb -->
+
+</div>
+<!-- 面包屑结束-->
 	<div class="ui grid page" id="index-nav">
 	<h3 class="page_title notifications_page_title">
 	通知
@@ -47,7 +64,12 @@
 			<thead>
 				<tr>
 					<th>
-					  <i>共有<span id="unReadSize2">${list.size()}</span>未读通知</i>
+						<c:if test="${list.size() > 0}" >
+					  		<i>共有<span id="unReadSize2">${list.size()}</span>未读通知</i>
+						</c:if>
+						<c:if test="${list.size() < 1}" >
+							<i>你没有新的通知</i>
+						</c:if>
 					</th>
 				</tr>
 			</thead>
@@ -59,10 +81,26 @@
 						<div class="notification-item unread issue-notification">
 							<div class="float-right">
 									<a href="#" onclick="setReaded(this,${noti.id})" ><span class="glyphicon glyphicon-remove"  title="标记为已读"/>
-									</a>&nbsp;2分钟前
+									</a>&nbsp;${noti.createTime}
 							</div>
 							<strong>
-								<a href="#" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								<c:choose>
+									<c:when test="${noti.type == 0}" >
+										<a href="/exper/attendList?experId=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+									</c:when>
+
+									<c:when test="${noti.type == 1}" >
+										<a href="/exper/showExper?from=myInvolve&id=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+									</c:when>
+
+									<c:when test="${noti.type == 2}" >
+										<a><span class="glyphicon glyphicon-file" />${noti.info}</a>
+									</c:when>
+
+									<c:when test="${noti.type == 4}" >
+										<a><span class="glyphicon glyphicon-file" />来自管理员的反馈回复：${noti.info}<a>
+									</c:when>
+								</c:choose>
 							</strong>
 						</div>
 					</td>
@@ -94,8 +132,6 @@
 
 				var tr =obj.parentNode.parentNode.parentNode;
 				tr.parentNode.removeChild(tr);
-
-
 			}
 		});
 	}

@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <head>
 <meta charset="UTF-8">
@@ -12,6 +13,22 @@
 <html>
 <body class="no-skin">
 <c:import  url="/View/common/header.jsp"/>
+<!-- 面包屑-->
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			<a href="/user/home">主页</a>
+		</li>
+		<li class="active">通知</li>
+	</ul><!-- /.breadcrumb -->
+
+</div>
+<!-- 面包屑结束-->
 
 	<div class="ui grid page" id="index-nav">
 	<h3 class="page_title notifications_page_title">
@@ -64,12 +81,28 @@
 						<div class="notification-item unread issue-notification">
 						<div class="float-right">
 							<div class="">
-							<a href="http://git.oschina.net/Mklaus" >
-							</a>2分钟前
+							${noti.createTime}
 							</div>
 						</div>
 						<strong>
-						<a href="#" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a></strong>
+							<c:choose>
+								<c:when test="${noti.type == 0}" >
+									<a href="/exper/attendList?experId=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 1}" >
+									<a href="/exper/showExper?from=myInvolve&id=${noti.refId}" id="mark_notification" noti_id="2240646" target="_blank"><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 2}" >
+									<a><span class="glyphicon glyphicon-file" />${noti.info}</a>
+								</c:when>
+
+								<c:when test="${noti.type == 4}" >
+									<a><span class="glyphicon glyphicon-file" />来自管理员的反馈回复：${noti.info}<a>
+								</c:when>
+							</c:choose>
+						</strong>
 						</div>
 					</td>
 					</tr>
