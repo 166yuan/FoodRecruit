@@ -12,7 +12,6 @@ import com.recruit.model.Notification;
 import com.recruit.model.User;
 import com.recruit.util.AuthUtils;
 import net.sf.json.JSONObject;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +53,7 @@ public class ExperUserController extends BaseController {
         int result = 0;
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         User user=userDao.getById(userId);
-        if(!AuthUtils.isPermit(user)){
+        if (!AuthUtils.isPermit(user)){
             result=-3;
         }else {
             Experiment experiment=experimentDao.getById(experId);
@@ -73,6 +72,7 @@ public class ExperUserController extends BaseController {
                     Notification noti = new Notification();
                     noti.setReceiver(publisher);
                     noti.setType(0);
+                    noti.setRefId(experId);
                     noti.setInfo("你有一个新的助手申请");
                     notificationDao.save(noti);
                     result = 1;
@@ -91,10 +91,10 @@ public class ExperUserController extends BaseController {
         }
         Integer uid=(Integer)session.getAttribute("userId");
         int total=experUserDao.countMyAttendExper(uid);
-        PageBean pageBean=PageBean.getInstance(page, total, "/experUser", "/myattendExper");
-        List<ExperUser> list=experUserDao.getByUser(uid, pageBean);
+        PageBean pageBean=PageBean.getInstance(page,total,"/experUser","/myattendExper");
+        List<ExperUser> list=experUserDao.getByUser(uid,pageBean);
         model.addAttribute("list",list);
-        model.addAttribute("pageBean", pageBean);
+        model.addAttribute("pageBean",pageBean);
         return "View/experiment/myAttendExper";
     }
 
@@ -124,5 +124,40 @@ public class ExperUserController extends BaseController {
         out.print(result);
     }
 
+    @RequestMapping("sentNoti")
+    public void sentNoti(Integer euid,PrintWriter out){
+        int result = 1;
+
+        System.out.println("In 1");
+
+        ExperUser experUser = experUserDao.getById(euid);
+
+        if (experUser != null){
+            System.out.println("Infasf");
+
+            if (experUser.getIsAgree()){
+                User receiver = experUser.getUser();
+                Notification noti = new Notification();
+                noti.setReceiver(receiver);
+                noti.setType(1);
+                noti.setRefId(experUser.getExperiment().getId());
+                noti.setInfo("你已经被招收为 " + experUser.getExperiment().getName() + " 的实验助手。");
+                notificationDao.save(noti);
+
+            }else {
+                User receiver = experUser.getUser();
+                Notification noti = new Notification();
+                noti.setReceiver(receiver);
+                noti.setType(2);
+                noti.setRefId(experUser.getExperiment().getId());
+                noti.setInfo("你未能通过成为 " + experUser.getExperiment().getName() + " 的实验助手。");
+                notificationDao.save(noti);
+            }
+        }else {
+            result = -1;
+        }
+
+        out.print(result);
+    }
 
 }

@@ -15,4 +15,5 @@ public interface ExperUserDao extends DaoSupport<ExperUser>{
     public List<ExperUser>getByExperiment(Integer experId);
     public List<ExperUser>getByUser(Integer userId,PageBean pageBean);
     public Integer countMyAttendExper(Integer uid);
+    public List<ExperUser>getByPublish(Integer userId);
 }

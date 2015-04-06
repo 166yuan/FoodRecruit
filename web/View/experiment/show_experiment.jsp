@@ -13,7 +13,7 @@
 <body class="no-skin">
 
 <!--导航栏开始-->
-<c:import url="/user/home"/>
+<c:import url="/View/common/header.jsp"/>
 <!--导航栏结束-->
 
 <!-- 面包屑-->
@@ -30,10 +30,13 @@
 			<li>
 				<c:choose>
 					<c:when test="${from == 'myPublish'}">
-						<a href="/exper/myPublishExperiment?page=1">已发布实验</a>
+						<a href="/exper/myPublishExperiment?page=1">我发布的实验</a>
 					</c:when>
 					<c:when test="${from == 'myInvolve'}">
-						<a href="/experUser/myattendExper?page=1">我参与的实验</a>
+						<a href="/experUser/myattendExper?page=1">我参与的实验助手</a>
+					</c:when>
+					<c:when test="${from == 'scoreExper'}">
+						<a href="/exper/scoreExper?page=1">实验评价</a>
 					</c:when>
 					<c:otherwise>
 						<a href="/exper/nendAssistant?page=1">成为实验助手</a>

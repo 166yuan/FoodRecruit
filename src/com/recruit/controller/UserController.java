@@ -12,10 +12,7 @@ import com.recruit.impl.ClassesImpl;
 import com.recruit.impl.MajorImpl;
 import com.recruit.impl.NotificationImpl;
 import com.recruit.impl.UserImpl;
-import com.recruit.model.Classes;
-import com.recruit.model.Major;
-import com.recruit.model.Notification;
-import com.recruit.model.User;
+import com.recruit.model.*;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
@@ -159,6 +156,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("home")
     public String home(HttpServletRequest request,Model model){
+        Integer userId=(Integer)request.getSession().getAttribute("userId");
+        List<ExperUser>eulist=experUserDao.getByPublish(userId);
+        model.addAttribute("assistList",eulist);
         return "View/user/myspace";
     }
 
@@ -241,6 +241,7 @@ public class UserController extends BaseController {
             u.setEmail(j.getString("email"));
             u.setPhone(j.getString("phone"));
             u.setQq(j.getString("QQ"));
+            u.setAddress(j.getString("address"));
             userDao.update(u);
             result = SUCCESS;
             publishLogDao.updateUser(u);

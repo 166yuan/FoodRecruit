@@ -1,0 +1,381 @@
+
+
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="screen" href="css/bootstrap.css">
+  <link rel="stylesheet" media="screen" href="css/bootstrap-responsive.min.css">
+  <script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+  <title>查看文章</title>
+</head>
+<body>
+  <div class="wrapper">
+    
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/managewebsite/managerpage">华农侨联</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              用户名： <a href="#" class="navbar-link"></a>　　<a href="/users/loginpage">返回登陆</a>
+            </p>
+            <ul class="nav">
+              <li class=""><a href="/managearticle/writearticle">文章管理</a></li>
+              <li class=""><a href="/users/registpage">用户管理</a></li>
+              <li class=""><a href="/manageimage/showimages?page=1&type=1">图片管理</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    
+
+<br>
+<br>
+<br>
+<div class="container-fluid">
+ <div class="row-fluid">
+ 	 <div class="span3">
+ 	<div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">文章管理</li>
+              <li class=""><a href="/managearticle/writearticle">写文章</a></li>
+               <li class="active"><a href="/managearticle/showarticles?page=1">查看文章</a></li> 
+            	<li class=""><a href="/managearticle/createarticletype">专题设置</a></li> 
+               
+            </ul>
+          </div><!--/.well -->
+         </div>
+
+		<div class="span9">
+			
+
+
+
+    
+
+    <div class="row offset1">
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          搜索
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- dropdown menu links -->
+          <li id="bytype">
+            <a href="#">按类型</a>
+          </li>
+          <li id="byname">
+            <a href="#">按作者</a>
+          </li>
+          <li id="bytime">
+            <a href="#">按时间</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="searchByType" >
+      <!-- 自己把类型写在这里-->
+
+      <span class="label label-info" font-size="23">按类型查询</span>
+      <br>
+      <form  method="post" class="navbar-search pull-left" action="@{ManageArticle.findArticlesByType(articleType,1)}">
+        <select class="form-control" name="articleType">
+          
+            <option value=1>??</option>
+          
+            <option value=2>??</option>
+          
+            <option value=3>??</option>
+          
+            <option value=4>??</option>
+          
+            <option value=5>??</option>
+          
+            <option value=6>??</option>
+          
+        </select>
+        <button type="submit" class="btn btn-primary">搜索</button>
+      </form>
+    </div>
+
+
+    <div id="serchByarticle">
+      <span class="label label-info" font-size="23">按作者名查询</span>
+      <br>
+      <form  method="post" class="navbar-search pull-left" action="@{ManageArticle.findArticleByAuthor(author,1)}">
+        <select class="form-control" name="author">
+          
+            <option value=admin>牵手无奈</option>
+          
+            <option value=binbin>???</option>
+          
+            <option value=binbin>???</option>
+          
+            <option value=binbin>???</option>
+          
+            <option value=binbin>???</option>
+          
+            <option value=binbin>???</option>
+          
+            <option value=binbin>???</option>
+          
+        </select>
+        <button type="submit" class="btn btn-primary">搜索</button>
+
+      </form>
+    </div>
+
+    <div class="row">
+
+      <div class="well" id="timeselect">
+
+        <form method="post" action="@{ManageArticle.findArticleByTime(left,right,1)}">
+
+          <p>选择时间</p>
+          <span>从</span>
+          <div class="input-append date" id="datetimepicker1">
+            &nbsp;
+            <input name="left" data-format="yyyy-MM-dd hh:mm:ss" type="text">
+            <span class="add-on"> <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+            </span>
+            &nbsp;
+          </div>
+          <div class="input-append date" id="datetimepicker2" >
+            到
+            <input name="right" data-format="yyyy-MM-dd hh:mm:ss" type="text">
+            <span class="add-on"> <i data-date-icon="icon-calendar" data-time-icon="icon-time" class="icon-calendar"></i>
+            </span>
+          </div>
+          <button id="button" class="btn" contenteditable="true" type="submit" >搜索</button>
+        </form>
+
+      </div>
+
+    </div>
+
+    <br>
+    <br>
+
+    <div class="row ">
+      <table class="table" border="1">
+        <thead>
+          <tr>
+            <th>标题</th>
+            <th>发表时间</th>
+            <th>作者</th>
+            <th>来源</th>
+            <th>浏览量</th>
+            <th width="20%">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:56.0</td>
+              <td>com.recruit.model.User@177f180</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:54.0</td>
+              <td>com.recruit.model.User@78bfcc</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:53.0</td>
+              <td>com.recruit.model.User@1ef4094</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:51.0</td>
+              <td>com.recruit.model.User@1f8dedc</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:48.0</td>
+              <td>com.recruit.model.User@1aad2d9</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+
+            <tr>
+              <td>
+                <a href="" target="_blank">
+                  <span style="width:250px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block; ">title</span>
+                </a>
+              </td>
+              <td>2015-03-30 09:44:28.0</td>
+              <td>com.recruit.model.User@1413b85</td>
+              <td>articleFrom</td>
+              <td>1</td>
+              <td>
+
+                
+                  
+                  
+                    <span style="text-decoration: line-through;">删除</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                
+
+                <a class="btn btn-info" href="">修改</a>
+              </td>
+            </tr>
+          
+        </tbody>
+
+      </table>
+  
+      <!-- 插入分页 -->
+
+      <p>
+        <a href="@{ManageArticle.writeArticle()}" class="btn btn-success btn-lg" role="button">去写文章 &raquo;</a>
+      </p>
+</div>
+    
+  </div>
+
+</body>
+<script type="text/javascript">
+  $(function() {
+    $('#datetimepicker1').datetimepicker({
+      language: 'pt-BR'
+    });
+  });
+  $(function() {
+    $('#datetimepicker2').datetimepicker({
+      language: 'pt-BR'
+    });
+  });
+
+$(document).ready(function(){
+  $('#timeselect').hide();
+  $('#serchByarticle').hide();
+   $('#searchByType').hide();
+  $('#byname').click(function(){
+     $('#timeselect').hide();
+      $('#searchByType').hide();
+     $('#serchByarticle').show();
+  });
+    $('#bytime').click(function(){
+      $('#serchByarticle').hide();
+            $('#searchByType').hide();
+     $('#timeselect').show();
+  });
+
+    $('#bytype').click(function(){
+      $('#serchByarticle').hide();
+     $('#timeselect').hide();
+      $('#searchByType').show();
+  });
+});
+</script>
+</html>

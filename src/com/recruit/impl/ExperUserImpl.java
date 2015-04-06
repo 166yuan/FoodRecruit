@@ -44,7 +44,7 @@ public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUse
 
     public List<ExperUser>getByExperiment(Integer experId){
         Map<String,Object>map=new HashMap<String, Object>();
-        map.put("experiment",experId);
+        map.put("experiment", experId);
         return this.findByProperties(map,1,10);
     }
     public List<ExperUser>getByUser(Integer userId,PageBean pageBean){
@@ -56,6 +56,11 @@ public class ExperUserImpl extends DaoSupportImpl<ExperUser> implements ExperUse
     public Integer countMyAttendExper(Integer uid){
         String hql="from ExperUser eu where eu.user="+uid;
         return this.getSize(hql);
+    }
+
+    public List<ExperUser>getByPublish(Integer userId){
+        String hql="from ExperUser eu where eu.experiment.publisher="+userId;
+        return this.findByHql(hql,1,10);
     }
 
 }

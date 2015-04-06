@@ -379,6 +379,17 @@
                             <h4 class="header blue bolder smaller">联系方式</h4>
 
                             <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">地址</label>
+
+                                <div class="col-sm-9">
+
+    																	<input class="col-xs-12 col-sm-8" type="text" name="address" value="${user.address}" id="form-field-address">
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-email">邮箱</label>
 
                                 <div class="col-sm-9">

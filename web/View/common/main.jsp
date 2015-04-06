@@ -1,16 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE HTML>
-<head>
-  <meta charset="UTF-8">
-  <!-- 强制国内垃圾浏览器开启高速模式-->
-  <meta name="renderer" content="webkit">
-  <title>个人中心</title>
-</head>
-<html>
-<body class="no-skin">
+
 <c:import  url="/View/common/header.jsp"/>
-<!-- 主体部分-->
 <div class="main-container" id="main-container">
   <!-- 选项卡-->
   <div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse">
@@ -215,10 +206,8 @@
   </div>
   <!-- 选项卡结束-->
 </div>
-<!-- 主体结束-->
-</body>
-</html>
-</html>
+
+
 
 
 

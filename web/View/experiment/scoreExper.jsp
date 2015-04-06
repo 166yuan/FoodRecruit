@@ -59,7 +59,7 @@
                             <c:forEach items="${list}" var="exper">
                                 <li>
                                     <h4 class="lighter no-margin-bottom">
-                                        <a href="/exper/showExper?id=${exper.experId}" class="pink btn-display-help"> ${exper.experName} </a>
+                                        <a href="/exper/showExper?id=${exper.experId}&from=scoreExper" class="pink btn-display-help"> ${exper.experName} </a>
                                         &nbsp;&nbsp; <small><fmt:formatDate value="${exper.beginTime}" pattern="yyyy年MM月dd日"/></small>&nbsp;&nbsp;
                                         <c:choose>
                                             <c:when test="${exper.status==0}">

@@ -68,9 +68,9 @@ function submitProfileForm(){
     var email     = $("#form-field-email").val();
     var phone     = $("#form-field-phone").val();
     var QQ        = $("#form-field-QQ").val();
-
+    var address = $("#form-field-address").val();
     var jsonData = {"name":name,"major":major,"classes":classes,"gender":gender,
-    "self_info":self_info,"email":email,"phone":phone,"QQ":QQ};
+    "self_info":self_info,"email":email,"phone":phone,"QQ":QQ,"address":address};
 
     var data = JSON.stringify(jsonData);
 
